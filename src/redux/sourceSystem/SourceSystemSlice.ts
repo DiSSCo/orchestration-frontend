@@ -2,8 +2,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
-/* Import Types */
-import { SourceSystem } from 'global/Types';
+/* Import Types 
+import { SourceSystem } from 'global/Types'; */
 
 
 export interface SourceSystemState {
