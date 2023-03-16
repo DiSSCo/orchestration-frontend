@@ -1,6 +1,5 @@
 /* Import Dependencies */
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import KeycloakService from 'keycloak/Keycloak';
 import { Row, Col, Dropdown } from 'react-bootstrap';
 
@@ -35,12 +34,10 @@ const Profile = () => {
     }, []);
 
     /* Handling Dropdown */
-    const navigate = useNavigate();
-
     const OnSelect = (eventKey: string | null) => {
         switch (eventKey) {
             case '1':
-                window.open('https://sandbox.dissco.tech/profile', '_blank');
+                window.open('https://sandbox.dissco.tech/profile', '_blank', 'noopener');
                 break;
             case '2':
                 KeycloakService.Logout();
