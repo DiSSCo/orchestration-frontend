@@ -1,4 +1,36 @@
+/* Root variables */
+
+:root {
+  --main-color: #0C86C6;
+  --main-color-light: #d6e0f5;
+  --main-color-dark: #1c497d;
+  --alt-color-1: #00BAAF;
+  --alt-color-2: #00BED1;
+  --alt-color-3: #0099B9;
+  --main-color-green: #009973;
+
+  --greyXLight: #F4F4F1;
+  --greyLight: #E9E8E3;
+  --grey: #D9D9DF;
+  --greyMedium: #B4B4BF;
+  --greyDark: #868696;
+
+  --new: #10C1FF;
+  --handled: #F7A112;
+  --approved: #3DCA77;
+  --denied: #E74C3C;
+  --resolved: var(--greyMedium);
+}
+
+
+/* General Styling */
+
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -7,46 +39,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  height: 100%;
 }
 
-.App {
-  text-align: center;
+.content {
+  height: 90%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+/* Bootstrap class overwrite */
+
+.tab-content {
+  height: Calc(100% - 41px);
+  border-top: 1px solid #d9d9d9;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.nav-tabs .nav-item.show, .nav-tabs .nav-link.active {
   color: white;
+  background-color: var(--main-color-dark);
+  border-color: none;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-link {
+  color: #333333;
+  font-size: 14px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-tabs {
+  border-bottom: none;
+}
+
+.nav-tabs .nav-link:hover{
+  color: gray
+}
+
+.tab-pane {
+  height: 100%;
+  padding-top: 2%;
 }

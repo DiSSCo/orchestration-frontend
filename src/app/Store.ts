@@ -3,11 +3,13 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 /* Import Redux Slices */
 import SourceSystemReducer from 'redux/sourceSystem/SourceSystemSlice';
+import MappingReducer from 'redux/mapping/MappingSlice';
 
 
 export const store = configureStore({
   reducer: {
-    sourceSystem: SourceSystemReducer
+    sourceSystem: SourceSystemReducer,
+    mapping: MappingReducer
   },
 });
 
