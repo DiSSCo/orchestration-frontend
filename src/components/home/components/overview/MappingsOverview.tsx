@@ -13,8 +13,11 @@ import { Dict } from 'global/Types';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
+/* Import Components */
+import OverviewTable from './OverviewTable';
 
-const MappingsTable = () => {
+
+const MappingsOverview = () => {
     /* Base variables */
     const mappings = useAppSelector(getMappings);
 
@@ -36,18 +39,7 @@ const MappingsTable = () => {
         { field: 'description', flex: 1, suppressSizeToFit: true, sortable: true }
     ];
 
-    return (
-        <Row className="h-100">
-            <Col className="h-100">
-                <div className={`w-100 h-100 ag-theme-alpine`}>
-                    <AgGridReact
-                        rowData={rows}
-                        columnDefs={columns}
-                    />
-                </div>
-            </Col>
-        </Row>
-    );
+    return <OverviewTable columns={columns} rows={rows} />
 }
 
-export default MappingsTable;
+export default MappingsOverview;

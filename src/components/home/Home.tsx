@@ -9,8 +9,8 @@ import { setMappings } from 'redux/mapping/MappingSlice';
 
 /* Import Components */
 import Header from 'components/Header/Header';
-import SourceSystemsTable from './components/overview/SourceSystemsTable';
-import MappingsTable from './components/overview/MappingsTable';
+import SourceSystemsTable from './components/overview/SourceSystemsOverview';
+import MappingsTable from './components/overview/MappingsOverview';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
