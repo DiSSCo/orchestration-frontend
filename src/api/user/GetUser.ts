@@ -18,7 +18,7 @@ const GetUser = async (userId?: string, token?: string) => {
             const result = await axios({
                 method: "get",
                 url: endPoint,
-                baseURL: 'http://localhost:3000/api/v1',
+                baseURL: 'https://sandbox.dissco.tech/api/v1',
                 responseType: 'json',
                 headers: {
                     'Content-type': 'application/json',
