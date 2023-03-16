@@ -7,6 +7,9 @@ import styles from './header.module.scss';
 /* Import Webroot */
 import DiSSCoLogo from 'webroot/img/dissco-logo-web.svg';
 
+/* Import Components */
+import Profile from './components/Profile';
+
 
 const Header = () => {
     return (
@@ -17,6 +20,9 @@ const Header = () => {
                 </Col>
                 <Col className="col-md-auto d-flex align-items-center">
                     <h1 className={styles.title}>Orchestration Service</h1>
+                </Col>
+                <Col className="d-flex justify-content-end align-items-center">
+                    <Profile />
                 </Col>
             </Row>
         </Container>

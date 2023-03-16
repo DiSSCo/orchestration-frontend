@@ -1,4 +1,8 @@
 /* Generic Types */
+export type EmptyCallback = {
+    (): void;
+}
+
 export type Dict = {
     [name: string]: any;
 };
@@ -13,6 +17,16 @@ export type JSONResult = {
     links: {
         self: string
     }
+};
+
+/* User Type */
+export type User = {
+    id: string,
+    firstName?: string,
+    lastName?: string,
+    email?: string,
+    organization?: string
+    orcid?: string,
 };
 
 /* Source System Type */
