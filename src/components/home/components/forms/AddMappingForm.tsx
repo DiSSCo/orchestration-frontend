@@ -1,5 +1,4 @@
 /* Import Dependencies */
-import { Field, FieldArray } from 'formik';
 import classNames from 'classnames';
 import cloneDeep from 'lodash/cloneDeep';
 import { Row, Col } from 'react-bootstrap';
@@ -9,10 +8,6 @@ import { Dict } from 'global/Types';
 
 /* Import Styling */
 import styles from 'components/home/home.module.scss';
-
-/* Import Icons */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
