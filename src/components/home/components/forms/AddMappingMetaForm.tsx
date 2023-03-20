@@ -9,13 +9,12 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 /* Props Typing */
 interface Props {
-    secondary?: boolean,
     SetBaseStandard: Function
 };
 
 
 const AddMappingMetaForm = (props: Props) => {
-    const { secondary, SetBaseStandard } = props;
+    const { SetBaseStandard } = props;
 
     return (
         <Row>

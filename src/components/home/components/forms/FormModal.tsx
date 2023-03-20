@@ -168,9 +168,7 @@ const FormModal = (props: Props) => {
                                             <AddSourceSystemForm />
                                             {secondaryForm &&
                                                 <div className="mt-3">
-                                                    <AddMappingMetaForm secondary={true}
-                                                        SetBaseStandard={() => setBaseStandard(values.mappingBaseStandard)}
-                                                    />
+                                                    <AddMappingMetaForm SetBaseStandard={() => setBaseStandard(values.mappingBaseStandard)} />
                                                 </div>
                                             }
                                         </>

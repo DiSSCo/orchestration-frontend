@@ -4,10 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getMappings } from 'redux/mapping/MappingSlice';
-
-/* Import Styles */
-import styles from 'components/home/home.module.scss';
+import { getMappings } from 'redux/mapping/MappingSlice'
 
 
 const AddSourceSystemForm = () => {
@@ -57,7 +54,7 @@ const AddSourceSystemForm = () => {
 
                             {mappings.map((mapping, i) => {
                                 return (
-                                    <option key={mapping.id + i} value={mapping.id}
+                                    <option key={mapping.id} value={mapping.id}
                                         label={mapping.mapping.name}
                                     />
                                 );

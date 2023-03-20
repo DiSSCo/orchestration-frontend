@@ -17,6 +17,9 @@ import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
 
+/* Import Components */
+import MappingFields from './MappingFields';
+
 
 /* Props Typing */
 interface Props {
@@ -57,132 +60,19 @@ const AddMappingForm = (props: Props) => {
 
                 <Row style={{ height: '90%' }}>
                     <Col className="h-100">
-                        <Row className="mt-3 h-50">
-                            <Col className="h-100">
-                                <div className={`${styles.mappingConstructBlock} px-3 py-3 h-100 position-relative`}>
-                                    <div className={`${classCoverDiv} position-absolute h-100 w-100 top-0 start-0`} />
-
-                                    <p className="mb-1"> Default Values: </p>
-
-                                    <FieldArray name="mappingDefaults">
-                                        {({ push, remove }) => (
-                                            <>
-                                                {formValues.mappingDefaults.map((value: Dict, index: number) => {
-                                                    const localAttributes = { ...harmonisedAttributes };
-
-                                                    if (value.field) {
-                                                        localAttributes[value.field] = originalHarmonisedAttributes[value.field];
-                                                    }
-
-                                                    return (
-                                                        <Row key={value.field} className="py-1">
-                                                            <Col>
-                                                                <Row>
-                                                                    <Col md={{ span: 6 }}>
-                                                                        <Field name={`mappingDefaults.${index}.field`}
-                                                                            as="select" className="w-100"
-                                                                        >
-                                                                            <option value="" label="Harmonised property" disabled />
-
-                                                                            {Object.keys(localAttributes).map((property) => {
-                                                                                const propertyData = localAttributes[property];
-
-                                                                                return (
-                                                                                    <option value={property} label={propertyData.displayName} />
-                                                                                );
-                                                                            })}
-                                                                        </Field>
-                                                                    </Col>
-                                                                    <Col md={{ span: 6 }}>
-                                                                        <Field name={`mappingDefaults.${index}.value`}
-                                                                            className="w-100"
-                                                                        />
-                                                                    </Col>
-                                                                </Row>
-                                                            </Col>
-                                                            <Col className="col-md-auto">
-                                                                <FontAwesomeIcon icon={faX}
-                                                                    onClick={() => remove(index)}
-                                                                />
-                                                            </Col>
-                                                        </Row>
-                                                    );
-                                                })}
-
-                                                <button type="button" onClick={() => push({
-                                                    field: '', value: ''
-                                                })}>
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                </button>
-                                            </>
-                                        )}
-                                    </FieldArray>
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row className="mt-3 h-50">
-                            <Col className="h-100">
-                                <div className={`${styles.mappingConstructBlock} px-3 py-3 h-100 position-relative`}>
-                                    <div className={`${classCoverDiv} position-absolute h-100 w-100 top-0 start-0`} />
-
-                                    <p className="mb-1"> Field Mapping: </p>
-
-                                    <FieldArray name="mappingFieldMapping">
-                                        {({ push, remove }) => (
-                                            <>
-                                                {formValues.mappingFieldMapping.map((value: Dict, index: number) => {
-                                                    const localAttributes = { ...harmonisedAttributes };
-
-                                                    if (value.field) {
-                                                        localAttributes[value.field] = originalHarmonisedAttributes[value.field];
-                                                    }
-
-                                                    return (
-                                                        <Row key={value.field} className="py-1">
-                                                            <Col>
-                                                                <Row>
-                                                                    <Col md={{ span: 6 }}>
-                                                                        <Field name={`mappingFieldMapping.${index}.field`}
-                                                                            as="select" className="w-100"
-                                                                        >
-                                                                            <option value="" label="Harmonised property" disabled />
-
-                                                                            {Object.keys(localAttributes).map((property) => {
-                                                                                const propertyData = localAttributes[property];
-
-                                                                                return (
-                                                                                    <option value={property} label={propertyData.displayName} />
-                                                                                );
-                                                                            })}
-                                                                        </Field>
-                                                                    </Col>
-                                                                    <Col md={{ span: 6 }}>
-                                                                        <Field name={`mappingFieldMapping.${index}.value`}
-                                                                            className="w-100"
-                                                                        />
-                                                                    </Col>
-                                                                </Row>
-                                                            </Col>
-                                                            <Col className="col-md-auto">
-                                                                <FontAwesomeIcon icon={faX}
-                                                                    onClick={() => remove(index)}
-                                                                />
-                                                            </Col>
-                                                        </Row>
-                                                    );
-                                                })}
-
-                                                <button type="button" onClick={() => push({
-                                                    field: '', value: ''
-                                                })}>
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                </button>
-                                            </>
-                                        )}
-                                    </FieldArray>
-                                </div>
-                            </Col>
-                        </Row>
+                        <MappingFields mappingType={'Defaults'}
+                            formValues={formValues}
+                            harmonisedAttributes={harmonisedAttributes}
+                            originalHarmonisedAttributes={originalHarmonisedAttributes}
+                            classCoverDiv={classCoverDiv}
+                        />
+                            
+                        <MappingFields mappingType={'FieldMapping'}
+                            formValues={formValues}
+                            harmonisedAttributes={harmonisedAttributes}
+                            originalHarmonisedAttributes={originalHarmonisedAttributes}
+                            classCoverDiv={classCoverDiv}
+                        />
                     </Col>
                 </Row>
             </Col>
