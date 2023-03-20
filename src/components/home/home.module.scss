@@ -1,7 +1,87 @@
 /* Custom styling for the Home page */
 
+.addButton {
+    background-color: var(--main-color-dark);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+.addButton:hover {
+    background-color: var(--main-color);
+}
+
+
 /* Overview Tables */
 
 .overviewTable {
     width: 100;
+}
+
+
+/* Form Modal */
+
+.formModalHeader {
+    height: 50px;
+    width: fit-content;
+    background-color: var(--main-color-dark);
+}
+
+.formModalHeaderTitle {
+    font-size: 20px !important;
+}
+
+.formModalHeaderButton {
+    height: 30px;
+    margin-top: 20px;
+    right: 0;
+    top: 0;
+    background-color: #404040;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.formModalBody {
+    height: Calc(100% - 50px);
+}
+
+.formModalBody.secondary {
+    margin-top: 50px !important;
+}
+
+
+/* Forms */
+
+select option[value="new"] {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.saveButton {
+    background-color: white;
+    border: 1px solid var(--main-color);
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+.saveButton:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+
+/* Mapping Construction */
+
+.mappingConstructBlock {
+    border: 1px solid var(--main-color-dark);
+    border-radius: 8px;
+    overflow: scroll;
+}
+
+.mappingConstructionCoverDiv {
+    background-color: gray;
+    border-radius: 8px;
+    border: 1px solid gray;
+    opacity: 0.2;
 }
