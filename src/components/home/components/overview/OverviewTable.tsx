@@ -19,6 +19,10 @@ interface Props {
 
 const OverviewTable = (props: Props) => {
     const { columns, rows } = props;
+
+    const gridOptions = {
+        pagination: true
+    }
     
     return (
         <Row className="h-100">
@@ -27,6 +31,7 @@ const OverviewTable = (props: Props) => {
                     <AgGridReact
                         rowData={rows}
                         columnDefs={columns}
+                        gridOptions={gridOptions}
                     />
                 </div>
             </Col>
