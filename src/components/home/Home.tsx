@@ -3,17 +3,20 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 
 /* Import Store */
-import { useAppDispatch } from 'app/Hooks';
-import { setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
-import { setMappings } from 'redux/mapping/MappingSlice';
+import { useAppSelector, useAppDispatch } from 'app/Hooks';
+import { getSourceSystems, setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
+import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
+
+/* Import Types */
+import { SourceSystem, Mapping } from 'global/Types';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
 
 /* Import Components */
 import Header from 'components/Header/Header';
-import SourceSystemsTable from './components/overview/SourceSystemsOverview';
-import MappingsTable from './components/overview/MappingsOverview';
+import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
+import MappingsOverview from './components/overview/MappingsOverview';
 import FormModal from './components/forms/FormModal';
 
 /* Import API */
@@ -24,6 +27,10 @@ import GetMappings from 'api/mapping/GetMappings';
 const Home = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
+
+    /* Base variables */
+    const sourceSystems = useAppSelector(getSourceSystems);
+    const mappings = useAppSelector(getMappings);
 
     /* OnLoad: Get Source Systems and Mappings */
     useEffect(() => {
@@ -41,6 +48,40 @@ const Home = () => {
 
     /* Function for tracking the chosen tab */
     const [chosenTab, setChosenTab] = useState('Source System');
+
+    /* Function for updating the Source Systems state */
+    const UpdateSourceSystems = (sourceSystemId: string, sourceSystem?: SourceSystem) => {
+        const copySourceSystems = [...sourceSystems];
+        const sourceSystemIndex = sourceSystems.findIndex(sourceSystemRecord => sourceSystemRecord.id === sourceSystemId);
+
+        /* If Source System object is present, update main array, else remove */
+        if (sourceSystem && sourceSystemIndex > 0) {
+            copySourceSystems[sourceSystemIndex] = sourceSystem;
+        } else if (sourceSystem) {
+            copySourceSystems.push(sourceSystem);
+        } else {
+            copySourceSystems.splice(sourceSystemIndex, 1);
+        }
+
+        dispatch(setSourceSystems(copySourceSystems));
+    }
+
+    /* Function for updating the Mappings state */
+    const UpdateMappings = (mappingId: string, mapping?: Mapping) => {
+        const copyMappings = [...mappings];
+        const mappingIndex = mappings.findIndex(mappingRecord => mappingRecord.id === mappingId);
+
+        /* If Source System object is present, update main array, else remove */
+        if (mapping && mappingIndex > 0) {
+            copyMappings[mappingIndex] = mapping;
+        } else if (mapping) {
+            copyMappings.push(mapping);
+        } else {
+            copyMappings.splice(mappingIndex, 1);
+        }
+
+        dispatch(setMappings(copyMappings));
+    }
 
     return (
         <div className="h-100">
@@ -61,10 +102,16 @@ const Home = () => {
                             onSelect={(tab) => setChosenTab(tab as string)}
                         >
                             <Tab eventKey="Source System" title="Source Systems">
-                                <SourceSystemsTable ToggleModal={() => setModalToggle(true)} />
+                                <SourceSystemsOverview ToggleModal={() => setModalToggle(true)}
+                                    UpdateSourceSystems={(sourceSystemId: string, sourceSystem?: SourceSystem) =>
+                                        UpdateSourceSystems(sourceSystemId, sourceSystem)}
+                                />
                             </Tab>
                             <Tab eventKey="Mapping" title="Mappings">
-                                <MappingsTable ToggleModal={() => setModalToggle(true)}/>
+                                <MappingsOverview ToggleModal={() => setModalToggle(true)}
+                                    UpdateMappings={(mappingId: string, mapping?: Mapping) =>
+                                        UpdateMappings(mappingId, mapping)}
+                                />
                             </Tab>
                         </Tabs>
                     </Col>
@@ -74,6 +121,10 @@ const Home = () => {
                     chosenTab={chosenTab}
 
                     ToggleModal={() => setModalToggle(!modalToggle)}
+                    UpdateSourceSystems={(sourceSystemId: string, sourceSystem?: SourceSystem) =>
+                        UpdateSourceSystems(sourceSystemId, sourceSystem)}
+                    UpdateMappings={(mappingId: string, mapping?: Mapping) =>
+                        UpdateMappings(mappingId, mapping)}
                 />
             </Container>
         </div>

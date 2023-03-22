@@ -30,12 +30,15 @@ import PatchMapping from 'api/mapping/PatchMapping';
 interface Props {
     modalToggle: boolean,
     chosenTab: string,
-    ToggleModal: Function
+    ToggleModal: Function,
+    UpdateSourceSystems: Function,
+    UpdateMappings: Function
 };
 
 
 const FormModal = (props: Props) => {
-    const { modalToggle, chosenTab, ToggleModal } = props;
+    const { modalToggle, chosenTab, 
+        ToggleModal, UpdateSourceSystems, UpdateMappings } = props;
 
     /* Hooks */
     const dispatch = useAppDispatch();
@@ -140,12 +143,16 @@ const FormModal = (props: Props) => {
 
             /* If edit target is not empty, patch instead of insert */
             if (editTarget.mapping) {
-                await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken());
+                await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
+                    UpdateMappings(mapping?.id, mapping);
+                });
             } else {
                 await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
                     if (mapping) {
                         form.sourceSystemMappingId = mapping.id;
                     }
+
+                    UpdateMappings(mapping?.id, mapping);
                 });
             }
         }
@@ -166,12 +173,17 @@ const FormModal = (props: Props) => {
 
             /* If edit target is not empty, patch instead of insert */
             if (editTarget.sourceSystem) {
-                PatchSourceSystem(sourceSystemRecord, editTarget.sourceSystem.id, KeycloakService.GetToken());
+                PatchSourceSystem(sourceSystemRecord, editTarget.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
+                    UpdateSourceSystems(sourceSystem?.id, sourceSystem);
+                });
             } else {
-                InsertSourceSystem(sourceSystemRecord, KeycloakService.GetToken());
+                InsertSourceSystem(sourceSystemRecord, KeycloakService.GetToken()).then((sourceSystem) => {
+                    UpdateSourceSystems(sourceSystem?.id, sourceSystem);
+                });
             }
         }
 
+        /* Close Form Modal */
         ToggleModal();
     }
 

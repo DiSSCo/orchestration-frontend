@@ -24,12 +24,13 @@ import DeleteMapping from 'api/mapping/DeleteMapping';
 
 /* Props Typing */
 interface Props {
-    ToggleModal: Function
+    ToggleModal: Function,
+    UpdateMappings: Function
 };
 
 
 const MappingsOverview = (props: Props) => {
-    const { ToggleModal } = props;
+    const { ToggleModal, UpdateMappings } = props;
 
     /* Hooks */
     const dispatch = useAppDispatch();
@@ -57,6 +58,8 @@ const MappingsOverview = (props: Props) => {
 
         if (confirmed) {
             DeleteMapping(mappingId, KeycloakService.GetToken());
+
+            UpdateMappings(mappingId);
         }
     }
 

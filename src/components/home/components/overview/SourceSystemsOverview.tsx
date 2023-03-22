@@ -26,12 +26,13 @@ import DeleteSourceSystem from 'api/sourceSystem/DeleteSourceSystem';
 
 /* Props Typing */
 interface Props {
-    ToggleModal: Function
+    ToggleModal: Function,
+    UpdateSourceSystems: Function
 };
 
 
 const SourceSystemsOverview = (props: Props) => {
-    const { ToggleModal } = props;
+    const { ToggleModal, UpdateSourceSystems } = props;
 
     /* Hooks */
     const dispatch = useAppDispatch();
@@ -63,6 +64,8 @@ const SourceSystemsOverview = (props: Props) => {
 
         if (confirmed) {
             DeleteSourceSystem(sourceSystemId, KeycloakService.GetToken());
+
+            UpdateSourceSystems(sourceSystemId);
         }
     }
 
