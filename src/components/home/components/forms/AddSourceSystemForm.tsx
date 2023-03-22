@@ -45,17 +45,19 @@ const AddSourceSystemForm = () => {
                             placeholder="Test"
                             className="w-75"
                         >
-                            <option value="new">
+                            <option key={'new'} value="new">
                                 Add New Mapping
                             </option>
-                            <option value="" disabled>
+                            <option key={'choose'} value="" disabled>
                                 Choose Mapping
                             </option>
 
-                            {mappings.map((mapping, i) => {
+                            {mappings.map((mapping, index) => {
+                                const key: string = mapping.name + index;
+
                                 return (
-                                    <option key={mapping.id} value={mapping.id}
-                                        label={mapping.mapping.name}
+                                    <option key={key} value={mapping.id}
+                                        label={mapping.name}
                                     />
                                 );
                             })}

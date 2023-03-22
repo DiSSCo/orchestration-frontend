@@ -7,12 +7,10 @@ const SourceSystemModel = (result: Dict) => {
     const sourceSystem: SourceSystemType = {
         id: result.id,
         created: result.attributes.created,
-        sourceSystem: {
-            name: result.attributes.sourceSystem.name,
-            endpoint: result.attributes.sourceSystem.endpoint,
-            description: result.attributes.sourceSystem.description,
-            mappingId: result.attributes.sourceSystem.mappingId
-        }
+        name: result.attributes.name,
+        endpoint: result.attributes.endpoint,
+        description: result.attributes.description,
+        mappingId: result.attributes.mappingId
     }
 
     return sourceSystem;

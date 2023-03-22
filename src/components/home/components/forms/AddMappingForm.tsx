@@ -25,7 +25,7 @@ interface Props {
 
 const AddMappingForm = (props: Props) => {
     const { formValues, baseStandard } = props;
-
+    
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);

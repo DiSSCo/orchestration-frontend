@@ -33,12 +33,10 @@ export type User = {
 export interface SourceSystem {
     id: string,
     created: Date,
-    sourceSystem: {
-        name: string,
-        endpoint: string,
-        description: string,
-        mappingId: string
-    }
+    name: string,
+    endpoint: string,
+    description: string,
+    mappingId: string
 };
 
 /* Mapping Type */
@@ -47,16 +45,21 @@ export interface Mapping {
     version: number,
     created: Date,
     creator: string,
-    mapping: {
-        name: string,
-        description: string,
-        mapping: {
-            mapping: [{
-                [property: string]: string;
-            }],
-            defaults: [{
-                [property: string]: string;
-            }]
-        }
+    name: string,
+    description: string,
+    sourceDataStandard: string,
+    fieldMapping: {
+        mapping: [{
+            [property: string]: string;
+        }],
+        defaults: [{
+            [property: string]: string;
+        }]
     }
+}
+
+/* Edit Target Type */
+export interface EditTarget {
+    sourceSystem?: SourceSystem,
+    mapping?: Mapping
 }

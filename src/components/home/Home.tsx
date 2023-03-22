@@ -61,10 +61,10 @@ const Home = () => {
                             onSelect={(tab) => setChosenTab(tab as string)}
                         >
                             <Tab eventKey="Source System" title="Source Systems">
-                                <SourceSystemsTable />
+                                <SourceSystemsTable ToggleModal={() => setModalToggle(true)} />
                             </Tab>
                             <Tab eventKey="Mapping" title="Mappings">
-                                <MappingsTable />
+                                <MappingsTable ToggleModal={() => setModalToggle(true)}/>
                             </Tab>
                         </Tabs>
                     </Col>
