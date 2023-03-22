@@ -53,19 +53,32 @@
 
 /* Forms */
 
+.secondaryForm {
+    background-color: rgb(12, 134, 198, 0.2);
+}
+
+.formFieldTitle {
+    font-size: 15px;
+}
+
+.formField {
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+}
+
 select option[value="new"] {
     background-color: var(--main-color);
     color: white;
 }
 
-.saveButton {
+.formButton {
     background-color: white;
     border: 1px solid var(--main-color);
     border-radius: 8px;
     transition: 0.4s;
 }
 
-.saveButton:hover {
+.formButton:hover {
     background-color: var(--main-color);
     color: white;
 }
@@ -80,8 +93,23 @@ select option[value="new"] {
 }
 
 .mappingConstructionCoverDiv {
-    background-color: gray;
+    background-color: rgb(134, 134, 150, 0.3);
     border-radius: 8px;
-    border: 1px solid gray;
-    opacity: 0.2;
+    font-weight: bold;
+}
+
+.mappingTitle {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.removeMappingIcon {
+    font-size: 14px;
+    color: var(--greyDark);
+    cursor: pointer;
+}
+
+.addMappingButton {
+    background-color: var(--grey);
+    font-size: 14px;
 }

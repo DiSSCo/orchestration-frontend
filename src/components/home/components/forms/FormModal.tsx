@@ -218,11 +218,13 @@ const FormModal = (props: Props) => {
                     mappingDescription: editTarget?.mapping ? editTarget.mapping.description : '',
                     mappingDefaults: editMappings?.defaults ? editMappings.defaults : [{
                         field: '',
-                        value: ''
+                        value: '',
+                        key: 0
                     }],
                     mappingFieldMapping: editMappings?.mapping ? editMappings.mapping : [{
                         field: '',
-                        value: ''
+                        value: '',
+                        key: 0
                     }]
                 }}
                 enableReinitialize={true}
@@ -259,7 +261,7 @@ const FormModal = (props: Props) => {
                                         <>
                                             <AddSourceSystemForm />
                                             {secondaryForm &&
-                                                <div className="mt-3">
+                                                <div className={`${styles.secondaryForm} px-3 pb-3 mt-3`}>
                                                     <AddMappingMetaForm SetBaseStandard={() => setBaseStandard(values.sourceDataStandard)} />
                                                 </div>
                                             }
@@ -267,9 +269,9 @@ const FormModal = (props: Props) => {
                                         : <AddMappingMetaForm SetBaseStandard={() => setBaseStandard(values.sourceDataStandard)} />
                                     }
 
-                                    <Row className="mt-5">
+                                    <Row className="mt-4">
                                         <Col>
-                                            <button type="submit" className={`${styles.saveButton} px-3`}>
+                                            <button type="submit" className={`${styles.formButton} px-3`}>
                                                 Save
                                             </button>
                                         </Col>

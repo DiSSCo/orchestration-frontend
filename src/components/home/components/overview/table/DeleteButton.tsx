@@ -1,6 +1,9 @@
 /* Import Types */
 import { Dict } from "global/Types"
 
+/* Import Styling */
+import styles from 'components/home/home.module.scss';
+
 /* Import Icons */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -17,7 +20,10 @@ const DeleteButton = (props: Props) => {
     const { data, DeleteTarget } = props;
 
     return (
-        <button type="button" onClick={() => DeleteTarget(data.identifier)}>
+        <button type="button"
+            className={`${styles.formButton} px-3 h-75 mt-1 d-flex align-items-center`}
+            onClick={() => DeleteTarget(data.identifier)}
+        >
             <FontAwesomeIcon icon={faTrash} />
         </button>
     );
