@@ -109,7 +109,7 @@ const FormModal = (props: Props) => {
     const SubmitForm = async (form: Dict) => {
         /* First, check if new mapping needs to be added */
         if (form.sourceSystemMappingId === 'new' || chosenTab === 'Mapping' || editTarget.mapping) {
-            const UpdateForm = (mappingId: String) => {
+            const UpdateForm = (mappingId: string) => {
                 form.sourceSystemMappingId = mappingId;
             }
 
