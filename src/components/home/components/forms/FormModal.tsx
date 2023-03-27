@@ -37,7 +37,7 @@ interface Props {
 
 
 const FormModal = (props: Props) => {
-    const { modalToggle, chosenTab, 
+    const { modalToggle, chosenTab,
         ToggleModal, UpdateSourceSystems, UpdateMappings } = props;
 
     /* Hooks */
@@ -95,7 +95,7 @@ const FormModal = (props: Props) => {
         }
     }, [modalToggle]);
 
-    /* Function for checking form status */
+    /* Function for checking the form status */
     const CheckOption = (formField: Dict) => {
         /* Checking if new mapping needs to be added */
         if (formField.target.name === 'sourceSystemMappingId' && formField.target.value === 'new') {
@@ -109,82 +109,99 @@ const FormModal = (props: Props) => {
     const SubmitForm = async (form: Dict) => {
         /* First, check if new mapping needs to be added */
         if (form.sourceSystemMappingId === 'new' || chosenTab === 'Mapping' || editTarget.mapping) {
-            /* Add new mapping */
-            const fieldMapping: Dict[] = [];
-
-            form.mappingFieldMapping.forEach((mapping: Dict) => {
-                if (mapping.field) {
-                    fieldMapping.push({ [mapping.field]: mapping.value });
-                }
-            });
-
-            const defaults: Dict[] = [];
-
-            form.mappingDefaults.forEach((mapping: Dict) => {
-                if (mapping.field) {
-                    defaults.push({ [mapping.field]: mapping.value });
-                }
-            });
-
-            const mappingRecord = {
-                data: {
-                    type: 'mapping',
-                    attributes: {
-                        name: form.mappingName,
-                        description: form.mappingDescription,
-                        sourceDataStandard: form.sourceDataStandard,
-                        fieldMapping: {
-                            mapping: fieldMapping,
-                            defaults: defaults
-                        }
-                    }
-                }
+            const UpdateForm = (mappingId: string) => {
+                form.sourceSystemMappingId = mappingId;
             }
 
-            /* If edit target is not empty, patch instead of insert */
-            if (editTarget.mapping) {
-                await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
-                    UpdateMappings(mapping?.id, mapping);
-                });
-            } else {
-                await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
-                    if (mapping) {
-                        form.sourceSystemMappingId = mapping.id;
-                    }
-
-                    UpdateMappings(mapping?.id, mapping);
-                });
-            }
+            await SubmitMapping(form, (mappingId: string) => UpdateForm(mappingId));
         }
 
         /* Check if new Source System needs to be added */
         if (chosenTab === 'Source System') {
-            const sourceSystemRecord = {
-                data: {
-                    type: 'sourceSystem',
-                    attributes: {
-                        name: form.sourceSystemName,
-                        endpoint: form.sourceSystemEndpoint,
-                        description: form.sourceSystemDescription,
-                        mappingId: form.sourceSystemMappingId
-                    }
-                }
-            }
+            console.log(form);
 
-            /* If edit target is not empty, patch instead of insert */
-            if (editTarget.sourceSystem) {
-                PatchSourceSystem(sourceSystemRecord, editTarget.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
-                    UpdateSourceSystems(sourceSystem?.id, sourceSystem);
-                });
-            } else {
-                InsertSourceSystem(sourceSystemRecord, KeycloakService.GetToken()).then((sourceSystem) => {
-                    UpdateSourceSystems(sourceSystem?.id, sourceSystem);
-                });
-            }
+            SubmitSourceSystem(form);
         }
 
         /* Close Form Modal */
         ToggleModal();
+    }
+
+    /* Function for inserting or patching a Source System */
+    const SubmitSourceSystem = (form: Dict) => {
+        console.log(form);
+
+        const sourceSystemRecord = {
+            data: {
+                type: 'sourceSystem',
+                attributes: {
+                    name: form.sourceSystemName,
+                    endpoint: form.sourceSystemEndpoint,
+                    description: form.sourceSystemDescription,
+                    mappingId: form.sourceSystemMappingId
+                }
+            }
+        }
+
+        /* If edit target is not empty, patch instead of insert */
+        if (editTarget.sourceSystem) {
+            PatchSourceSystem(sourceSystemRecord, editTarget.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
+                UpdateSourceSystems(sourceSystem?.id, sourceSystem);
+            });
+        } else {
+            InsertSourceSystem(sourceSystemRecord, KeycloakService.GetToken()).then((sourceSystem) => {
+                UpdateSourceSystems(sourceSystem?.id, sourceSystem);
+            });
+        }
+    }
+
+    /* Function for inserting or patching a Mapping */
+    const SubmitMapping = async (form: Dict, UpdateForm: Function) => {
+        const fieldMapping: Dict[] = [];
+
+        form.mappingFieldMapping.forEach((mapping: Dict) => {
+            if (mapping.field) {
+                fieldMapping.push({ [mapping.field]: mapping.value });
+            }
+        });
+
+        const defaults: Dict[] = [];
+
+        form.mappingDefaults.forEach((mapping: Dict) => {
+            if (mapping.field) {
+                defaults.push({ [mapping.field]: mapping.value });
+            }
+        });
+
+        const mappingRecord = {
+            data: {
+                type: 'mapping',
+                attributes: {
+                    name: form.mappingName,
+                    description: form.mappingDescription,
+                    sourceDataStandard: form.sourceDataStandard,
+                    fieldMapping: {
+                        mapping: fieldMapping,
+                        defaults: defaults
+                    }
+                }
+            }
+        }
+
+        /* If edit target is not empty, patch instead of insert */
+        if (editTarget.mapping) {
+            await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
+                UpdateMappings(mapping?.id, mapping);
+            });
+        } else {
+            await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
+                if (mapping) {
+                    UpdateForm(mapping.id);
+                }
+
+                UpdateMappings(mapping?.id, mapping);
+            });
+        }
     }
 
     /* Function for closing the form modal */
