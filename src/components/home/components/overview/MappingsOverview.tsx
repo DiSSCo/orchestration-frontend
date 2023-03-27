@@ -3,11 +3,8 @@ import KeycloakService from 'keycloak/Keycloak';
 import { confirm } from 'react-confirm-box';
 
 /* Import Store */
-import { useAppSelector } from 'app/Hooks';
+import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getMappings } from 'redux/mapping/MappingSlice';
-
-/* Import Store */
-import { useAppDispatch } from 'app/Hooks';
 import { setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
@@ -81,7 +78,7 @@ const MappingsOverview = (props: Props) => {
         { field: 'description', flex: 1, suppressSizeToFit: true, sortable: true },
         {
             field: 'edit',
-            flex: 0.2,
+            flex: 0.15,
             suppressSizeToFit: true,
             cellRenderer: EditButton,
             cellRendererParams: {
