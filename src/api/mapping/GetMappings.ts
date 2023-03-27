@@ -17,6 +17,9 @@ const GetMappings = async () => {
         const result = await axios({
             method: "get",
             url: endPoint,
+            params: {
+                pageSize: 50
+            },
             responseType: 'json'
         });
 

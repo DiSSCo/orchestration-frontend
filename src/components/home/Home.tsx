@@ -1,5 +1,5 @@
 /* Import Dependencies */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 
 /* Import Store */
@@ -7,10 +7,14 @@ import { useAppDispatch } from 'app/Hooks';
 import { setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
 import { setMappings } from 'redux/mapping/MappingSlice';
 
+/* Import Styles */
+import styles from 'components/home/home.module.scss';
+
 /* Import Components */
 import Header from 'components/Header/Header';
 import SourceSystemsTable from './components/overview/SourceSystemsOverview';
 import MappingsTable from './components/overview/MappingsOverview';
+import FormModal from './components/forms/FormModal';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
@@ -32,6 +36,12 @@ const Home = () => {
         });
     }, []);
 
+    /* Function for toggling the Form Modal */
+    const [modalToggle, setModalToggle] = useState(false);
+
+    /* Function for tracking the chosen tab */
+    const [chosenTab, setChosenTab] = useState('Source System');
+
     return (
         <div className="h-100">
             <Header />
@@ -39,16 +49,32 @@ const Home = () => {
             <Container className="content py-5">
                 <Row className="h-100">
                     <Col className="h-100">
-                        <Tabs defaultActiveKey="sourceSystems">
-                            <Tab eventKey="sourceSystems" title="Source Systems">
+                        <div className="position-relative">
+                            <button className={`${styles.addButton} position-absolute px-3 py-1 end-0`}
+                                onClick={() => setModalToggle(true)}
+                            >
+                                Add {chosenTab}
+                            </button>
+                        </div>
+
+                        <Tabs defaultActiveKey="Source System"
+                            onSelect={(tab) => setChosenTab(tab as string)}
+                        >
+                            <Tab eventKey="Source System" title="Source Systems">
                                 <SourceSystemsTable />
                             </Tab>
-                            <Tab eventKey="mappings" title="Mappings">
+                            <Tab eventKey="Mapping" title="Mappings">
                                 <MappingsTable />
                             </Tab>
                         </Tabs>
                     </Col>
                 </Row>
+
+                <FormModal modalToggle={modalToggle}
+                    chosenTab={chosenTab}
+
+                    ToggleModal={() => setModalToggle(!modalToggle)}
+                />
             </Container>
         </div>
     );

@@ -78,3 +78,19 @@ body {
   height: 100%;
   padding-top: 2%;
 }
+
+
+/* Bootstrap Modal */
+
+.modal-dialog {
+  height: 100%;
+  margin: 0 auto !important;
+}
+
+.modal-content {
+  background-color: rgba(255, 255, 255, 0);
+  height: 84.8%;
+  overflow: hidden;
+  padding-top: 11.2%;
+  border: none;
+}
