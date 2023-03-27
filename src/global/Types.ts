@@ -25,7 +25,7 @@ export type User = {
     firstName?: string,
     lastName?: string,
     email?: string,
-    organization?: string
+    organisation?: string
     orcid?: string,
 };
 
