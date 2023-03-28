@@ -21,17 +21,17 @@ const AddMappingMetaForm = (props: Props) => {
             <Col>
                 <Row className="mt-2">
                     <Col>
-                        <p className="mb-1"> Choose base data standard: </p>
-                        <Field name="mappingBaseStandard" as="select"
+                        <p className="mb-1"> Base data standard: </p>
+                        <Field name="sourceDataStandard" as="select"
                             className="w-100"
                         >
-                            <option value="" label="Choose base standard" disabled />
-                            <option value="DarwinCore" label="DarwinCore" />
-                            <option value="ABCD" label="ABCD" />
+                            <option value="" label="Choose base data standard" disabled />
+                            <option value="dwc" label="DarwinCore" />
+                            <option value="abcd" label="ABCD" />
+                            <option value="abcdefg" label="ABCD-EFG" />
                         </Field>
                     </Col>
                     <Col className="col-md-auto d-flex align-items-end">
-
                         <button type="button"
                             onClick={() => SetBaseStandard()}
                         >

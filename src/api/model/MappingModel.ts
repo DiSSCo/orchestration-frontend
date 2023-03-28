@@ -9,13 +9,12 @@ const MappingModel = (result: Dict) => {
         version: result.attributes.version,
         created: result.attributes.created,
         creator: result.attributes.creator,
-        mapping: {
-            name: result.attributes.mapping.name,
-            description: result.attributes.mapping.description,
-            mapping: {
-                mapping: result.attributes.mapping.mapping.mapping,
-                defaults: result.attributes.mapping.mapping.defaults
-            }
+        name: result.attributes.name,
+        description: result.attributes.description,
+        sourceDataStandard: result.attributes.sourceDataStandard,
+        fieldMapping: {
+            mapping: result.attributes.fieldMapping.mapping,
+            defaults: result.attributes.fieldMapping.defaults
         }
     }
 
