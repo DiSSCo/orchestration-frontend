@@ -118,8 +118,6 @@ const FormModal = (props: Props) => {
 
         /* Check if new Source System needs to be added */
         if (chosenTab === 'Source System') {
-            console.log(form);
-
             SubmitSourceSystem(form);
         }
 
@@ -129,8 +127,6 @@ const FormModal = (props: Props) => {
 
     /* Function for inserting or patching a Source System */
     const SubmitSourceSystem = (form: Dict) => {
-        console.log(form);
-
         const sourceSystemRecord = {
             data: {
                 type: 'sourceSystem',
