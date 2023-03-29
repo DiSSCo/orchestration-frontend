@@ -1,6 +1,5 @@
 /* Import Dependencies */
 import KeycloakService from 'keycloak/Keycloak';
-import { confirm } from 'react-confirm-box';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
@@ -50,8 +49,8 @@ const MappingsOverview = (props: Props) => {
     }
 
     /* Function for removing a Mapping */
-    const RemoveMapping = async (mappingId: string) => {
-        const confirmed: boolean = await confirm(`Do you want to delete the Mapping with id: ${mappingId}`);
+    const RemoveMapping = (mappingId: string) => {
+        const confirmed: boolean = window.confirm(`Do you want to delete the Mapping with id: ${mappingId}`);
 
         if (confirmed) {
             DeleteMapping(mappingId, KeycloakService.GetToken());

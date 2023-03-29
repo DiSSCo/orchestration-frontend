@@ -1,6 +1,5 @@
 /* Import Dependencies */
 import KeycloakService from 'keycloak/Keycloak';
-import { confirm } from 'react-confirm-box';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
@@ -60,7 +59,7 @@ const SourceSystemsOverview = (props: Props) => {
 
     /* Function for removing a Source System */
     const RemoveSourceSystem = async (sourceSystemId: string) => {
-        const confirmed: boolean = await confirm(`Do you want to delete the Source System with id: ${sourceSystemId}`);
+        const confirmed: boolean = window.confirm(`Do you want to delete the Source System with id: ${sourceSystemId}`);
 
         if (confirmed) {
             DeleteSourceSystem(sourceSystemId, KeycloakService.GetToken());
@@ -87,7 +86,7 @@ const SourceSystemsOverview = (props: Props) => {
         { field: 'endpoint', flex: 1, suppressSizeToFit: true, sortable: true },
         {
             field: 'edit',
-            flex: 0.2,
+            flex: 0.15,
             suppressSizeToFit: true,
             cellRenderer: EditButton,
             cellRendererParams: {

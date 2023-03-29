@@ -30,9 +30,12 @@ const MappingFields = (props: Props) => {
         <Row className="mt-3 h-50">
             <Col className="h-100">
                 <div className={`${styles.mappingConstructBlock} px-3 py-3 h-100 position-relative`}>
-                    <div className={`${classCoverDiv} position-absolute h-100 w-100 top-0 start-0`} />
+                    <div className={`${classCoverDiv} position-absolute h-100 w-100 top-0 start-0
+                        d-flex justify-content-center align-items-center`}>
+                        Set a base data standard to continue
+                    </div>
 
-                    <p className="mb-1"> {mappingType}: </p>
+                    <p className={`${styles.mappingTitle} ms-1 mb-1`}> {mappingType}: </p>
 
                     <FieldArray name={`mapping${mappingType}`}>
                         {({ push, remove }) => (
@@ -45,12 +48,12 @@ const MappingFields = (props: Props) => {
                                     }
 
                                     return (
-                                        <Row key={value.field} className="py-1">
+                                        <Row key={value.key} className="py-1">
                                             <Col>
                                                 <Row>
                                                     <Col md={{ span: 6 }}>
                                                         <Field name={`mapping${mappingType}.${index}.field`}
-                                                            as="select" className="w-100"
+                                                            as="select" className={`${styles.formField} py-1 px-2 w-100 h-100`}
                                                         >
                                                             <option value="" label="Harmonised property" disabled />
 
@@ -69,13 +72,14 @@ const MappingFields = (props: Props) => {
                                                     </Col>
                                                     <Col md={{ span: 6 }}>
                                                         <Field name={`mapping${mappingType}.${index}.value`}
-                                                            className="w-100"
+                                                            className={`${styles.formField} py-1 px-2 w-100`}
                                                         />
                                                     </Col>
                                                 </Row>
                                             </Col>
-                                            <Col className="col-md-auto">
+                                            <Col className="col-md-auto d-flex align-items-center">
                                                 <FontAwesomeIcon icon={faX}
+                                                    className={styles.removeMappingIcon}
                                                     onClick={() => remove(index)}
                                                 />
                                             </Col>
@@ -83,9 +87,12 @@ const MappingFields = (props: Props) => {
                                     );
                                 })}
 
-                                <button type="button" onClick={() => push({
-                                    field: '', value: ''
-                                })}>
+                                <button type="button"
+                                    className={`${styles.addMappingButton} w-100 mt-2`}
+                                    onClick={() => push({
+                                        field: '', value: '', key: formValues[`mapping${mappingType}`].length
+                                    })}
+                                >
                                     <FontAwesomeIcon icon={faPlus} />
                                 </button>
                             </>
