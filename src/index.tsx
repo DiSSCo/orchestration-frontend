@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 
 
-axios.defaults.baseURL = process.env.REACT_APP_AXIOS_URL;
+axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/api/v1`;
 
 const RenderRoot = () => {
   const root = ReactDOM.createRoot(
