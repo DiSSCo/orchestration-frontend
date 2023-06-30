@@ -6,9 +6,10 @@ import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getSourceSystems, setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
 import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
+import { getMachineAnnotationServices, setMachineAnnotationServices } from 'redux/MAS/MASSlice';
 
 /* Import Types */
-import { SourceSystem, Mapping } from 'global/Types';
+import { SourceSystem, Mapping, MAS } from 'global/Types';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
@@ -17,11 +18,13 @@ import styles from 'components/home/home.module.scss';
 import Header from 'components/Header/Header';
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
 import MappingsOverview from './components/overview/MappingsOverview';
+import MASOverview from './components/overview/MASOverview';
 import FormModal from './components/forms/FormModal';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
 import GetMappings from 'api/mapping/GetMappings';
+import GetMAS from 'api/mas/GetMAS';
 
 
 const Home = () => {
@@ -31,15 +34,26 @@ const Home = () => {
     /* Base variables */
     const sourceSystems = useAppSelector(getSourceSystems);
     const mappings = useAppSelector(getMappings);
+    const machineAnnotationServices = useAppSelector(getMachineAnnotationServices);
 
-    /* OnLoad: Get Source Systems and Mappings */
+    /* OnLoad: Get Source Systems, Mappings and Machine annotation services */
     useEffect(() => {
         GetSourceSystems().then((sourceSystems) => {
             dispatch(setSourceSystems(sourceSystems));
+        }).catch(error => {
+            console.warn(error);
         });
 
         GetMappings().then((mappings) => {
             dispatch(setMappings(mappings));
+        }).catch(error => {
+            console.warn(error);
+        });
+
+        GetMAS().then((machineAnnotationServices) => {
+            dispatch(setMachineAnnotationServices(machineAnnotationServices));
+        }).catch(error => {
+            console.warn(error);
         });
     }, []);
 
@@ -111,6 +125,12 @@ const Home = () => {
                                 <MappingsOverview ToggleModal={() => setModalToggle(true)}
                                     UpdateMappings={(mappingId: string, mapping?: Mapping) =>
                                         UpdateMappings(mappingId, mapping)}
+                                />
+                            </Tab>
+                            <Tab eventKey="MAS" title="Machine annotation services">
+                                <MASOverview ToggleModal={() => setModalToggle(true)}
+                                    UpdateMachineAnnotationServices={(MASId: string, MAS?: MAS) =>
+                                        console.log('test')}// UpdateMappings(mappingId, mapping)}
                                 />
                             </Tab>
                         </Tabs>
