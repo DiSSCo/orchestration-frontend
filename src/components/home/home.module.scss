@@ -21,7 +21,6 @@
 
 
 /* Form Modal */
-
 .formModalHeader {
     height: 50px;
     width: fit-content;
@@ -69,6 +68,28 @@
 select option[value="new"] {
     background-color: var(--main-color);
     color: white;
+}
+
+.formFieldArrayOptionTitle {
+    font-size: 14px;
+}
+
+.formFieldArrayOption {
+    background-color: var(--greyLight);
+}
+
+.formArrayAddButton {
+    background-color: transparent;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.formArrayRemoveButton {
+    background-color: transparent;
+    border: none;
+    color: var(--denied);
+    font-size: 14px;
 }
 
 .formButton {

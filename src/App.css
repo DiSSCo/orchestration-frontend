@@ -1,6 +1,9 @@
 /* Root variables */
 
 :root {
+  --primary: #4d59a2;
+  --secondary: #51a993;
+  --accent: #28bacb;
   --main-color: #0C86C6;
   --main-color-light: #d6e0f5;
   --main-color-dark: #1c497d;
@@ -23,7 +26,7 @@
 }
 
 
-/* General Styling */
+/* Global Styling */
 
 html {
   height: 100%;
@@ -45,6 +48,35 @@ body {
 
 .content {
   height: 90%;
+}
+
+/* Font Weight */
+.fw-lightBold {
+  font-weight: 500;
+}
+
+/* Cursor */
+.c-pointer {
+  cursor: pointer;
+}
+
+
+/* Custom Component Styling */
+.primaryButton {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  transition: 0.4s;
+  font-weight: 500;
+}
+
+.primaryButton:hover {
+  background-color: var(--accent);
+}
+
+.primaryButton.cancel {
+  background-color: #CBCCD4;
 }
 
 
@@ -93,4 +125,9 @@ body {
   overflow: hidden;
   padding-top: 11.2%;
   border: none;
+}
+
+.modalHeader {
+  background-color: var(--primary);
+  color: white
 }

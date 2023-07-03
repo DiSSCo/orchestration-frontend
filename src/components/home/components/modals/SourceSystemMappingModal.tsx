@@ -15,9 +15,9 @@ import { Dict } from 'global/Types';
 import styles from 'components/home/home.module.scss';
 
 /* Import Components */
-import AddSourceSystemForm from './AddSourceSystemForm';
-import AddMappingMetaForm from './AddMappingMetaForm';
-import AddMappingForm from './AddMappingForm';
+import AddSourceSystemForm from '../forms/AddSourceSystemForm';
+import AddMappingMetaForm from '../forms/AddMappingMetaForm';
+import AddMappingForm from '../forms/AddMappingForm';
 
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
@@ -36,7 +36,7 @@ interface Props {
 };
 
 
-const FormModal = (props: Props) => {
+const SourceSystemMappingModal = (props: Props) => {
     const { modalToggle, chosenTab,
         ToggleModal, UpdateSourceSystems, UpdateMappings } = props;
 
@@ -171,7 +171,7 @@ const FormModal = (props: Props) => {
 
         const mappingRecord = {
             data: {
-                type: 'mapping',
+                type: "mapping",
                 attributes: {
                     name: form.mappingName,
                     description: form.mappingDescription,
@@ -188,6 +188,8 @@ const FormModal = (props: Props) => {
         if (editTarget.mapping) {
             await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
                 UpdateMappings(mapping?.id, mapping);
+            }).catch(error => {
+                console.warn(error);
             });
         } else {
             await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
@@ -196,6 +198,8 @@ const FormModal = (props: Props) => {
                 }
 
                 UpdateMappings(mapping?.id, mapping);
+            }).catch(error => {
+                console.warn(error);
             });
         }
     }
@@ -265,7 +269,6 @@ const FormModal = (props: Props) => {
                                         {Object.keys(editTarget).length > 0 ?
                                             `Edit ${chosenTab}` : `Add new ${chosenTab}`
                                         }
-
                                     </Modal.Title>
                                 </Modal.Header>
 
@@ -307,4 +310,4 @@ const FormModal = (props: Props) => {
     );
 }
 
-export default FormModal;
+export default SourceSystemMappingModal;

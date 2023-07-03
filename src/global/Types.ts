@@ -79,5 +79,6 @@ export interface MAS {
 /* Edit Target Type */
 export interface EditTarget {
     sourceSystem?: SourceSystem,
-    mapping?: Mapping
+    mapping?: Mapping,
+    MAS?: MAS
 }

@@ -15,7 +15,7 @@ import EditButton from './table/EditButton';
 import DeleteButton from './table/DeleteButton';
 
 /* Import API */
-// import DeleteMapping from 'api/mapping/DeleteMapping';
+import DeleteMAS from 'api/mas/DeleteMAS';
 
 
 /* Props Typing */
@@ -35,29 +35,29 @@ const MASOverview = (props: Props) => {
     const machineAnnotationServices = useAppSelector(getMachineAnnotationServices);
 
     /* Function to edit a Mapping */
-    // const EditMapping = (mappingId: string) => {
-    //     const editTarget: EditTarget = {};
+    const EditMachineAnnotationService = (MASId: string) => {
+        const editTarget: EditTarget = {};
 
-    //     /* Fetch Mapping from existing array */
-    //     editTarget.mapping = mappings.find(mapping => mapping.id === mappingId);
+        /* Fetch Mapping from existing array */
+        editTarget.MAS = machineAnnotationServices.find(MAS => MAS.id === MASId);
 
-    //     /* Set edit target */
-    //     dispatch(setEditTarget(editTarget));
+        /* Set edit target */
+        dispatch(setEditTarget(editTarget));
 
-    //     /* Open form modal */
-    //     ToggleModal();
-    // }
+        /* Open form modal */
+        ToggleModal();
+    }
 
-    // /* Function for removing a Mapping */
-    // const RemoveMapping = (mappingId: string) => {
-    //     const confirmed: boolean = window.confirm(`Do you want to delete the Mapping with id: ${mappingId}`);
+    /* Function for removing a Mapping */
+    const RemoveMAS = (MASId: string) => {
+        const confirmed: boolean = window.confirm(`Do you want to delete the Machine annotation service with id: ${MASId}`);
 
-    //     if (confirmed) {
-    //         DeleteMapping(mappingId, KeycloakService.GetToken());
+        if (confirmed) {
+            DeleteMAS(MASId, KeycloakService.GetToken());
 
-    //         UpdateMappings(mappingId);
-    //     }
-    // }
+            UpdateMachineAnnotationServices(MASId);
+        }
+    }
 
     /* Table rows */
     const rows: Dict[] = [];
@@ -80,18 +80,18 @@ const MASOverview = (props: Props) => {
             flex: 0.15,
             suppressSizeToFit: true,
             cellRenderer: EditButton,
-            // cellRendererParams: {
-            //     EditTarget: (mappingId: string) => EditMapping(mappingId)
-            // }
+            cellRendererParams: {
+                EditTarget: (MASId: string) => EditMachineAnnotationService(MASId)
+            }
         },
         {
             field: 'delete',
             flex: 0.2,
             suppressSizeToFit: true,
             cellRenderer: DeleteButton,
-            // cellRendererParams: {
-            //     DeleteTarget: (mappingId: string) => RemoveMapping(mappingId)
-            // }
+            cellRendererParams: {
+                DeleteTarget: (MASId: string) => RemoveMAS(MASId)
+            }
         }
     ];
 

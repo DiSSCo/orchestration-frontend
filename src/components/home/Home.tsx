@@ -19,7 +19,8 @@ import Header from 'components/Header/Header';
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
 import MappingsOverview from './components/overview/MappingsOverview';
 import MASOverview from './components/overview/MASOverview';
-import FormModal from './components/forms/FormModal';
+import SourceSystemMappingModal from './components/modals/SourceSystemMappingModal';
+import MASModal from './components/modals/MASModal';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
@@ -97,6 +98,23 @@ const Home = () => {
         dispatch(setMappings(copyMappings));
     }
 
+    /* Function for updating the Machine Annotation Services state */
+    const UpdateMachineAnnotationServices = (MASId: string, MAS?: MAS) => {
+        const copyMachineAnnotationServices = [...machineAnnotationServices];
+        const MASIndex = machineAnnotationServices.findIndex(MASRecord => MASRecord.id === MASId);
+
+        /* If Source System object is present, update main array, else remove */
+        if (MAS && MASIndex > 0) {
+            copyMachineAnnotationServices[MASIndex] = MAS;
+        } else if (MAS) {
+            copyMachineAnnotationServices.push(MAS);
+        } else {
+            copyMachineAnnotationServices.splice(MASIndex, 1);
+        }
+
+        dispatch(setMachineAnnotationServices(copyMachineAnnotationServices));
+    }
+
     return (
         <div className="h-100">
             <Header />
@@ -130,14 +148,15 @@ const Home = () => {
                             <Tab eventKey="MAS" title="Machine annotation services">
                                 <MASOverview ToggleModal={() => setModalToggle(true)}
                                     UpdateMachineAnnotationServices={(MASId: string, MAS?: MAS) =>
-                                        console.log('test')}// UpdateMappings(mappingId, mapping)}
+                                        UpdateMachineAnnotationServices(MASId, MAS)}
                                 />
                             </Tab>
                         </Tabs>
                     </Col>
                 </Row>
 
-                <FormModal modalToggle={modalToggle}
+                {/* Form Modal for adding or editing Source Systems or Mappings */}
+                <SourceSystemMappingModal modalToggle={(modalToggle && (chosenTab === 'Source System' || chosenTab === 'Mapping'))}
                     chosenTab={chosenTab}
 
                     ToggleModal={() => setModalToggle(!modalToggle)}
@@ -145,6 +164,12 @@ const Home = () => {
                         UpdateSourceSystems(sourceSystemId, sourceSystem)}
                     UpdateMappings={(mappingId: string, mapping?: Mapping) =>
                         UpdateMappings(mappingId, mapping)}
+                />
+
+                {/* Form Modal for adding or editing Machine annotation services */}
+                <MASModal modalToggle={(modalToggle && chosenTab === 'MAS')}
+                    ToggleModal={() => setModalToggle(!modalToggle)}
+                    UpdateMachineAnnotationServices={(MASId: string, MAS: MAS) => UpdateMachineAnnotationServices(MASId, MAS)}
                 />
             </Container>
         </div>
