@@ -30,6 +30,7 @@
 
 html {
   height: 100%;
+  background-color: #F9FAFC;
 }
 
 body {
@@ -49,6 +50,21 @@ body {
 .content {
   height: 90%;
 }
+
+/* Backgrounds */
+.bgc-primary {
+  background-color: var(--primary);
+}
+
+.bgc-secondary {
+  background-color: var(--secondary);
+}
+
+.bgc-accent {
+  backdrop-filter: var(--accent);
+}
+
+.bgc-
 
 /* Font Weight */
 .fw-lightBold {
