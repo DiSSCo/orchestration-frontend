@@ -20,10 +20,20 @@ interface Props {
 const OverviewTable = (props: Props) => {
     const { columns, rows } = props;
 
+    const getRowStyle = (params: Dict) => {
+        const data = { ...params.data };
+
+        if (Number(data.index) % 2 === 0) {
+            return { background: "rgb(238, 247, 244)" };
+        }
+
+        return undefined;
+    };
+
     const gridOptions = {
         pagination: true
     }
-    
+
     return (
         <Row className="h-100">
             <Col className="h-100">
@@ -32,6 +42,7 @@ const OverviewTable = (props: Props) => {
                         rowData={rows}
                         columnDefs={columns}
                         gridOptions={gridOptions}
+                        getRowStyle={getRowStyle}
                     />
                 </div>
             </Col>

@@ -1,6 +1,8 @@
 /* Import Dependencies */
 import { useEffect, useState } from 'react';
-import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import classNames from 'classnames';
+import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
@@ -64,6 +66,16 @@ const Home = () => {
     /* Function for tracking the chosen tab */
     const [chosenTab, setChosenTab] = useState('Source System');
 
+    const SetChosenTab = (tabNumber: number) => {
+        if (tabNumber === 0) {
+            setChosenTab('Source System');
+        } else if (tabNumber === 1) {
+            setChosenTab('Mapping');
+        } else if (tabNumber === 2) {
+            setChosenTab('MAS')
+        }
+    }
+
     /* Function for updating the Source Systems state */
     const UpdateSourceSystems = (sourceSystemId: string, sourceSystem?: SourceSystem) => {
         const copySourceSystems = [...sourceSystems];
@@ -115,6 +127,21 @@ const Home = () => {
         dispatch(setMachineAnnotationServices(copyMachineAnnotationServices));
     }
 
+    /* Class Names for Tabs */
+    const classTabsList = classNames({
+        [`${styles.tabsList}`]: true
+    });
+
+    const classTab = classNames({
+        'react-tabs__tab': true,
+        [`${styles.tab}`]: true
+    });
+
+    const classTabPanel = classNames({
+        'react-tabs__tab-panel': true,
+        [`${styles.tabPanel}`]: true
+    });
+
     return (
         <div className="h-100">
             <Header />
@@ -123,34 +150,44 @@ const Home = () => {
                 <Row className="h-100">
                     <Col className="h-100">
                         <div className="position-relative">
-                            <button className={`${styles.addButton} position-absolute px-3 py-1 end-0`}
+                            <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
                                 onClick={() => setModalToggle(true)}
                             >
                                 Add {chosenTab}
                             </button>
                         </div>
 
-                        <Tabs defaultActiveKey="Source System"
-                            onSelect={(tab) => setChosenTab(tab as string)}
-                        >
-                            <Tab eventKey="Source System" title="Source Systems">
+                        {/* Tabs with different orchestration services */}
+                        <Tabs className="h-100" onSelect={(tab) => SetChosenTab(tab)}>
+                            <TabList className={classTabsList}>
+                                <Tab className={classTab} selectedClassName={styles.active}> Source Systems </Tab>
+                                <Tab className={classTab} selectedClassName={styles.active}> Mappings </Tab>
+                                <Tab className={classTab} selectedClassName={styles.active}> Machine Annotation Services </Tab>
+                            </TabList>
+
+                            {/* Source Systems */}
+                            <TabPanel className={classTabPanel}>
                                 <SourceSystemsOverview ToggleModal={() => setModalToggle(true)}
                                     UpdateSourceSystems={(sourceSystemId: string, sourceSystem?: SourceSystem) =>
                                         UpdateSourceSystems(sourceSystemId, sourceSystem)}
                                 />
-                            </Tab>
-                            <Tab eventKey="Mapping" title="Mappings">
+                            </TabPanel>
+
+                            {/* Mappings */}
+                            <TabPanel className={classTabPanel}>
                                 <MappingsOverview ToggleModal={() => setModalToggle(true)}
                                     UpdateMappings={(mappingId: string, mapping?: Mapping) =>
                                         UpdateMappings(mappingId, mapping)}
                                 />
-                            </Tab>
-                            <Tab eventKey="MAS" title="Machine annotation services">
+                            </TabPanel>
+
+                            {/* Machine Annotation Services */}
+                            <TabPanel className={classTabPanel}>
                                 <MASOverview ToggleModal={() => setModalToggle(true)}
                                     UpdateMachineAnnotationServices={(MASId: string, MAS?: MAS) =>
                                         UpdateMachineAnnotationServices(MASId, MAS)}
                                 />
-                            </Tab>
+                            </TabPanel>
                         </Tabs>
                     </Col>
                 </Row>

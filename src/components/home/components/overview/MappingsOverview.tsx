@@ -61,17 +61,22 @@ const MappingsOverview = (props: Props) => {
 
     /* Table rows */
     const rows: Dict[] = [];
+    let index: number = 0;
 
     mappings.forEach((mapping) => {
         rows.push({
+            index: index,
             identifier: mapping.id,
             name: mapping.name,
             description: mapping.description
         });
+
+        index++;
     });
 
     /* Table columns */
     const columns = [
+        { field: 'index', hide: true },
         { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
         { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
         { field: 'description', flex: 1, suppressSizeToFit: true, sortable: true },

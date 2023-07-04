@@ -19,7 +19,7 @@ const Header = () => {
                     <img src={DiSSCoLogo} className="h-100" />
                 </Col>
                 <Col className="col-md-auto d-flex align-items-center">
-                    <h1 className={styles.title}>Orchestration Service</h1>
+                    <h1 className={`${styles.title} c-primary`}>Orchestration Services</h1>
                 </Col>
                 <Col className="d-flex justify-content-end align-items-center">
                     <Profile />
