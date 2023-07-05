@@ -27,7 +27,7 @@ const MappingFields = (props: Props) => {
     const { mappingType, formValues, harmonisedAttributes, originalHarmonisedAttributes, classCoverDiv } = props;
 
     return (
-        <Row className="mt-3 h-50">
+        <Row className="h-50 py-2">
             <Col className="h-100">
                 <div className={`${styles.mappingConstructBlock} px-3 py-3 h-100 position-relative`}>
                     <div className={`${classCoverDiv} position-absolute h-100 w-100 top-0 start-0

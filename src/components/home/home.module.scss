@@ -60,6 +60,7 @@
 
 .formModalBody {
     height: Calc(100% - 50px);
+    overflow-y: scroll;
 }
 
 .formModalBody.secondary {
