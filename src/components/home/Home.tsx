@@ -115,7 +115,7 @@ const Home = () => {
         const copyMachineAnnotationServices = [...machineAnnotationServices];
         const MASIndex = machineAnnotationServices.findIndex(MASRecord => MASRecord.id === MASId);
 
-        /* If Source System object is present, update main array, else remove */
+        /* If Machine Annotation Service object is present, update main array, else remove */
         if (MAS && MASIndex > 0) {
             copyMachineAnnotationServices[MASIndex] = MAS;
         } else if (MAS) {
