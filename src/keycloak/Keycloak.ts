@@ -13,14 +13,12 @@ const keycloak = new Keycloak({
 
 const InitKeyCloak = (callback: EmptyCallback) => {
     keycloak.init({
-        onLoad: "login-required",
+        onLoad: "check-sso",
         silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
         pkceMethod: "S256"
     })
-        .then((authenticated) => {
-            if (authenticated) {
-                callback();
-            }
+        .then((_authenticated) => {
+            callback();
         })
         .catch(console.error);
 }

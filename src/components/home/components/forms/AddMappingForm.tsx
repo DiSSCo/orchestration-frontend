@@ -25,7 +25,7 @@ interface Props {
 
 const AddMappingForm = (props: Props) => {
     const { formValues, baseStandard } = props;
-    
+
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -47,29 +47,31 @@ const AddMappingForm = (props: Props) => {
     return (
         <Row className="h-100">
             <Col className="h-100">
-                <Row>
-                    <Col>
-                        <h6> Construct Mapping </h6>
-                    </Col>
-                </Row>
+                <div className="h-100 d-flex flex-column">
+                    <Row>
+                        <Col>
+                            <h6> Construct Mapping </h6>
+                        </Col>
+                    </Row>
 
-                <Row style={{ height: '90%' }}>
-                    <Col className="h-100">
-                        <MappingFields mappingType={'Defaults'}
-                            formValues={formValues}
-                            harmonisedAttributes={harmonisedAttributes}
-                            originalHarmonisedAttributes={originalHarmonisedAttributes}
-                            classCoverDiv={classCoverDiv}
-                        />
-                            
-                        <MappingFields mappingType={'FieldMapping'}
-                            formValues={formValues}
-                            harmonisedAttributes={harmonisedAttributes}
-                            originalHarmonisedAttributes={originalHarmonisedAttributes}
-                            classCoverDiv={classCoverDiv}
-                        />
-                    </Col>
-                </Row>
+                    <Row className="flex-grow-1">
+                        <Col className="h-100">
+                            <MappingFields mappingType={'Defaults'}
+                                formValues={formValues}
+                                harmonisedAttributes={harmonisedAttributes}
+                                originalHarmonisedAttributes={originalHarmonisedAttributes}
+                                classCoverDiv={classCoverDiv}
+                            />
+
+                            <MappingFields mappingType={'FieldMapping'}
+                                formValues={formValues}
+                                harmonisedAttributes={harmonisedAttributes}
+                                originalHarmonisedAttributes={originalHarmonisedAttributes}
+                                classCoverDiv={classCoverDiv}
+                            />
+                        </Col>
+                    </Row>
+                </div>
             </Col>
         </Row>
     );

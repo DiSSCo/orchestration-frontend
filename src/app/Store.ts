@@ -4,6 +4,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 /* Import Redux Slices */
 import SourceSystemReducer from 'redux/sourceSystem/SourceSystemSlice';
 import MappingReducer from 'redux/mapping/MappingSlice';
+import MASReducer from 'redux/MAS/MASSlice';
 import EditReducer from 'redux/edit/EditSlice';
 
 
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     sourceSystem: SourceSystemReducer,
     mapping: MappingReducer,
+    machineAnnotationServices: MASReducer,
     edit: EditReducer
   },
 });

@@ -1,6 +1,9 @@
 /* Root variables */
 
 :root {
+  --primary: #4d59a2;
+  --secondary: #51a993;
+  --accent: #28bacb;
   --main-color: #0C86C6;
   --main-color-light: #d6e0f5;
   --main-color-dark: #1c497d;
@@ -23,7 +26,7 @@
 }
 
 
-/* General Styling */
+/* Global Styling */
 
 html {
   height: 100%;
@@ -37,6 +40,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F9FAFC;
 }
 
 #root {
@@ -47,6 +51,64 @@ body {
   height: 90%;
 }
 
+/* Colors */
+.c-primary {
+  color: var(--primary);
+}
+
+.c-secondary {
+  color: var(--secondary);
+}
+
+.c-accent {
+  color: var(--accent);
+}
+
+/* Backgrounds */
+.bgc-primary {
+  background-color: var(--primary);
+}
+
+.bgc-secondary {
+  background-color: var(--secondary);
+}
+
+.bgc-accent {
+  backdrop-filter: var(--accent);
+}
+
+.bgc-
+
+/* Font Weight */
+.fw-lightBold {
+  font-weight: 500;
+}
+
+/* Cursor */
+.c-pointer {
+  cursor: pointer;
+}
+
+
+/* Custom Component Styling */
+.primaryButton {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  transition: 0.4s;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.primaryButton:hover {
+  background-color: var(--accent);
+}
+
+.primaryButton.cancel {
+  background-color: #CBCCD4;
+}
+
 
 /* Bootstrap class overwrite */
 
@@ -55,7 +117,8 @@ body {
   border-top: 1px solid #d9d9d9;
 }
 
-.nav-tabs .nav-item.show, .nav-tabs .nav-link.active {
+.nav-tabs .nav-item.show,
+.nav-tabs .nav-link.active {
   color: white;
   background-color: var(--main-color-dark);
   border-color: none;
@@ -70,13 +133,51 @@ body {
   border-bottom: none;
 }
 
-.nav-tabs .nav-link:hover{
+.nav-tabs .nav-link:hover {
   color: gray
 }
 
 .tab-pane {
   height: 100%;
   padding-top: 2%;
+}
+
+li.page-item.active .page-link {
+  background-color: var(--secondary);
+  border: none;
+}
+
+.dropdown {
+  padding-right: 0;
+}
+
+.dropdown-toggle {
+  background-color: #F9FAFC !important;
+  color: #333333 !important;
+  border: 1px solid #F9FAFC !important;
+}
+
+.dropdown-toggle:hover {
+  background-color: white !important;
+  border: 1px solid var(--secondary) !important;
+}
+
+
+/* AG Table Overwrite */
+.ag-root-wrapper {
+  border-radius: 8px;
+}
+
+.ag-row-hover {
+  background-color: #a1d8ca !important;
+}
+
+.ag-header {
+  background-color: var(--secondary) !important;
+}
+
+.ag-header-cell {
+  color: white;
 }
 
 
@@ -93,4 +194,9 @@ body {
   overflow: hidden;
   padding-top: 11.2%;
   border: none;
+}
+
+.modalHeader {
+  background-color: var(--primary);
+  color: white
 }

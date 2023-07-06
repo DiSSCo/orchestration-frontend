@@ -14,10 +14,14 @@ import { Dict } from 'global/Types';
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
 
+/* Import Icons */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+
 /* Import Components */
-import AddSourceSystemForm from './AddSourceSystemForm';
-import AddMappingMetaForm from './AddMappingMetaForm';
-import AddMappingForm from './AddMappingForm';
+import AddSourceSystemForm from '../forms/AddSourceSystemForm';
+import AddMappingMetaForm from '../forms/AddMappingMetaForm';
+import AddMappingForm from '../forms/AddMappingForm';
 
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
@@ -36,7 +40,7 @@ interface Props {
 };
 
 
-const FormModal = (props: Props) => {
+const SourceSystemMappingModal = (props: Props) => {
     const { modalToggle, chosenTab,
         ToggleModal, UpdateSourceSystems, UpdateMappings } = props;
 
@@ -171,7 +175,7 @@ const FormModal = (props: Props) => {
 
         const mappingRecord = {
             data: {
-                type: 'mapping',
+                type: "mapping",
                 attributes: {
                     name: form.mappingName,
                     description: form.mappingDescription,
@@ -188,6 +192,8 @@ const FormModal = (props: Props) => {
         if (editTarget.mapping) {
             await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
                 UpdateMappings(mapping?.id, mapping);
+            }).catch(error => {
+                console.warn(error);
             });
         } else {
             await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
@@ -196,6 +202,8 @@ const FormModal = (props: Props) => {
                 }
 
                 UpdateMappings(mapping?.id, mapping);
+            }).catch(error => {
+                console.warn(error);
             });
         }
     }
@@ -251,22 +259,22 @@ const FormModal = (props: Props) => {
                     <Form className="h-100" onChange={(formField) => CheckOption(formField)}>
                         <Row className="h-100 justify-content-center">
                             <Col md={{ span: 5 }} className="h-100">
-                                <div className="w-100 m-0 p-0 position-relative">
-                                    <button type="button"
-                                        onClick={() => CloseModal()}
-                                        className={`${styles.formModalHeaderButton} position-absolute px-3 border-0 text-white`}
-                                    >
-                                        Dismiss
-                                    </button>
-                                </div>
-
-                                <Modal.Header className={`${styles.formModalHeader} position-relative text-white`}>
-                                    <Modal.Title className={styles.formModalHeaderTitle}>
-                                        {Object.keys(editTarget).length > 0 ?
-                                            `Edit ${chosenTab}` : `Add new ${chosenTab}`
-                                        }
-
-                                    </Modal.Title>
+                                <Modal.Header className="modalHeader pb-0">
+                                    <Row className="w-100">
+                                        <Col>
+                                            <p className="fw-lightBold">
+                                                {Object.keys(editTarget).length > 0 ?
+                                                    'Edit Machine annotation service' : 'Add new Machine annotation service'
+                                                }
+                                            </p>
+                                        </Col>
+                                        <Col className="col-md-auto pe-0">
+                                            <FontAwesomeIcon icon={faX}
+                                                className="c-pointer"
+                                                onClick={() => CloseModal()}
+                                            />
+                                        </Col>
+                                    </Row>
                                 </Modal.Header>
 
                                 <Modal.Body className={`${styles.formModalBody} bg-white`}>
@@ -284,7 +292,7 @@ const FormModal = (props: Props) => {
 
                                     <Row className="mt-4">
                                         <Col>
-                                            <button type="submit" className={`${styles.formButton} px-3`}>
+                                            <button type="submit" className="primaryButton px-3 py-1">
                                                 Save
                                             </button>
                                         </Col>
@@ -293,7 +301,7 @@ const FormModal = (props: Props) => {
                             </Col>
 
                             {secondaryForm &&
-                                <Col md={{ span: 6 }} className="h-100">
+                                <Col md={{ span: 6 }} className="h-100 mt-1">
                                     <Modal.Body className={`${styles.formModalBody} ${styles.secondary} bg-white`}>
                                         <AddMappingForm formValues={values} baseStandard={baseStandard} />
                                     </Modal.Body>
@@ -307,4 +315,4 @@ const FormModal = (props: Props) => {
     );
 }
 
-export default FormModal;
+export default SourceSystemMappingModal;

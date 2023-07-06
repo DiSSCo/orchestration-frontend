@@ -1,27 +1,43 @@
 /* Custom styling for the Home page */
-
 .addButton {
-    background-color: var(--main-color-dark);
-    border: none;
-    color: white;
-    border-radius: 8px;
-    transition: 0.4s;
+    font-size: 15px;
+    padding: 6px 1.5% !important;
 }
 
 .addButton:hover {
     background-color: var(--main-color);
 }
 
+/* Tabs */
+.tabsList {
+    padding: 0;
+}
+
+.tab {
+    background-color: #E6E2F1;
+    border-radius: 999px;
+    font-size: 15px;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-right: 1%;
+}
+
+.tab.active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.tabPanel {
+    height: Calc(100% - 51px);
+}
 
 /* Overview Tables */
-
 .overviewTable {
     width: 100;
 }
 
-
 /* Form Modal */
-
 .formModalHeader {
     height: 50px;
     width: fit-content;
@@ -44,6 +60,7 @@
 
 .formModalBody {
     height: Calc(100% - 50px);
+    overflow-y: scroll;
 }
 
 .formModalBody.secondary {
@@ -71,15 +88,42 @@ select option[value="new"] {
     color: white;
 }
 
+.formFieldArrayOptionTitle {
+    font-size: 14px;
+}
+
+.formFieldArrayOption {
+    background-color: var(--greyLight);
+}
+
+.formArrayAddButton {
+    background-color: transparent;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.formArrayRemoveButton {
+    background-color: transparent;
+    border: none;
+    color: var(--denied);
+    font-size: 14px;
+}
+
 .formButton {
-    background-color: white;
-    border: 1px solid var(--main-color);
+    background-color: var(--accent);
+    color: white;
+    border: none;
     border-radius: 8px;
     transition: 0.4s;
 }
 
+.formButton.delete {
+    background-color: var(--denied);
+}
+
 .formButton:hover {
-    background-color: var(--main-color);
+    background-color: var(--primary);
     color: white;
 }
 

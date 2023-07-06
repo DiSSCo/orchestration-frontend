@@ -3,7 +3,7 @@ import KeycloakService from 'keycloak/Keycloak';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMappings } from 'redux/mapping/MappingSlice';
+import { getMachineAnnotationServices } from 'redux/MAS/MASSlice';
 import { setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
@@ -15,31 +15,31 @@ import EditButton from './table/EditButton';
 import DeleteButton from './table/DeleteButton';
 
 /* Import API */
-import DeleteMapping from 'api/mapping/DeleteMapping';
+import DeleteMAS from 'api/mas/DeleteMAS';
 
 
 /* Props Typing */
 interface Props {
     ToggleModal: Function,
-    UpdateMappings: Function
+    UpdateMachineAnnotationServices: Function
 };
 
 
-const MappingsOverview = (props: Props) => {
-    const { ToggleModal, UpdateMappings } = props;
+const MASOverview = (props: Props) => {
+    const { ToggleModal, UpdateMachineAnnotationServices } = props;
 
     /* Hooks */
     const dispatch = useAppDispatch();
 
     /* Base variables */
-    const mappings = useAppSelector(getMappings);
+    const machineAnnotationServices = useAppSelector(getMachineAnnotationServices);
 
     /* Function to edit a Mapping */
-    const EditMapping = (mappingId: string) => {
+    const EditMachineAnnotationService = (MASId: string) => {
         const editTarget: EditTarget = {};
 
         /* Fetch Mapping from existing array */
-        editTarget.mapping = mappings.find(mapping => mapping.id === mappingId);
+        editTarget.MAS = machineAnnotationServices.find(MAS => MAS.id === MASId);
 
         /* Set edit target */
         dispatch(setEditTarget(editTarget));
@@ -49,13 +49,13 @@ const MappingsOverview = (props: Props) => {
     }
 
     /* Function for removing a Mapping */
-    const RemoveMapping = (mappingId: string) => {
-        const confirmed: boolean = window.confirm(`Do you want to delete the Mapping with id: ${mappingId}`);
+    const RemoveMAS = (MASId: string) => {
+        const confirmed: boolean = window.confirm(`Do you want to delete the Machine annotation service with id: ${MASId}`);
 
         if (confirmed) {
-            DeleteMapping(mappingId, KeycloakService.GetToken());
+            DeleteMAS(MASId, KeycloakService.GetToken());
 
-            UpdateMappings(mappingId);
+            UpdateMachineAnnotationServices(MASId);
         }
     }
 
@@ -63,12 +63,12 @@ const MappingsOverview = (props: Props) => {
     const rows: Dict[] = [];
     let index: number = 0;
 
-    mappings.forEach((mapping) => {
+    machineAnnotationServices.forEach((machineAnnotationService) => {
         rows.push({
             index: index,
-            identifier: mapping.id,
-            name: mapping.name,
-            description: mapping.description
+            identifier: machineAnnotationService.id,
+            name: machineAnnotationService.name,
+            containerImage: machineAnnotationService.containerImage
         });
 
         index++;
@@ -79,14 +79,14 @@ const MappingsOverview = (props: Props) => {
         { field: 'index', hide: true },
         { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
         { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
-        { field: 'description', flex: 1, suppressSizeToFit: true, sortable: true },
+        { field: 'containerImage', flex: 1, suppressSizeToFit: true, sortable: true },
         {
             field: 'edit',
             flex: 0.15,
             suppressSizeToFit: true,
             cellRenderer: EditButton,
             cellRendererParams: {
-                EditTarget: (mappingId: string) => EditMapping(mappingId)
+                EditTarget: (MASId: string) => EditMachineAnnotationService(MASId)
             }
         },
         {
@@ -95,7 +95,7 @@ const MappingsOverview = (props: Props) => {
             suppressSizeToFit: true,
             cellRenderer: DeleteButton,
             cellRendererParams: {
-                DeleteTarget: (mappingId: string) => RemoveMapping(mappingId)
+                DeleteTarget: (MASId: string) => RemoveMAS(MASId)
             }
         }
     ];
@@ -103,4 +103,4 @@ const MappingsOverview = (props: Props) => {
     return <OverviewTable columns={columns} rows={rows} />
 }
 
-export default MappingsOverview;
+export default MASOverview;

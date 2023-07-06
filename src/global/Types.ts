@@ -58,8 +58,27 @@ export interface Mapping {
     }
 }
 
+/* Machine Annotation System (MAS) Type */
+export interface MAS {
+    id: string,
+    name: string,
+    containerImage: string,
+    containerTag: string,
+    targetDigitalObjectFilters: {},
+    serviceDescription: string,
+    serviceState: string,
+    sourceCodeRepository: string,
+    serviceAvailability: string,
+    codeMaintainer: string,
+    codeLicense: string,
+    dependencies: [],
+    supportContact: string,
+    slaDocumentation: string
+}
+
 /* Edit Target Type */
 export interface EditTarget {
     sourceSystem?: SourceSystem,
-    mapping?: Mapping
+    mapping?: Mapping,
+    MAS?: MAS
 }

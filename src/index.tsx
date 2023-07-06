@@ -7,6 +7,7 @@ import KeycloakService from 'keycloak/Keycloak';
 
 /* Import Styles */
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-tabs/style/react-tabs.css';
 
 /* Import Components */
 import App from './App';

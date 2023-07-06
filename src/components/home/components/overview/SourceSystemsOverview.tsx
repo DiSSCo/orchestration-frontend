@@ -70,17 +70,22 @@ const SourceSystemsOverview = (props: Props) => {
 
     /* Table rows */
     const rows: Dict[] = [];
+    let index: number = 0;
 
     sourceSystems.forEach((sourceSystem) => {
         rows.push({
+            index: index,
             identifier: sourceSystem.id,
             name: sourceSystem.name,
             endpoint: sourceSystem.endpoint
         });
+
+        index++;
     });
 
     /* Table columns */
     const columns = [
+        { field: 'index', hide: true },
         { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
         { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
         { field: 'endpoint', flex: 1, suppressSizeToFit: true, sortable: true },
