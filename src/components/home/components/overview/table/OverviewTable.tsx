@@ -31,7 +31,9 @@ const OverviewTable = (props: Props) => {
     };
 
     const gridOptions = {
-        pagination: true
+        pagination: true,
+        enableCellTextSelection: true,
+        ensureDomOrder: true
     }
 
     return (

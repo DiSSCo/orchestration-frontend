@@ -10,6 +10,7 @@ const MASModel = (result: Dict) => {
         containerImage: result.attributes.containerImage,
         containerTag: result.attributes.containerTag,
         targetDigitalObjectFilters: result.attributes.targetDigitalObjectFilters,
+        topicName: result.attributes.topicName,
         serviceDescription: result.attributes.serviceDescription,
         serviceState: result.attributes.serviceState,
         sourceCodeRepository: result.attributes.sourceCodeRepository,
@@ -18,7 +19,8 @@ const MASModel = (result: Dict) => {
         codeLicense: result.attributes.codeLicense,
         dependencies: result.attributes.dependencies,
         supportContact: result.attributes.supportContact,
-        slaDocumentation: result.attributes.slaDocumentation
+        slaDocumentation: result.attributes.slaDocumentation,
+        maxReplicas: result.attributes.maxReplicas
     }
 
     return MAS;

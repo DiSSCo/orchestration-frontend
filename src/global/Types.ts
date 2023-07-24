@@ -65,6 +65,7 @@ export interface MAS {
     containerImage: string,
     containerTag: string,
     targetDigitalObjectFilters: {},
+    topicName: string,
     serviceDescription: string,
     serviceState: string,
     sourceCodeRepository: string,
@@ -73,7 +74,8 @@ export interface MAS {
     codeLicense: string,
     dependencies: [],
     supportContact: string,
-    slaDocumentation: string
+    slaDocumentation: string,
+    maxReplicas: number
 }
 
 /* Edit Target Type */
