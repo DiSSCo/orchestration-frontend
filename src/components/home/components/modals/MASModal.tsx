@@ -47,6 +47,7 @@ const MASModal = (props: Props) => {
         containerTag: editTarget.MAS?.containerTag ? editTarget.MAS.containerTag : '',
         targetDigitalObjectFilters: editTarget.MAS?.targetDigitalObjectFilters ? editTarget.MAS.targetDigitalObjectFilters : {},
         targetDigitalObjectFiltersOptions: "",
+        topicName: editTarget.MAS?.topicName ? editTarget.MAS.topicName : '',
         serviceDescription: editTarget.MAS?.serviceDescription ? editTarget.MAS.serviceDescription : '',
         serviceState: editTarget.MAS?.serviceState ? editTarget.MAS.serviceState : '',
         sourceCodeRepository: editTarget.MAS?.sourceCodeRepository ? editTarget.MAS.sourceCodeRepository : '',
@@ -56,6 +57,7 @@ const MASModal = (props: Props) => {
         dependencies: editTarget.MAS?.dependencies ? editTarget.MAS.dependencies : [],
         supportContact: editTarget.MAS?.supportContact ? editTarget.MAS.supportContact : '',
         slaDocumentation: editTarget.MAS?.slaDocumentation ? editTarget.MAS.slaDocumentation : '',
+        maxReplicas: editTarget.MAS?.maxReplicas ? editTarget.MAS.maxReplicas : 1
     };
 
     /* Function for submitting the form */
@@ -68,6 +70,7 @@ const MASModal = (props: Props) => {
                     containerImage: form.containerImage,
                     containerTag: form.containerTag,
                     targetDigitalObjectFilters: form.targetDigitalObjectFilters,
+                    topicName: form.topicName,
                     serviceDescription: form.serviceDescription,
                     serviceState: form.serviceState,
                     sourceCodeRepository: form.sourceCodeRepository,
@@ -76,7 +79,8 @@ const MASModal = (props: Props) => {
                     codeLicense: form.codeLicense,
                     dependencies: form.dependencies,
                     supportContact: form.supportContact,
-                    slaDocumentation: form.slaDocumentation
+                    slaDocumentation: form.slaDocumentation,
+                    maxReplicas: form.maxReplicas
                 }
             }
         };
@@ -274,6 +278,12 @@ const MASModal = (props: Props) => {
                                                 </Row>
                                                 <Row className="mt-3">
                                                     <Col>
+                                                        <p className={`${styles.formFieldTitle} mb-1 fw-lightBold`}> Topic Name: </p>
+                                                        <Field name="topicName" className={`${styles.formField} w-75`} />
+                                                    </Col>
+                                                </Row>
+                                                <Row className="mt-3">
+                                                    <Col>
                                                         <p className={`${styles.formFieldTitle} mb-1 fw-lightBold`}> Service Description: </p>
                                                         <Field name="serviceDescription" className={`${styles.formField} w-75`} />
                                                     </Col>
@@ -364,6 +374,12 @@ const MASModal = (props: Props) => {
                                                     <Col>
                                                         <p className={`${styles.formFieldTitle} mb-1 fw-lightBold`}> SLA Documentation: </p>
                                                         <Field name="slaDocumentation" className={`${styles.formField} w-75`} />
+                                                    </Col>
+                                                </Row>
+                                                <Row className="mt-3">
+                                                    <Col>
+                                                        <p className={`${styles.formFieldTitle} mb-1 fw-lightBold`}> Max Replicas: </p>
+                                                        <Field name="maxReplicas" type="number" className={`${styles.formField} w-75`} />
                                                     </Col>
                                                 </Row>
                                             </Col>

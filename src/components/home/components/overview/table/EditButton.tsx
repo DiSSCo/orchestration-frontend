@@ -21,7 +21,7 @@ const EditButton = (props: Props) => {
 
     return (
         <button type="button"
-            className={`${styles.formButton} bgc-accent px-3 h-75 mt-1 d-flex align-items-center`}
+            className={`${styles.formButton} bgc-accent px-3 py-2 h-75 mt-1 d-flex align-items-center`}
             onClick={() => EditTarget(data.identifier)}
         >
             <FontAwesomeIcon icon={faEdit} />
