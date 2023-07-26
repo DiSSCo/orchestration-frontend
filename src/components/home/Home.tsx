@@ -82,7 +82,7 @@ const Home = () => {
         const sourceSystemIndex = sourceSystems.findIndex(sourceSystemRecord => sourceSystemRecord.id === sourceSystemId);
 
         /* If Source System object is present, update main array, else remove */
-        if (sourceSystem && sourceSystemIndex > 0) {
+        if (sourceSystem && sourceSystemIndex >= 0) {
             copySourceSystems[sourceSystemIndex] = sourceSystem;
         } else if (sourceSystem) {
             copySourceSystems.push(sourceSystem);
@@ -99,7 +99,7 @@ const Home = () => {
         const mappingIndex = mappings.findIndex(mappingRecord => mappingRecord.id === mappingId);
 
         /* If Source System object is present, update main array, else remove */
-        if (mapping && mappingIndex > 0) {
+        if (mapping && mappingIndex >= 0) {
             copyMappings[mappingIndex] = mapping;
         } else if (mapping) {
             copyMappings.push(mapping);
