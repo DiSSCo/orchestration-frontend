@@ -9,7 +9,7 @@ import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
-import { Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
@@ -65,7 +65,7 @@ const SourceSystemMappingModal = (props: Props) => {
             };
 
             if (editTarget.mapping.fieldMapping.defaults) {
-                editTarget.mapping.fieldMapping.defaults.forEach((fieldMapping) => {
+                editTarget.mapping.fieldMapping.defaults.forEach((fieldMapping: Dict) => {
                     reformatMappings.defaults.push({
                         field: Object.keys(fieldMapping)[0],
                         value: Object.values(fieldMapping)[0]
@@ -73,7 +73,7 @@ const SourceSystemMappingModal = (props: Props) => {
                 })
             }
             if (editTarget.mapping.fieldMapping.mapping) {
-                editTarget.mapping.fieldMapping.mapping.forEach((fieldMapping) => {
+                editTarget.mapping.fieldMapping.mapping.forEach((fieldMapping: Dict) => {
                     reformatMappings.mapping.push({
                         field: Object.keys(fieldMapping)[0],
                         value: Object.values(fieldMapping)[0]

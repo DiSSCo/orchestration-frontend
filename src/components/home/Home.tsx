@@ -11,7 +11,7 @@ import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
 import { getMachineAnnotationServices, setMachineAnnotationServices } from 'redux/MAS/MASSlice';
 
 /* Import Types */
-import { SourceSystem, Mapping, MAS } from 'global/Types';
+import { SourceSystem, Mapping, MAS } from 'app/Types';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';

@@ -1,5 +1,5 @@
 /* Import Types */
-import { Dict } from "global/Types"
+import { Dict } from "app/Types"
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';

@@ -8,7 +8,7 @@ import { useAppSelector } from 'app/Hooks';
 import { getEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
-import { Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';

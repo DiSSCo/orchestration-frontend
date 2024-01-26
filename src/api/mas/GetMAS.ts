@@ -5,7 +5,7 @@ import axios from "axios";
 import MASModel from "api/model/MASModel";
 
 /* Import Types */
-import { MAS, JSONResult, Dict } from "global/Types";
+import { MAS, JSONResult, Dict } from "app/Types";
 
 
 const GetMAS = async () => {

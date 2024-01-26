@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Types */
-import { Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Styles */
 import 'ag-grid-community/styles/ag-grid.css';

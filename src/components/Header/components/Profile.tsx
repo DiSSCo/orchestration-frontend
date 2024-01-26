@@ -4,7 +4,7 @@ import KeycloakService from 'keycloak/Keycloak';
 import { Row, Col, Dropdown } from 'react-bootstrap';
 
 /* Import Types */
-import { User } from 'global/Types';
+import { User } from 'app/Types';
 
 /* Import API */
 import GetUser from 'api/user/GetUser';

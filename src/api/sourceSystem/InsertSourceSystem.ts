@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 /* Import Types */
-import { SourceSystem, JSONResult, Dict } from 'global/Types';
+import { SourceSystem, JSONResult, Dict } from 'app/Types';
 
 /* Import Model */
 import SourceSystemModel from 'api/model/SourceSystemModel';

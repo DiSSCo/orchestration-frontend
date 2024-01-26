@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-import { Mapping } from 'global/Types';
+import { Mapping } from 'app/Types';
 
 
 export interface MappingState {

@@ -8,7 +8,7 @@ import { getMappings } from 'redux/mapping/MappingSlice';
 import { setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
-import { EditTarget, Dict } from 'global/Types';
+import { EditTarget, Dict } from 'app/Types';
 
 /* Import Styles */
 import 'ag-grid-community/styles/ag-grid.css';

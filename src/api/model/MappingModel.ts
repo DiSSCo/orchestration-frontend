@@ -1,5 +1,5 @@
 /* Import Types */
-import { Mapping as MappingType, Dict } from "global/Types"
+import { Mapping as MappingType, Dict } from "app/Types"
 
 
 /* Source System Model for API calls */
