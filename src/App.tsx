@@ -12,6 +12,7 @@ import './App.css';
 /* Import Components */
 import Home from "components/home/Home";
 import Landing from "components/landing/Landing";
+import SourceSystem from "components/sourceSystem/SourceSystem";
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/sourceSystem/:prefix/:suffix" element={<SourceSystem />} />
         </Routes>
       </Router>
     );

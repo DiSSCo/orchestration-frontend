@@ -7,17 +7,22 @@ import { SourceSystem } from 'app/Types';
 
 
 export interface SourceSystemState {
+    sourceSystem: SourceSystem | undefined;
     sourceSystems: SourceSystem[];
 }
 
 const initialState: SourceSystemState = {
-    sourceSystems: <SourceSystem[]>[]
+    sourceSystem: undefined,
+    sourceSystems: []
 };
 
 export const SourceSystemSlice = createSlice({
     name: 'sourceSystem',
     initialState,
     reducers: {
+        setSourceSystem: (state, action: PayloadAction<SourceSystem>) => {
+            state.sourceSystem = action.payload;
+        },
         setSourceSystems: (state, action: PayloadAction<SourceSystem[]>) => {
             state.sourceSystems = action.payload;
         }
@@ -25,9 +30,13 @@ export const SourceSystemSlice = createSlice({
 })
 
 /* Action Creators */
-export const { setSourceSystems } = SourceSystemSlice.actions;
+export const {
+    setSourceSystem,
+    setSourceSystems
+} = SourceSystemSlice.actions;
 
 /* Connect with Root State */
+export const getSourceSystem = (state: RootState) => state.sourceSystem.sourceSystem;
 export const getSourceSystems = (state: RootState) => state.sourceSystem.sourceSystems;
 
 export default SourceSystemSlice.reducer;
