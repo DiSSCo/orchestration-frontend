@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "mappingName",
+            "type": "text"
+        },
+        {
+            "name": "mappingDescription",
+            "type": "textarea"
+        }
+    ]
+}

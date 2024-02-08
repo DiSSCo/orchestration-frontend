@@ -57,7 +57,7 @@ const SourceSystemMappingModal = (props: Props) => {
     const [editMappings, setEditMappings] = useState<Dict>({});
 
     useEffect(() => {
-        if (editTarget.mapping) {
+        if (editTarget?.mapping) {
             /* Destructure Mapping */
             const reformatMappings: Dict = {
                 defaults: [],
@@ -92,7 +92,7 @@ const SourceSystemMappingModal = (props: Props) => {
     const [secondaryForm, setSecondaryForm] = useState<boolean>(false);
 
     useEffect(() => {
-        if (chosenTab === 'Mapping' || Object.keys(editTarget).length > 0) {
+        if (chosenTab === 'Mapping' || (editTarget && Object.keys(editTarget).length > 0)) {
             setSecondaryForm(true);
         } else if (secondaryForm === true) {
             setSecondaryForm(false);
@@ -112,7 +112,7 @@ const SourceSystemMappingModal = (props: Props) => {
     /* Function for submitting the form */
     const SubmitForm = async (form: Dict) => {
         /* First, check if new mapping needs to be added */
-        if (form.sourceSystemMappingId === 'new' || chosenTab === 'Mapping' || editTarget.mapping) {
+        if (form.sourceSystemMappingId === 'new' || chosenTab === 'Mapping' || editTarget?.mapping) {
             const UpdateForm = (mappingId: string) => {
                 form.sourceSystemMappingId = mappingId;
             }
@@ -144,8 +144,8 @@ const SourceSystemMappingModal = (props: Props) => {
         }
 
         /* If edit target is not empty, patch instead of insert */
-        if (editTarget.sourceSystem) {
-            PatchSourceSystem(sourceSystemRecord, editTarget.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
+        if (editTarget?.sourceSystem) {
+            PatchSourceSystem(sourceSystemRecord, editTarget?.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
                 UpdateSourceSystems(sourceSystem?.id, sourceSystem);
             });
         } else {
@@ -189,7 +189,7 @@ const SourceSystemMappingModal = (props: Props) => {
         }
 
         /* If edit target is not empty, patch instead of insert */
-        if (editTarget.mapping) {
+        if (editTarget?.mapping) {
             await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
                 UpdateMappings(mapping?.id, mapping);
             }).catch(error => {
@@ -220,7 +220,7 @@ const SourceSystemMappingModal = (props: Props) => {
         setBaseStandard('');
 
         /* If edit target is set, reset */
-        if (Object.keys(editTarget).length > 0) {
+        if (editTarget && Object.keys(editTarget).length > 0) {
             setEditMappings({});
             dispatch(setEditTarget({}));
         }
@@ -263,7 +263,7 @@ const SourceSystemMappingModal = (props: Props) => {
                                     <Row className="w-100">
                                         <Col>
                                             <p className="fw-lightBold">
-                                                {Object.keys(editTarget).length > 0 ?
+                                                {editTarget && Object.keys(editTarget).length > 0 ?
                                                     'Edit Machine annotation service' : 'Add new Machine annotation service'
                                                 }
                                             </p>

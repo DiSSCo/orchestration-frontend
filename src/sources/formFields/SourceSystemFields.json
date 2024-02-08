@@ -1,0 +1,16 @@
+{
+    "fields": [
+        {
+            "name": "sourceSystemName",
+            "type": "text"
+        },
+        {
+            "name": "sourceSystemEndpoint",
+            "type": "text"
+        },
+        {
+            "name": "sourceSystemDescription",
+            "type": "textarea"
+        }
+    ]
+}

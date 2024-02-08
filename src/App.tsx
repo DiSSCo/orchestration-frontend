@@ -13,6 +13,7 @@ import './App.css';
 import Home from "components/home/Home";
 import Landing from "components/landing/Landing";
 import SourceSystem from "components/sourceSystem/SourceSystem";
+import FormBuilder from "components/formBuilder/FormBuilder";
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sourceSystem/:prefix/:suffix" element={<SourceSystem />} />
+          <Route path="/sourceSystem/:prefix/:suffix/edit" element={<FormBuilder />} />
         </Routes>
       </Router>
     );

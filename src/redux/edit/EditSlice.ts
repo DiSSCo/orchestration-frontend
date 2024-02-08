@@ -7,11 +7,11 @@ import { EditTarget } from 'app/Types';
 
 
 export interface EditState {
-    target: EditTarget;
+    target: EditTarget | undefined;
 }
 
 const initialState: EditState = {
-    target: <EditTarget>{}
+    target: undefined
 };
 
 export const EditSlice = createSlice({

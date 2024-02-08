@@ -42,22 +42,22 @@ const MASModal = (props: Props) => {
     const harmonisedAttributes = { ...HarmonisedAttributes };
 
     const initialValues = {
-        name: editTarget.MAS ? editTarget.MAS.name : '',
-        containerImage: editTarget.MAS?.containerImage ? editTarget.MAS.containerImage : '',
-        containerTag: editTarget.MAS?.containerTag ? editTarget.MAS.containerTag : '',
-        targetDigitalObjectFilters: editTarget.MAS?.targetDigitalObjectFilters ? editTarget.MAS.targetDigitalObjectFilters : {},
+        name: editTarget?.MAS ? editTarget.MAS.name : '',
+        containerImage: editTarget?.MAS?.containerImage ? editTarget.MAS.containerImage : '',
+        containerTag: editTarget?.MAS?.containerTag ? editTarget.MAS.containerTag : '',
+        targetDigitalObjectFilters: editTarget?.MAS?.targetDigitalObjectFilters ? editTarget.MAS.targetDigitalObjectFilters : {},
         targetDigitalObjectFiltersOptions: "",
-        topicName: editTarget.MAS?.topicName ? editTarget.MAS.topicName : '',
-        serviceDescription: editTarget.MAS?.serviceDescription ? editTarget.MAS.serviceDescription : '',
-        serviceState: editTarget.MAS?.serviceState ? editTarget.MAS.serviceState : '',
-        sourceCodeRepository: editTarget.MAS?.sourceCodeRepository ? editTarget.MAS.sourceCodeRepository : '',
-        serviceAvailability: editTarget.MAS?.serviceAvailability ? editTarget.MAS.serviceAvailability : '',
-        codeMaintainer: editTarget.MAS?.codeMaintainer ? editTarget.MAS.codeMaintainer : '',
-        codeLicense: editTarget.MAS?.codeLicense ? editTarget.MAS.codeLicense : '',
-        dependencies: editTarget.MAS?.dependencies ? editTarget.MAS.dependencies : [],
-        supportContact: editTarget.MAS?.supportContact ? editTarget.MAS.supportContact : '',
-        slaDocumentation: editTarget.MAS?.slaDocumentation ? editTarget.MAS.slaDocumentation : '',
-        maxReplicas: editTarget.MAS?.maxReplicas ? editTarget.MAS.maxReplicas : 1
+        topicName: editTarget?.MAS?.topicName ? editTarget.MAS.topicName : '',
+        serviceDescription: editTarget?.MAS?.serviceDescription ? editTarget.MAS.serviceDescription : '',
+        serviceState: editTarget?.MAS?.serviceState ? editTarget.MAS.serviceState : '',
+        sourceCodeRepository: editTarget?.MAS?.sourceCodeRepository ? editTarget.MAS.sourceCodeRepository : '',
+        serviceAvailability: editTarget?.MAS?.serviceAvailability ? editTarget.MAS.serviceAvailability : '',
+        codeMaintainer: editTarget?.MAS?.codeMaintainer ? editTarget.MAS.codeMaintainer : '',
+        codeLicense: editTarget?.MAS?.codeLicense ? editTarget.MAS.codeLicense : '',
+        dependencies: editTarget?.MAS?.dependencies ? editTarget.MAS.dependencies : [],
+        supportContact: editTarget?.MAS?.supportContact ? editTarget.MAS.supportContact : '',
+        slaDocumentation: editTarget?.MAS?.slaDocumentation ? editTarget.MAS.slaDocumentation : '',
+        maxReplicas: editTarget?.MAS?.maxReplicas ? editTarget.MAS.maxReplicas : 1
     };
 
     /* Function for submitting the form */
@@ -86,7 +86,7 @@ const MASModal = (props: Props) => {
         };
 
         /* If edit target is not empty, patch instead of insert */
-        if (editTarget.MAS) {
+        if (editTarget?.MAS) {
             PatchMAS(MASRecord, editTarget.MAS.id, KeycloakService.GetToken()).then((MAS) => {
                 UpdateMachineAnnotationServices(MAS?.id, MAS);
             }).catch(error => {
@@ -123,7 +123,7 @@ const MASModal = (props: Props) => {
                                     <Row className="w-100">
                                         <Col>
                                             <p className="fw-lightBold">
-                                                {Object.keys(editTarget).length > 0 ?
+                                                {(editTarget && Object.keys(editTarget).length > 0) ?
                                                     'Edit Machine annotation service' : 'Add new Machine annotation service'
                                                 }
                                             </p>
