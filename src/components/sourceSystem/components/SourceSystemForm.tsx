@@ -12,10 +12,10 @@ const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSys
     /* Generate Source System form fields */
     SourceSystemFields.fields.forEach((field) => {
         /* Push to form fields */
-        formFields.push(DetermineFormField(field.name, field.type));
+        formFields.push(DetermineFormField(field.alias ?? field.name, field.type));
 
         /* Add to initial form values */
-        initialValuesFields[field.name] = '';
+        initialValuesFields[field?.alias ?? field.name] = sourceSystem?.[field.name as keyof typeof sourceSystem] ?? '';
     });
 
     return { formFields, initialValuesFields };

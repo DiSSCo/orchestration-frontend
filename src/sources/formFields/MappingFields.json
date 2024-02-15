@@ -1,12 +1,53 @@
 {
-    "fields": [
+    "pages": [
         {
-            "name": "mappingName",
-            "type": "text"
+            "fields": [
+                {
+                    "name": "name",
+                    "alias": "mappingName",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "alias": "mappingDescription",
+                    "type": "textarea"
+                },
+                {
+                    "name": "sourceDataStandard",
+                    "alias": "mappingSourceDataStandard",
+                    "type": "select",
+                    "options": [
+                        {
+                            "name": "dwc",
+                            "label": "DarwinCore"
+                        },
+                        {
+                            "name": "abcd",
+                            "label": "ABCD"
+                        },
+                        {
+                            "name": "abcdefg",
+                            "label": "ABCD-EFG"
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "name": "mappingDescription",
-            "type": "textarea"
+            "fields": [
+                {
+                    "name": "defaults",
+                    "type": "mapping"
+                }
+            ]
+        },
+        {
+            "fields": [
+                {
+                    "name": "mapping",
+                    "type": "mapping"
+                }
+            ]
         }
     ]
 }

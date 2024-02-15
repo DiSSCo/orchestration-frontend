@@ -1,43 +1,45 @@
 /* Import Dependencies */
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
-import KeycloakService from 'keycloak/Keycloak';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getSourceSystem, setSourceSystem } from 'redux/sourceSystem/SourceSystemSlice';
+import { getMapping, setMapping } from 'redux/mapping/MappingSlice';
+
+/* Import Utilities */
+import KeycloakService from 'keycloak/Keycloak';
 
 /* Import Components */
 import Header from 'components/Header/Header';
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
-import MappingTab from 'components/mapping/components/MappingTab';
+import MappingTab from './components/MappingTab';
 
 /* Import API */
-import GetSourceSystem from 'api/sourceSystem/GetSourceSystem';
+import GetMapping from 'api/mapping/GetMapping';
 
 
-const SourceSystem = () => {
+const Mapping = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const params = useParams();
     const navigate = useNavigate();
 
     /* Base variables */
-    const sourceSystem = useAppSelector(getSourceSystem);
+    const mapping = useAppSelector(getMapping);
 
     /* OnLoad: fetch Source System */
     useEffect(() => {
-        const sourceSystemId = `${params.prefix}/${params.suffix}`;
+        const mappingId = `${params.prefix}/${params.suffix}`;
 
-        if (!sourceSystem || sourceSystem.id !== sourceSystemId) {
-            GetSourceSystem(sourceSystemId).then((sourceSystem) => {
-                if (sourceSystem) {
+        if (!mapping || mapping.id !== mappingId) {
+            GetMapping(mappingId).then((mapping) => {
+                if (mapping) {
                     /* Set Source System */
-                    dispatch(setSourceSystem(sourceSystem));
+                    dispatch(setMapping(mapping));
                 } else {
                     /* Not found: return to Home */
                     navigate('/');
@@ -62,11 +64,11 @@ const SourceSystem = () => {
             <Header />
 
             <Container className="flex-grow-1 py-5">
-                {sourceSystem &&
+                {mapping &&
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={sourceSystem.name}
+                                <TitleBar title={mapping.name}
                                     subTitle="Source Systems"
                                 />
                             </Col>
@@ -83,12 +85,12 @@ const SourceSystem = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={sourceSystem.id}
+                                <IDCard identifier={mapping.id}
                                     IDCardProperties={{
-                                        name: sourceSystem.name,
-                                        endpoint: sourceSystem.endpoint,
-                                        description: sourceSystem.description,
-                                        created: sourceSystem.created
+                                        name: mapping.name,
+                                        description: mapping.description,
+                                        sourceDataStandard: mapping.sourceDataStandard,
+                                        created: mapping.created
                                     }}
                                 />
                             </Col>
@@ -100,7 +102,7 @@ const SourceSystem = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={sourceSystem.mappingId} />
+                                        <MappingTab mappingId={mapping.id} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>
@@ -112,4 +114,4 @@ const SourceSystem = () => {
     );
 }
 
-export default SourceSystem;
+export default Mapping;

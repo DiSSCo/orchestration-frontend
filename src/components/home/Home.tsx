@@ -1,5 +1,6 @@
 /* Import Dependencies */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -12,6 +13,9 @@ import { getMachineAnnotationServices, setMachineAnnotationServices } from 'redu
 
 /* Import Types */
 import { SourceSystem, Mapping, MAS } from 'app/Types';
+
+/* Import Utilities */
+import { ReparseString } from 'app/Utilities';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
@@ -33,6 +37,7 @@ import GetMAS from 'api/mas/GetMAS';
 const Home = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     /* Base variables */
     const sourceSystems = useAppSelector(getSourceSystems);
@@ -151,7 +156,7 @@ const Home = () => {
                     <Col className="h-100">
                         <div className="position-relative">
                             <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
-                                onClick={() => setModalToggle(true)}
+                                onClick={() => navigate(`${ReparseString(chosenTab)}/add`)}
                             >
                                 Add {chosenTab}
                             </button>
@@ -167,26 +172,17 @@ const Home = () => {
 
                             {/* Source Systems */}
                             <TabPanel className={classTabPanel}>
-                                <SourceSystemsOverview ToggleModal={() => setModalToggle(true)}
-                                    UpdateSourceSystems={(sourceSystemId: string, sourceSystem?: SourceSystem) =>
-                                        UpdateSourceSystems(sourceSystemId, sourceSystem)}
-                                />
+                                <SourceSystemsOverview />
                             </TabPanel>
 
                             {/* Mappings */}
                             <TabPanel className={classTabPanel}>
-                                <MappingsOverview ToggleModal={() => setModalToggle(true)}
-                                    UpdateMappings={(mappingId: string, mapping?: Mapping) =>
-                                        UpdateMappings(mappingId, mapping)}
-                                />
+                                <MappingsOverview />
                             </TabPanel>
 
                             {/* Machine Annotation Services */}
                             <TabPanel className={classTabPanel}>
-                                <MASOverview ToggleModal={() => setModalToggle(true)}
-                                    UpdateMachineAnnotationServices={(MASId: string, MAS?: MAS) =>
-                                        UpdateMachineAnnotationServices(MASId, MAS)}
-                                />
+                                <MASOverview />
                             </TabPanel>
                         </Tabs>
                     </Col>

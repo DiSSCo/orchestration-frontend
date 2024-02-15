@@ -107,6 +107,10 @@ p {
   backdrop-filter: var(--accent);
 }
 
+.bgc-disabled {
+  opacity: 0.6;
+}
+
 /* Border */
 .b-none {
   border: none;
@@ -163,6 +167,11 @@ p {
 
 .primaryButton.cancel {
   background-color: #CBCCD4;
+}
+
+.button-no-style {
+  background-color: inherit;
+  border: none;
 }
 
 .formField {

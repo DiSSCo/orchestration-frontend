@@ -35,8 +35,6 @@ const MappingTab = (props: Props) => {
         }
     }, [mappingId]);
 
-    console.log(mapping);
-
     return (
         <Card className="h-100">
             {mapping &&

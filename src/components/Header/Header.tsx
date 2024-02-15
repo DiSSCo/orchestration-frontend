@@ -1,4 +1,5 @@
 /* Import Dependencies */
+import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Styles */
@@ -16,7 +17,9 @@ const Header = () => {
         <Container className={`${styles.header} py-3`}>
             <Row className="h-100">
                 <Col className="col-md-auto h-100">
-                    <img src={DiSSCoLogo} className="h-100" />
+                    <Link to="/">
+                        <img src={DiSSCoLogo} className="h-100" />
+                    </Link>
                 </Col>
                 <Col className="col-md-auto d-flex align-items-center">
                     <h1 className={`${styles.title} c-primary`}>Orchestration Services</h1>

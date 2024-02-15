@@ -23,7 +23,19 @@ const ParseString = (string: string) => {
     return Capitalize(newString);
 }
 
+/* Function that takes a readable string and returns a CamelCase version of it */
+const ReparseString = (string: string) => {
+    let newString: string = string;
+
+    /* Remove all spaces from string */
+    newString = newString.replaceAll(' ', '');
+
+    return newString.charAt(0).toLowerCase() + newString.slice(1);
+}
+
+
 export {
     Capitalize,
-    ParseString
+    ParseString,
+    ReparseString
 };

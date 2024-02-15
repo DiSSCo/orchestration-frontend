@@ -20,7 +20,10 @@ const GetMapping = async (mappingId: string) => {
 
             const data: JSONResult = result.data;
 
-            mapping = data.data.attributes as Mapping;
+            mapping = {
+                ...data.data.attributes,
+                id: data.data.id
+            } as Mapping;
         } catch (error) {
             console.warn(error);
         }

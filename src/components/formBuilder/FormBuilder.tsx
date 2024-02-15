@@ -1,108 +1,191 @@
 /* Import Dependencies */
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState, cloneElement } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import { isEmpty } from 'lodash';
+import classNames from 'classnames';
+import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
-import { useAppSelector } from 'app/Hooks';
-import { getEditTarget } from 'redux/edit/EditSlice';
+import { useAppSelector, useAppDispatch } from 'app/Hooks';
+import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
-import { Dict } from 'app/Types';
+import { EditTarget, Dict } from 'app/Types';
+
+/* Import Utilities */
+import { DefineEditTarget, SubmitSourceSystem, SubmitMapping } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import Header from 'components/Header/Header';
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
 import MappingMetaForm from 'components/mapping/components/MappingMetaForm';
+import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
+import SelectField from './formFields/SelectField';
+import MappingSelect from './formFields/MappingSelect';
+import MappingField from './formFields/MappingField';
 
 
 const FormBuilder = () => {
     /* Hooks */
+    const dispatch = useAppDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
 
     /* Base variables */
     const editTarget = useAppSelector(getEditTarget);
-    const [formPage, setFormPage] = useState<number>(1);
+    const [formPage, setFormPage] = useState<number>(0);
     const formTemplates: JSX.Element[] = [];
     let initialValues: Dict = {};
 
+    /* OnLoad: check if route is edit and edit target is present and valid */
+    useEffect(() => {
+        if (location.pathname.includes('edit')) {
+            const route = location.pathname.split('/', 2)[1];
+            const id = `${location.pathname.split('/', 3)[2]}/${location.pathname.split('/', 4)[3]}`;
+
+            if (!editTarget || !editTarget[route as keyof typeof editTarget]) {
+                /* Set edit target */
+                DefineEditTarget(route, id).then((editTarget) => {
+                    dispatch(setEditTarget(editTarget));
+                }).catch(error => {
+                    console.warn(error);
+                });
+            }
+        }
+    }, []);
+
     /* Function to determine the form field by type */
-    const DetermineFormField = (fieldName: string, fieldType: string) => {
+    const DetermineFormField = (fieldName: string, fieldType: string, options?: { name: string, label: string }[]) => {
         switch (fieldType) {
             case 'text':
-                return <InputField name={fieldName} />
+                return <InputField name={fieldName} />;
             case 'textarea':
-                return <InputTextArea name={fieldName} />
+                return <InputTextArea name={fieldName} />;
+            case 'select':
+                if (options) {
+                    return <SelectField name={fieldName} options={options} />;
+                } else {
+                    return <> </>;
+                }
+            case 'mappingSelect':
+                return <MappingSelect />;
+            case 'mapping':
+                return <MappingField name={fieldName} />;
         }
+    }
+
+    /* Depict number of form pages */
+    let numberOfFormPages: number = 1;
+
+    if ((location.pathname.includes('sourceSystem') && !editTarget?.sourceSystem)) {
+        numberOfFormPages = 4;
+    } else if (location.pathname.includes('mapping')) {
+        numberOfFormPages = 3;
     }
 
     /* Define form template based upon location */
     if (location.pathname.includes('sourceSystem')) {
-        {
-            /* Generate form for Source System */
-            const { formFields, initialValuesFields } = SourceSystemForm(DetermineFormField);
+        /* Generate form page for Source System */
+        const { formFields, initialValuesFields } = SourceSystemForm(DetermineFormField, editTarget?.sourceSystem);
 
-            /* Push to form template */
-            formTemplates.push(
-                <Card key="formTemplate_sourceSystem" className="h-100 d-flex flex-column px-4 py-3">
-                    <p className="fs-2 fw-lightBold"> Source System </p>
+        /* Push to form template */
+        formTemplates.push(
+            <FormBase title="Source System"
+                formFields={formFields}
+                numberOfFormPages={numberOfFormPages}
+                currentPage={1}
+                NextPage={(numberOfFormPages > 1) ? () => setFormPage(1) : undefined}
+            />
+        );
 
-                    <Row className="flex-grow-1">
-                        <Col>
-                            {formFields}
-                        </Col>
-                    </Row>
-
-                    {formPage === 1 &&
-                        <button type="button"
-                            className="primaryButton w-25"
-                            onClick={() => setFormPage(2)}
-                        >
-                            Next
-                        </button>
-                    }
-                </Card>
-            );
-
-            /* Set initial values */
-            initialValues = { ...initialValues, ...initialValuesFields };
-        } {
-            /* Generate form for Mapping */
-            const { formFields, initialValuesFields } = MappingMetaForm(DetermineFormField);
-
-            formTemplates.push(
-                <Card key="formTemplate_sourceSystem" className="h-100 d-flex flex-column px-4 py-3">
-                    <p className="fs-2 fw-lightBold"> Source System </p>
-
-                    <Row className="flex-grow-1">
-                        <Col>
-                            {formFields}
-                        </Col>
-                    </Row>
-
-                    {formPage === 1 &&
-                        <button type="button"
-                            className="primaryButton w-25"
-                            onClick={() => setFormPage(2)}
-                        >
-                            Next
-                        </button>
-                    }
-                </Card>
-            );
-        }
+        /* Set initial values */
+        initialValues = { ...initialValues, ...initialValuesFields };
     }
 
-    if (location.pathname.includes('mapping')) {
+    if (location.pathname.includes('mapping') || (location.pathname.includes('sourceSystem') && !editTarget?.mapping)) {
+        /* Generate form pages for Mapping */
+        const { formFieldsPages, initialValuesFields } = MappingMetaForm(DetermineFormField, editTarget?.mapping);
+        const tabNames = ['Mapping', 'Default Mapping', 'Field Mapping'];
 
+        formFieldsPages.forEach((formFields, index) => {
+            const currentPage = numberOfFormPages === 4 ? index + 2 : index + 1;
+
+            formTemplates.push(
+                <FormBase title={tabNames[index]}
+                    formFields={formFields}
+                    numberOfFormPages={numberOfFormPages}
+                    currentPage={currentPage}
+                    NextPage={(index + 1 < numberOfFormPages) ? () => setFormPage(numberOfFormPages === 4 ? index + 2 : index + 1) : undefined}
+                    PreviousPage={currentPage > 1 ? () => setFormPage(numberOfFormPages === 4 ? index : index - 1) : undefined}
+                />
+            );
+        });
+
+        /* Set initial values */
+        initialValues = { ...initialValues, ...initialValuesFields };
     }
 
     if (location.pathname.includes('MAS')) {
         // formTemplates.push('MAS');
     }
+
+    /* Function for submitting form */
+    const SubmitForm = async (form: Dict) => {
+        /* Submit Mapping */
+        if (form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.id)) {
+            await SubmitMapping(form, editTarget as EditTarget).then((mapping) => {
+                form.mappingId = mapping?.id;
+
+                /* If editing a Mapping, return to mapping detail page */
+                if (mapping && editTarget && editTarget.mapping?.id) {
+                    navigate(`/mapping/${mapping?.id}`);
+                }
+
+                return;
+            }).catch(error => {
+                console.warn(error);
+            });
+        }
+
+        /* Submit Source System */
+        if (location.pathname.includes('sourceSystem')) {
+            await SubmitSourceSystem(form, editTarget as EditTarget).then((sourceSystem) => {
+                /* On finish: navigate to detail page of Source System */
+                if (sourceSystem) {
+                    navigate(`/sourceSystem/${sourceSystem.id}`)
+                }
+
+                return;
+            }).catch(error => {
+                console.warn(error);
+            });
+        }
+    }
+
+    /* ClassNames */
+    const classTabList = classNames({
+        'tabsList p-0': true
+    });
+
+    const ClassTab = (tab: string, mappingId: string) => {
+        if (tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping')) {
+            return classNames({
+                'react-tabs__tab tab bgc-disabled': true,
+            });
+        } else {
+            return classNames({
+                'react-tabs__tab tab': true,
+            });
+        }
+    }
+
+    const classTabPanel = classNames({
+        'react-tabs__tab-panel flex-grow-1 overflow-hidden': true
+    });
 
     return (
         <div className="h-100 d-flex flex-column overflow-hidden">
@@ -115,30 +198,44 @@ const FormBuilder = () => {
                     onSubmit={async (form: any) => {
                         await new Promise((resolve) => setTimeout(resolve, 100));
 
-                        // SubmitForm(form);
+                        SubmitForm(form);
                     }}
                 >
-                    <Form className="h-100">
-                        <Row className="h-100">
-                            {formTemplates.map((formTemplate, index) => {
-                                const key = `formTemplate_${index}`;
+                    {({ values }) => {
+                        return (
+                            <Form className="h-100">
+                                <Row className="h-100">
+                                    <Col lg={{ span: 6, offset: 3 }}>
+                                        <Tabs className="h-100 d-flex flex-column"
+                                            selectedIndex={formPage}
+                                            onSelect={() => { }}
+                                        >
+                                            <TabList className={classTabList}>
+                                                {formTemplates.map((formTemplate) => (
+                                                    <Tab key={formTemplate.props.title}
+                                                        className={ClassTab(formTemplate.props.title, values.mappingId ?? '')}
+                                                        selectedClassName="active"
+                                                    >
+                                                        {formTemplate.props.title}
+                                                    </Tab>
+                                                ))}
+                                            </TabList>
 
-                                if (index === 0) {
-                                    return (
-                                        <Col key={key} lg={{ span: 4 }}>
-                                            {formTemplate}
-                                        </Col>
-                                    );
-                                } else {
-                                    return (
-                                        <Col key={key} lg={{ span: 8 }}>
-                                            {formTemplate}
-                                        </Col>
-                                    );
-                                }
-                            })}
-                        </Row>
-                    </Form>
+                                            {formTemplates.map((formTemplate) => {
+                                                return (
+                                                    <TabPanel key={formTemplate.props.title}
+                                                        className={classTabPanel}
+                                                    >
+                                                        {cloneElement(formTemplate, { formValues: values })}
+                                                    </TabPanel>
+                                                );
+                                            })}
+                                        </Tabs>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        );
+                    }}
                 </Formik>
             </Container>
         </div>

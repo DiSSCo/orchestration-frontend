@@ -20,7 +20,10 @@ const GetSourceSystem = async (sourceSystemId: string) => {
 
             const data: JSONResult = result.data;
 
-            sourceSystem = data.data.attributes as SourceSystem;
+            sourceSystem = {
+                ...data.data.attributes,
+                id: data.data.id
+            } as SourceSystem;
         } catch (error) {
             console.warn(error);
         }
