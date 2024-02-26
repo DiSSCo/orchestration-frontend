@@ -18,7 +18,7 @@ export const EditSlice = createSlice({
     name: 'edit',
     initialState,
     reducers: {
-        setEditTarget: (state, action: PayloadAction<EditTarget>) => {
+        setEditTarget: (state, action: PayloadAction<EditTarget | undefined>) => {
             state.target = action.payload;
         }
     }

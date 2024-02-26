@@ -7,6 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
+import { getEditTarget } from 'redux/edit/EditSlice';
 
 /* Import API */
 import GetMappings from 'api/mapping/GetMappings';
@@ -18,6 +19,7 @@ const MappingSelect = () => {
 
     /* Base variables */
     const mappings = useAppSelector(getMappings);
+    const editTarget = useAppSelector(getEditTarget);
 
     /* OnLoad: Check if Mappings are present in state, otherwise fetch and set */
     useEffect(() => {
@@ -37,9 +39,11 @@ const MappingSelect = () => {
                 <Field name="mappingId" as="select"
                     className="w-100 formField"
                 >
-                    <option key={'new'} value="new">
-                        Add New Mapping
-                    </option>
+                    {isEmpty(editTarget) &&
+                        <option key={'new'} value="new">
+                            Add New Mapping
+                        </option>
+                    }
                     <option key={'choose'} value="" disabled>
                         Choose Mapping
                     </option>

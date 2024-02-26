@@ -49,7 +49,7 @@ const MappingField = (props: Props) => {
                 <FieldArray name={name}>
                     {({ push, remove }) => (
                         <>
-                            {formValues && formValues[name].map((value: Dict, index: number) => {
+                            {formValues?.[name].map((value: Dict, index: number) => {
                                 const localAttributes = { ...harmonisedAttributes };
 
                                 if (value.field) {

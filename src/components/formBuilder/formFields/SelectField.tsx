@@ -31,7 +31,7 @@ const SelectField = (props: Props) => {
                     </option>
 
                     {options.map((option) => (
-                        <option value={option.name}>
+                        <option key={option.name} value={option.name}>
                             {option.label}
                         </option>
                     ))}

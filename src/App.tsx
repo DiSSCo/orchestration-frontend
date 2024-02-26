@@ -2,8 +2,7 @@
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  useLocation
+  Route
 } from "react-router-dom";
 import KeycloakService from "keycloak/Keycloak";
 

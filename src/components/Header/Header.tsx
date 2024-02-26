@@ -18,7 +18,10 @@ const Header = () => {
             <Row className="h-100">
                 <Col className="col-md-auto h-100">
                     <Link to="/">
-                        <img src={DiSSCoLogo} className="h-100" />
+                        <img src={DiSSCoLogo}
+                            alt="DiSSCo logo"
+                            className="h-100"
+                        />
                     </Link>
                 </Col>
                 <Col className="col-md-auto d-flex align-items-center">

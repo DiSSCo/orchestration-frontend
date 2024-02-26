@@ -29,6 +29,27 @@ import MappingSelect from './formFields/MappingSelect';
 import MappingField from './formFields/MappingField';
 
 
+/* Function to determine the form field by type */
+const DetermineFormField = (fieldName: string, fieldType: string, options?: { name: string, label: string }[]) => {
+    switch (fieldType) {
+        case 'text':
+            return <InputField name={fieldName} />;
+        case 'textarea':
+            return <InputTextArea name={fieldName} />;
+        case 'select':
+            if (options) {
+                return <SelectField name={fieldName} options={options} />;
+            } else {
+                return <> </>;
+            }
+        case 'mappingSelect':
+            return <MappingSelect />;
+        case 'mapping':
+            return <MappingField name={fieldName} />;
+    }
+}
+
+
 const FormBuilder = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
@@ -47,7 +68,7 @@ const FormBuilder = () => {
             const route = location.pathname.split('/', 2)[1];
             const id = `${location.pathname.split('/', 3)[2]}/${location.pathname.split('/', 4)[3]}`;
 
-            if (!editTarget || !editTarget[route as keyof typeof editTarget]) {
+            if (!editTarget?.[route as keyof typeof editTarget]) {
                 /* Set edit target */
                 DefineEditTarget(route, id).then((editTarget) => {
                     dispatch(setEditTarget(editTarget));
@@ -55,28 +76,10 @@ const FormBuilder = () => {
                     console.warn(error);
                 });
             }
+        } else {
+            dispatch(setEditTarget(undefined));
         }
     }, []);
-
-    /* Function to determine the form field by type */
-    const DetermineFormField = (fieldName: string, fieldType: string, options?: { name: string, label: string }[]) => {
-        switch (fieldType) {
-            case 'text':
-                return <InputField name={fieldName} />;
-            case 'textarea':
-                return <InputTextArea name={fieldName} />;
-            case 'select':
-                if (options) {
-                    return <SelectField name={fieldName} options={options} />;
-                } else {
-                    return <> </>;
-                }
-            case 'mappingSelect':
-                return <MappingSelect />;
-            case 'mapping':
-                return <MappingField name={fieldName} />;
-        }
-    }
 
     /* Depict number of form pages */
     let numberOfFormPages: number = 1;
@@ -129,10 +132,6 @@ const FormBuilder = () => {
         initialValues = { ...initialValues, ...initialValuesFields };
     }
 
-    if (location.pathname.includes('MAS')) {
-        // formTemplates.push('MAS');
-    }
-
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
@@ -141,11 +140,9 @@ const FormBuilder = () => {
                 form.mappingId = mapping?.id;
 
                 /* If editing a Mapping, return to mapping detail page */
-                if (mapping && editTarget && editTarget.mapping?.id) {
+                if (mapping && editTarget?.mapping?.id) {
                     navigate(`/mapping/${mapping?.id}`);
                 }
-
-                return;
             }).catch(error => {
                 console.warn(error);
             });
@@ -158,8 +155,6 @@ const FormBuilder = () => {
                 if (sourceSystem) {
                     navigate(`/sourceSystem/${sourceSystem.id}`)
                 }
-
-                return;
             }).catch(error => {
                 console.warn(error);
             });

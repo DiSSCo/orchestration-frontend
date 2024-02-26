@@ -35,7 +35,7 @@ const Mapping = () => {
     useEffect(() => {
         const mappingId = `${params.prefix}/${params.suffix}`;
 
-        if (!mapping || mapping.id !== mappingId) {
+        if (mapping?.id !== mappingId) {
             GetMapping(mappingId).then((mapping) => {
                 if (mapping) {
                     /* Set Source System */

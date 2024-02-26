@@ -1,5 +1,5 @@
 /* Import Dependencies */
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import { Row, Col } from 'react-bootstrap';
 

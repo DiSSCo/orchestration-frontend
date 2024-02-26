@@ -11,22 +11,20 @@ import PatchSourceSystem from 'api/sourceSystem/PatchSourceSystem';
 import GetMapping from "api/mapping/GetMapping";
 import InsertMapping from 'api/mapping/InsertMapping';
 import PatchMapping from 'api/mapping/PatchMapping';
-import InsertMAS from 'api/mas/InsertMAS';
-import PatchMAS from 'api/mas/PatchMAS';
 
 
 const DefineEditTarget = async (targetName: string, id: string) => {
     let editTarget: EditTarget = {};
-    let copyEditTarget = Object.assign({}, editTarget, {});
+    let copyEditTarget = { ...editTarget };
 
     if (targetName === 'sourceSystem') {
         await GetSourceSystem(id).then(async (sourceSystem) => {
             if (sourceSystem) {
-                copyEditTarget = Object.assign({}, copyEditTarget, { sourceSystem: { ...sourceSystem, id } });
+                copyEditTarget = { ...copyEditTarget, sourceSystem: { ...sourceSystem, id } };
 
                 await GetMapping(sourceSystem.mappingId).then((mapping) => {
                     if (mapping) {
-                        copyEditTarget = Object.assign({}, copyEditTarget, { mapping });
+                        copyEditTarget = { ...copyEditTarget, ...mapping };
                     }
                 }).catch(error => {
                     console.warn(error);
@@ -38,7 +36,7 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     } else if (targetName === 'mapping') {
         await GetMapping(id).then((mapping) => {
             if (mapping) {
-                copyEditTarget = Object.assign({}, copyEditTarget, { mapping });
+                copyEditTarget = { ...editTarget, mapping: mapping };
             }
         }).catch(error => {
             console.warn(error);
@@ -116,7 +114,7 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     /* If edit target is not empty, patch instead of insert */
     let mappingResponse: Mapping | undefined;
 
-    if (editTarget && editTarget.mapping) {
+    if (editTarget?.mapping) {
         await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
             mappingResponse = mapping;
         }).catch(error => {

@@ -1,10 +1,5 @@
 /* Import Dependencies */
-import { Field } from "formik";
 import { Row, Col } from 'react-bootstrap';
-
-/* Import Store */
-import { useAppSelector } from "app/Hooks";
-import { getEditTarget } from "redux/edit/EditSlice";
 
 /* Import Icons */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,9 +15,6 @@ interface Props {
 
 const MappingField = (props: Props) => {
     const { harmonisedProperty, givenValue } = props;
-
-    /* Base variables */
-    const editTarget = useAppSelector(getEditTarget);
 
     return (
         <Row>

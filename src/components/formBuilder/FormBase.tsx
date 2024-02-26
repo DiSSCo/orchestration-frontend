@@ -42,7 +42,7 @@ const FormBase = (props: Props) => {
                     <Col>
                         <button type="button"
                             className="primaryButton px-3 py-2"
-                            onClick={() => PreviousPage && PreviousPage()}
+                            onClick={() => PreviousPage?.()}
                         >
                             Previous
                         </button>
