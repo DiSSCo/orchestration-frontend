@@ -6,13 +6,10 @@ import classNames from 'classnames';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
-import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getSourceSystems, setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
-import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
-import { getMachineAnnotationServices, setMachineAnnotationServices } from 'redux/MAS/MASSlice';
-
-/* Import Types */
-import { SourceSystem, Mapping, MAS } from 'app/Types';
+import { useAppDispatch } from 'app/Hooks';
+import { setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
+import { setMappings } from 'redux/mapping/MappingSlice';
+import { setMachineAnnotationServices } from 'redux/MAS/MASSlice';
 
 /* Import Utilities */
 import { ReparseString } from 'app/Utilities';
