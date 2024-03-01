@@ -20,7 +20,7 @@ import { DefineEditTarget, SubmitSourceSystem, SubmitMapping } from 'app/Utiliti
 /* Import Components */
 import Header from 'components/Header/Header';
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
-import MappingMetaForm from 'components/mapping/components/MappingMetaForm';
+import MappingForm from 'components/mapping/components/MappingForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
@@ -37,11 +37,7 @@ const DetermineFormField = (fieldName: string, fieldType: string, options?: { na
         case 'textarea':
             return <InputTextArea name={fieldName} />;
         case 'select':
-            if (options) {
-                return <SelectField name={fieldName} options={options} />;
-            } else {
-                return <> </>;
-            }
+            return <SelectField name={fieldName} options={options} />;
         case 'mappingSelect':
             return <MappingSelect />;
         case 'mapping':
@@ -111,7 +107,7 @@ const FormBuilder = () => {
 
     if (location.pathname.includes('mapping') || (location.pathname.includes('sourceSystem') && !editTarget?.mapping)) {
         /* Generate form pages for Mapping */
-        const { formFieldsPages, initialValuesFields } = MappingMetaForm(DetermineFormField, editTarget?.mapping);
+        const { formFieldsPages, initialValuesFields } = MappingForm(DetermineFormField, editTarget?.mapping);
         const tabNames = ['Mapping', 'Default Mapping', 'Field Mapping'];
 
         formFieldsPages.forEach((formFields, index) => {

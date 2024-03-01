@@ -21,14 +21,6 @@ const DefineEditTarget = async (targetName: string, id: string) => {
         await GetSourceSystem(id).then(async (sourceSystem) => {
             if (sourceSystem) {
                 copyEditTarget = { ...copyEditTarget, sourceSystem: { ...sourceSystem, id } };
-
-                await GetMapping(sourceSystem.mappingId).then((mapping) => {
-                    if (mapping) {
-                        copyEditTarget = { ...copyEditTarget, ...mapping };
-                    }
-                }).catch(error => {
-                    console.warn(error);
-                });
             }
         }).catch(error => {
             console.warn(error);

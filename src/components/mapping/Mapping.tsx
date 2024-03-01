@@ -31,14 +31,14 @@ const Mapping = () => {
     /* Base variables */
     const mapping = useAppSelector(getMapping);
 
-    /* OnLoad: fetch Source System */
+    /* OnLoad: fetch Mapping */
     useEffect(() => {
         const mappingId = `${params.prefix}/${params.suffix}`;
 
         if (mapping?.id !== mappingId) {
             GetMapping(mappingId).then((mapping) => {
                 if (mapping) {
-                    /* Set Source System */
+                    /* Set Mapping */
                     dispatch(setMapping(mapping));
                 } else {
                     /* Not found: return to Home */
@@ -69,7 +69,7 @@ const Mapping = () => {
                         <Row className="mb-2">
                             <Col>
                                 <TitleBar title={mapping.name}
-                                    subTitle="Source Systems"
+                                    subTitle="Mappings"
                                 />
                             </Col>
                             {KeycloakService.IsLoggedIn() &&
