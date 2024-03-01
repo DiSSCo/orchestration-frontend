@@ -15,7 +15,7 @@ const MappingMetaForm = (DetermineFormField: Function, mapping?: Mapping) => {
 
         /* Iterate to prepare initial form values */
         page.fields.forEach((field: { name: string, alias?: string, type: string, options?: { name: string, label: string }[] }) => {
-            formFieldsPages[index].push(DetermineFormField(field.alias ?? field.name, field.type, field.options));
+            formFieldsPages[index].push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field.options));
 
             /* Add to initial form values */
             if (field.type === 'mapping') {

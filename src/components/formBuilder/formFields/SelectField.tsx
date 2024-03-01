@@ -9,6 +9,7 @@ import { ParseString } from "app/Utilities";
 /* Props Typing */
 interface Props {
     name: string,
+    visibleName: string,
     options: {
         name: string,
         label: string
@@ -17,12 +18,12 @@ interface Props {
 
 
 const SelectField = (props: Props) => {
-    const { name, options } = props;
+    const { name, visibleName, options } = props;
 
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(name)}:`} </p>
+                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
                 <Field name={name} as="select"
                     className="w-100 formField"
                 >

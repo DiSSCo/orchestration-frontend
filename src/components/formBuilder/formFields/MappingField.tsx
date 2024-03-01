@@ -20,12 +20,13 @@ import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 /* Props Typing */
 interface Props {
     name: string,
+    visibleName: string,
     formValues?: Dict
 };
 
 
 const MappingField = (props: Props) => {
-    const { name, formValues } = props;
+    const { name, visibleName, formValues } = props;
 
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -44,7 +45,7 @@ const MappingField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(name)}:`} </p>
+                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (

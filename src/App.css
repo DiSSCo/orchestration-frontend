@@ -94,6 +94,10 @@ p {
   color: #ACAAD4;
 }
 
+.c-denied {
+  color: var(--denied);
+}
+
 /* Backgrounds */
 .bgc-primary {
   background-color: var(--primary);
@@ -105,6 +109,10 @@ p {
 
 .bgc-accent {
   backdrop-filter: var(--accent);
+}
+
+.bgc-grey {
+  background-color: #E9E8E3;
 }
 
 .bgc-disabled {
@@ -136,6 +144,23 @@ p {
 /* Cursor */
 .c-pointer {
   cursor: pointer;
+}
+
+/* Overflow */
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 
 /* Text overflow */

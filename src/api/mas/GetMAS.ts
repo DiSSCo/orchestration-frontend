@@ -1,38 +1,35 @@
 /* Import Dependencies */
 import axios from "axios";
 
-/* Import Model */
-import MASModel from "api/model/MASModel";
-
 /* Import Types */
-import { MAS, JSONResult, Dict } from "app/Types";
+import { MAS, JSONResult } from "app/Types";
 
 
-const GetMAS = async () => {
-    let machineAnnotationServices = <MAS[]>[];
+const GetMAS = async (MASId: string) => {
+    let MAS: MAS | undefined;
 
-    const endPoint = "/mas"
+    if (MASId) {
+        const endPoint = `/mas/${MASId}`;
 
-    try {
-        const result = await axios({
-            method: "get",
-            url: endPoint,
-            params: {
-                pageSize: 50
-            },
-            responseType: 'json'
-        });
+        try {
+            const result = await axios({
+                method: "get",
+                url: endPoint,
+                responseType: 'json'
+            });
 
-        const data: JSONResult = result.data;
+            const data: JSONResult = result.data;
 
-        Object.values(data.data).forEach((machineAnnotationService) => {
-            machineAnnotationServices.push(MASModel(machineAnnotationService as Dict));
-        });
-    } catch (error) {
-        console.warn(error);
+            MAS = {
+                ...data.data.attributes,
+                id: data.data.id
+            } as MAS;
+        } catch (error) {
+            console.warn(error);
+        }
     }
 
-    return machineAnnotationServices;
+    return MAS;
 }
 
 export default GetMAS;

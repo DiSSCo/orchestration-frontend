@@ -15,37 +15,48 @@ import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
 import { EditTarget, Dict } from 'app/Types';
 
 /* Import Utilities */
-import { DefineEditTarget, SubmitSourceSystem, SubmitMapping } from 'app/Utilities/FormBuilderUtilities';
+import { DefineEditTarget, SubmitSourceSystem, SubmitMapping, SubmitMAS } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import Header from 'components/Header/Header';
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
 import MappingMetaForm from 'components/mapping/components/MappingMetaForm';
+import MASForm from 'components/MAS/components/MASForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
 import SelectField from './formFields/SelectField';
+import ArrayField from './formFields/ArrayField';
 import MappingSelect from './formFields/MappingSelect';
 import MappingField from './formFields/MappingField';
+import MASFiltersField from './formFields/MASFiltersField';
 
 
 /* Function to determine the form field by type */
-const DetermineFormField = (fieldName: string, fieldType: string, options?: { name: string, label: string }[]) => {
+const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[]) => {
     switch (fieldType) {
         case 'text':
-            return <InputField name={fieldName} />;
+            return <InputField name={fieldName} visibleName={visibleName} />;
         case 'textarea':
-            return <InputTextArea name={fieldName} />;
+            return <InputTextArea name={fieldName} visibleName={visibleName} />;
+        case 'number':
+            return <InputField name={fieldName} visibleName={visibleName} />
         case 'select':
             if (options) {
-                return <SelectField name={fieldName} options={options} />;
+                return <SelectField name={fieldName} options={options} visibleName={visibleName} />;
             } else {
                 return <> </>;
             }
+        case 'array':
+            return <ArrayField name={fieldName} visibleName={visibleName} />
         case 'mappingSelect':
             return <MappingSelect />;
         case 'mapping':
-            return <MappingField name={fieldName} />;
+            return <MappingField name={fieldName} visibleName={visibleName} />;
+        case 'MASFilters':
+            return <MASFiltersField name={fieldName} visibleName={visibleName} />;
+        default:
+            return;
     }
 }
 
@@ -132,6 +143,23 @@ const FormBuilder = () => {
         initialValues = { ...initialValues, ...initialValuesFields };
     }
 
+    if (location.pathname.includes('MAS')) {
+        /* Generate form page for MAS */
+        const { formFields, initialValuesFields } = MASForm(DetermineFormField, editTarget?.MAS);
+
+        /* Push to form template */
+        formTemplates.push(
+            <FormBase title="Machine Annotation Service"
+                formFields={formFields}
+                numberOfFormPages={numberOfFormPages}
+                currentPage={1}
+            />
+        );
+
+        /* Set initial values */
+        initialValues = { ...initialValues, ...initialValuesFields };
+    }
+
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
@@ -153,10 +181,20 @@ const FormBuilder = () => {
             await SubmitSourceSystem(form, editTarget as EditTarget).then((sourceSystem) => {
                 /* On finish: navigate to detail page of Source System */
                 if (sourceSystem) {
-                    navigate(`/sourceSystem/${sourceSystem.id}`)
+                    navigate(`/sourceSystem/${sourceSystem.id}`);
                 }
             }).catch(error => {
                 console.warn(error);
+            });
+        }
+
+        /* Submit MAS */
+        if (location.pathname.includes('MAS')) {
+            await SubmitMAS(form, editTarget as EditTarget).then((MAS) => {
+                /* On finish: navigate to detail page of MAS */
+                if (MAS) {
+                    navigate(`/MAS/${MAS.id}`);
+                }
             });
         }
     }
@@ -167,7 +205,7 @@ const FormBuilder = () => {
     });
 
     const ClassTab = (tab: string, mappingId: string) => {
-        if (tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping')) {
+        if ((tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping') && !location.pathname.includes('MAS'))) {
             return classNames({
                 'react-tabs__tab tab bgc-disabled': true,
             });
@@ -186,7 +224,7 @@ const FormBuilder = () => {
         <div className="h-100 d-flex flex-column overflow-hidden">
             <Header />
 
-            <Container className="flex-grow-1 py-5">
+            <Container className="flex-grow-1 py-5 overflow-y-hidden">
                 <Formik
                     initialValues={initialValues}
                     enableReinitialize={true}
@@ -196,11 +234,11 @@ const FormBuilder = () => {
                         SubmitForm(form);
                     }}
                 >
-                    {({ values }) => {
+                    {({ values, setFieldValue }) => {
                         return (
                             <Form className="h-100">
                                 <Row className="h-100">
-                                    <Col lg={{ span: 6, offset: 3 }}>
+                                    <Col lg={{ span: 6, offset: 3 }} className="h-100">
                                         <Tabs className="h-100 d-flex flex-column"
                                             selectedIndex={formPage}
                                             onSelect={() => { }}
@@ -221,7 +259,10 @@ const FormBuilder = () => {
                                                     <TabPanel key={formTemplate.props.title}
                                                         className={classTabPanel}
                                                     >
-                                                        {cloneElement(formTemplate, { formValues: values })}
+                                                        {cloneElement(formTemplate, {
+                                                            formValues: values,
+                                                            SetFieldValue: (field: string, value: String) => setFieldValue(field, value)
+                                                        })}
                                                     </TabPanel>
                                                 );
                                             })}

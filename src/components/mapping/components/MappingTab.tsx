@@ -50,7 +50,6 @@ const MappingTab = (props: Props) => {
                         </Row>
                     </Card.Subtitle>
 
-
                     <Row className="flex-grow-1 overflow-y-scroll">
                         <Col>
                             {/* Defaults */}

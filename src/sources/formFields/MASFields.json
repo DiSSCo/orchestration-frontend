@@ -1,0 +1,86 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "alias": "MASName",
+            "type": "text"
+        },
+        {
+            "name": "containerImage",
+            "alias": "MASContainerImage",
+            "type": "text"
+        },
+        {
+            "name": "containerTag",
+            "alias": "MASContainerTag",
+            "type": "text"
+        },
+        {
+            "name": "targetDigitalObjectFilters",
+            "type": "MASFilters",
+            "defaultValue": {}
+        },
+        {
+            "name": "targetDigitalObjectFiltersOptions",
+            "type": "hidden",
+            "defaultValue": ""
+        },
+        {
+            "name": "topicName",
+            "alias": "MASTopicName",
+            "type": "text"
+        },
+        {
+            "name": "serviceDescription",
+            "alias": "MASServiceDescription",
+            "type": "textarea"
+        },
+        {
+            "name": "serviceState",
+            "alias": "MASServiceState",
+            "type": "text"
+        },
+        {
+            "name": "sourceCodeRepository",
+            "alias": "MASSourceCodeRepository",
+            "type": "text"
+        },
+        {
+            "name": "serviceAvailability",
+            "alias": "MASServiceAvailability",
+            "type": "text"
+        },
+        {
+            "name": "codeMaintainer",
+            "alias": "MASCodeMaintainer",
+            "type": "text"
+        },
+        {
+            "name": "codeLicense",
+            "alias": "MASCodeLicense",
+            "type": "text"
+        },
+        {
+            "name": "dependencies",
+            "alias": "MASDependencies",
+            "type": "array",
+            "defaultValue": []
+        },
+        {
+            "name": "supportContact",
+            "alias": "MASSupportContact",
+            "type": "text"
+        },
+        {
+            "name": "SLADocumentation",
+            "alias": "MASSLADocumentation",
+            "type": "text"
+        },
+        {
+            "name": "maxReplicas",
+            "alias": "MASMaxReplicas",
+            "type": "number",
+            "defaultValue": 1
+        }
+    ]
+}
