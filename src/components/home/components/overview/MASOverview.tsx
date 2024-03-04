@@ -1,3 +1,6 @@
+/* Import Dependencies */
+import { useNavigate } from 'react-router-dom';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getMachineAnnotationServices } from 'redux/MAS/MASSlice';
@@ -5,8 +8,11 @@ import { getMachineAnnotationServices } from 'redux/MAS/MASSlice';
 /* Import Types */
 import { Dict } from 'app/Types';
 
+/* Import Config */
+import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
+
 /* Import Components */
-import OverviewTable from './table/OverviewTable';
+import DataTable from 'components/general/tables/DataTable';
 
 
 /* Props Typing */
@@ -17,8 +23,19 @@ interface Props {
 
 
 const MASOverview = () => {
+    /* Hooks */
+    const navigate = useNavigate();
+
     /* Base variables */
     const machineAnnotationServices = useAppSelector(getMachineAnnotationServices);
+
+    /* Data Row Typing */
+    interface DataRow {
+        index: number,
+        id: string,
+        name: string,
+        containerImage: string
+    };
 
     /* Table rows */
     const rows: Dict[] = [];
@@ -27,7 +44,7 @@ const MASOverview = () => {
     machineAnnotationServices.forEach((machineAnnotationService) => {
         rows.push({
             index: index,
-            identifier: machineAnnotationService.id,
+            id: machineAnnotationService.id,
             name: machineAnnotationService.name,
             containerImage: machineAnnotationService.containerImage,
             type: "MAS"
@@ -37,14 +54,16 @@ const MASOverview = () => {
     });
 
     /* Table columns */
-    const columns = [
-        { field: 'index', hide: true },
-        { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
-        { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
-        { field: 'containerImage', flex: 1, suppressSizeToFit: true, sortable: true }
-    ];
+    const { columns } = MASOverviewTableConfig();
 
-    return <OverviewTable columns={columns} rows={rows} />
+    return (
+        <div className="h-100 overflow-scroll b-secondary rounded-c">
+            <DataTable columns={columns}
+                data={rows}
+                SelectAction={(row: DataRow) => navigate(`/MAS/${row.id}`)}
+            />
+        </div>
+    );
 }
 
 export default MASOverview;

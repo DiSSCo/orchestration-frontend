@@ -90,12 +90,21 @@ p {
   color: var(--accent);
 }
 
+.c-white {
+  color: white;
+}
+
 .c-grey {
   color: #ACAAD4;
 }
 
 .c-denied {
   color: var(--denied);
+}
+
+/* Border radius */
+.rounded-c {
+  border-radius: 8px;
 }
 
 /* Backgrounds */
@@ -109,6 +118,14 @@ p {
 
 .bgc-accent {
   backdrop-filter: var(--accent);
+}
+
+.bgc-tableHover {
+  background-color: rgb(152, 205, 191);
+}
+
+.bgc-white {
+  background-color: white;
 }
 
 .bgc-grey {
@@ -134,6 +151,10 @@ p {
 
 .b-accent {
   border: 1px solid var(--accent);
+}
+
+.b-bottom-grey {
+  border-bottom: 1px solid var(--grey);
 }
 
 /* Font Weight */

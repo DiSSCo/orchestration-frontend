@@ -1,3 +1,6 @@
+/* Import Dependencies */
+import { useNavigate } from 'react-router-dom';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getMappings } from 'redux/mapping/MappingSlice';
@@ -5,22 +8,38 @@ import { getMappings } from 'redux/mapping/MappingSlice';
 /* Import Types */
 import { Dict } from 'app/Types';
 
+/* Import Config */
+import MappingsOverviewTableConfig from 'app/config/tables/MappingsOverviewTableConfig';
+
 /* Import Components */
-import OverviewTable from './table/OverviewTable';
+import DataTable from 'components/general/tables/DataTable';
 
 
 const MappingsOverview = () => {
+    /* Hooks */
+    const navigate = useNavigate();
+
     /* Base variables */
     const mappings = useAppSelector(getMappings);
+
+    /* Data Row Typing */
+    interface DataRow {
+        index: number,
+        id: string,
+        name: string,
+        description: string
+    };
 
     /* Table rows */
     const rows: Dict[] = [];
     let index: number = 0;
 
     mappings.forEach((mapping) => {
+        console.log(mapping);
+
         rows.push({
             index: index,
-            identifier: mapping.id,
+            id: mapping.id,
             name: mapping.name,
             description: mapping.description,
             type: "mapping"
@@ -30,14 +49,16 @@ const MappingsOverview = () => {
     });
 
     /* Table columns */
-    const columns = [
-        { field: 'index', hide: true },
-        { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
-        { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
-        { field: 'description', flex: 1, suppressSizeToFit: true, sortable: true }
-    ];
+    const { columns } = MappingsOverviewTableConfig();
 
-    return <OverviewTable columns={columns} rows={rows} />
+    return (
+        <div className="h-100 overflow-scroll b-secondary rounded-c">
+            <DataTable columns={columns}
+                data={rows}
+                SelectAction={(row: DataRow) => navigate(`/mapping/${row.id}`)}
+            />
+        </div>
+    );
 }
 
 export default MappingsOverview;
