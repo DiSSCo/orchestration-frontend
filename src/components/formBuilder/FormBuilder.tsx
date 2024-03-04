@@ -15,7 +15,8 @@ import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
 import { EditTarget, Dict } from 'app/Types';
 
 /* Import Utilities */
-import { DefineEditTarget, SubmitSourceSystem, SubmitMapping } from 'app/Utilities/FormBuilderUtilities';
+import { SubmitSourceSystem, SubmitMapping } from './SubmitFunctions';
+import { DefineEditTarget } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import Header from 'components/Header/Header';
