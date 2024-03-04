@@ -1,0 +1,23 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "alias": "sourceSystemName",
+            "type": "text"
+        },
+        {
+            "name": "description",
+            "alias": "sourceSystemDescription",
+            "type": "textarea"
+        },
+        {
+            "name": "endpoint",
+            "alias": "sourceSystemEndpoint",
+            "type": "text"
+        },
+        {
+            "name": "mappingId",
+            "type": "mappingSelect"
+        }
+    ]
+}

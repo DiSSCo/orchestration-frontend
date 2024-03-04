@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 /* Import Types */
-import { Mapping, JSONResult, Dict } from 'global/Types';
+import { Mapping, JSONResult, Dict } from 'app/Types';
 
 /* Import Model */
 import MappingModel from 'api/model/MappingModel';

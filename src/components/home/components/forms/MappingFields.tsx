@@ -3,7 +3,7 @@ import { FieldArray, Field } from 'formik';
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Types */
-import { Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Styling */
 import styles from 'components/home/home.module.scss';

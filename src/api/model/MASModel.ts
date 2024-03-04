@@ -1,5 +1,5 @@
 /* Import Types */
-import { MAS as MASType, Dict } from "global/Types"
+import { MAS as MASType, Dict } from "app/Types"
 
 
 /* Source System Model for API calls */

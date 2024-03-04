@@ -12,6 +12,9 @@ import './App.css';
 /* Import Components */
 import Home from "components/home/Home";
 import Landing from "components/landing/Landing";
+import SourceSystem from "components/sourceSystem/SourceSystem";
+import Mapping from "components/mapping/Mapping";
+import FormBuilder from "components/formBuilder/FormBuilder";
 
 
 const App = () => {
@@ -21,6 +24,14 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+
+          <Route path="/sourceSystem/:prefix/:suffix" element={<SourceSystem />} />
+          <Route path="/sourceSystem/add" element={<FormBuilder />} />
+          <Route path="/sourceSystem/:prefix/:suffix/edit" element={<FormBuilder />} />
+
+          <Route path="/mapping/:prefix/:suffix" element={<Mapping />} />
+          <Route path="/mapping/add" element={<FormBuilder />} />
+          <Route path="/mapping/:prefix/:suffix/edit" element={<FormBuilder />} />
         </Routes>
       </Router>
     );

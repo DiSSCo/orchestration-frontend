@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 /* Import Types */
-import { MAS, JSONResult, Dict } from 'global/Types';
+import { MAS, JSONResult, Dict } from 'app/Types';
 
 /* Import Model */
 import MASModel from 'api/model/MASModel';

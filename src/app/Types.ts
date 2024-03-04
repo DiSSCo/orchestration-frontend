@@ -1,7 +1,5 @@
 /* Generic Types */
-export type EmptyCallback = {
-    (): void;
-}
+export type EmptyCallback = () => void;
 
 export type Dict = {
     [name: string]: any;

@@ -29,7 +29,8 @@
 /* Global Styling */
 
 html {
-  height: 100%;
+  height: 100vh;
+  font-size: 0.85vw;
 }
 
 body {
@@ -43,12 +44,37 @@ body {
   background-color: #F9FAFC;
 }
 
-#root {
+.root {
   height: 100%;
 }
 
 .content {
   height: 90%;
+}
+
+p {
+  margin: 0;
+}
+
+/* Font sizes, default is 16px */
+.fs-1 {
+  font-size: 2.5rem !important;
+}
+
+.fs-2 {
+  font-size: 1.5rem !important;
+}
+
+.fs-3 {
+  font-size: 1.125rem !important;
+}
+
+.fs-4 {
+  font-size: 0.875rem !important;
+}
+
+.fs-5 {
+  font-size: 0.75rem !important;
 }
 
 /* Colors */
@@ -64,6 +90,10 @@ body {
   color: var(--accent);
 }
 
+.c-grey {
+  color: #ACAAD4;
+}
+
 /* Backgrounds */
 .bgc-primary {
   background-color: var(--primary);
@@ -77,6 +107,27 @@ body {
   backdrop-filter: var(--accent);
 }
 
+.bgc-disabled {
+  opacity: 0.6;
+}
+
+/* Border */
+.b-none {
+  border: none;
+}
+
+.b-primary {
+  border: 1px solid var(--primary);
+}
+
+.b-secondary {
+  border: 1px solid var(--secondary);
+}
+
+.b-accent {
+  border: 1px solid var(--accent);
+}
+
 /* Font Weight */
 .fw-lightBold {
   font-weight: 500;
@@ -87,8 +138,19 @@ body {
   cursor: pointer;
 }
 
+/* Text overflow */
+.textOverflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 
 /* Custom Component Styling */
+.title {
+  font-size: 1.875rem;
+}
+
 .primaryButton {
   background-color: var(--primary);
   color: white;
@@ -107,9 +169,22 @@ body {
   background-color: #CBCCD4;
 }
 
+.button-no-style {
+  background-color: inherit;
+  border: none;
+}
+
+.formField {
+  border: 1px solid var(--grey);
+  border-radius: 8px;
+}
+
+.formField.textArea {
+  resize: none;
+}
+
 
 /* Bootstrap class overwrite */
-
 .tab-content {
   height: Calc(100% - 41px);
   border-top: 1px solid #d9d9d9;
@@ -180,7 +255,6 @@ li.page-item.active .page-link {
 
 
 /* Bootstrap Modal */
-
 .modal-dialog {
   height: 100%;
   margin: 0 auto !important;
@@ -197,4 +271,24 @@ li.page-item.active .page-link {
 .modalHeader {
   background-color: var(--primary);
   color: white
+}
+
+/* React Tabs */
+.tabsList {
+  padding: 0;
+}
+
+.tab {
+  background-color: #E6E2F1;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-right: 1%;
+}
+
+.tab.active {
+  background-color: var(--primary);
+  color: white;
+  font-weight: bold;
 }

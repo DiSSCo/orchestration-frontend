@@ -1,9 +1,10 @@
 /* Import Dependencies */
+import { useNavigate } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Types */
-import { Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Styles */
 import 'ag-grid-community/styles/ag-grid.css';
@@ -20,6 +21,9 @@ interface Props {
 const OverviewTable = (props: Props) => {
     const { columns, rows } = props;
 
+    /* Hooks */
+    const navigate = useNavigate();
+
     const getRowStyle = (params: Dict) => {
         const data = { ...params.data };
 
@@ -29,6 +33,11 @@ const OverviewTable = (props: Props) => {
 
         return undefined;
     };
+
+    /* Function for navigating to the detail page of a record */
+    const NavigateToDetailPage = (row: Dict) => {
+        navigate(`/${row.data.type}/${row.data.identifier}`);
+    }
 
     const gridOptions = {
         pagination: true,
@@ -45,6 +54,7 @@ const OverviewTable = (props: Props) => {
                         columnDefs={columns}
                         gridOptions={gridOptions}
                         getRowStyle={getRowStyle}
+                        onRowClicked={(row: Dict) => NavigateToDetailPage(row)}
                     />
                 </div>
             </Col>

@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-import { MAS } from 'global/Types';
+import { MAS } from 'app/Types';
 
 
 export interface MASState {

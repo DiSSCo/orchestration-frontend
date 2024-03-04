@@ -1,5 +1,5 @@
 /* Import Types */
-import { SourceSystem as SourceSystemType, Dict } from "global/Types"
+import { SourceSystem as SourceSystemType, Dict } from "app/Types"
 
 
 /* Source System Model for API calls */

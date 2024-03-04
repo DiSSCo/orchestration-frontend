@@ -5,7 +5,7 @@ import axios from "axios";
 import MappingModel from "api/model/MappingModel";
 
 /* Import Types */
-import { Mapping, JSONResult, Dict } from "global/Types";
+import { Mapping, JSONResult, Dict } from "app/Types";
 
 
 const GetMappings = async () => {

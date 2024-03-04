@@ -1,21 +1,12 @@
-/* Import Dependencies */
-import KeycloakService from 'keycloak/Keycloak';
-
 /* Import Store */
-import { useAppSelector, useAppDispatch } from 'app/Hooks';
+import { useAppSelector } from 'app/Hooks';
 import { getMachineAnnotationServices } from 'redux/MAS/MASSlice';
-import { setEditTarget } from 'redux/edit/EditSlice';
 
 /* Import Types */
-import { EditTarget, Dict } from 'global/Types';
+import { Dict } from 'app/Types';
 
 /* Import Components */
 import OverviewTable from './table/OverviewTable';
-import EditButton from './table/EditButton';
-import DeleteButton from './table/DeleteButton';
-
-/* Import API */
-import DeleteMAS from 'api/mas/DeleteMAS';
 
 
 /* Props Typing */
@@ -25,39 +16,9 @@ interface Props {
 };
 
 
-const MASOverview = (props: Props) => {
-    const { ToggleModal, UpdateMachineAnnotationServices } = props;
-
-    /* Hooks */
-    const dispatch = useAppDispatch();
-
+const MASOverview = () => {
     /* Base variables */
     const machineAnnotationServices = useAppSelector(getMachineAnnotationServices);
-
-    /* Function to edit a Mapping */
-    const EditMachineAnnotationService = (MASId: string) => {
-        const editTarget: EditTarget = {};
-
-        /* Fetch Mapping from existing array */
-        editTarget.MAS = machineAnnotationServices.find(MAS => MAS.id === MASId);
-
-        /* Set edit target */
-        dispatch(setEditTarget(editTarget));
-
-        /* Open form modal */
-        ToggleModal();
-    }
-
-    /* Function for removing a Mapping */
-    const RemoveMAS = (MASId: string) => {
-        const confirmed: boolean = window.confirm(`Do you want to delete the Machine annotation service with id: ${MASId}`);
-
-        if (confirmed) {
-            DeleteMAS(MASId, KeycloakService.GetToken());
-
-            UpdateMachineAnnotationServices(MASId);
-        }
-    }
 
     /* Table rows */
     const rows: Dict[] = [];
@@ -68,7 +29,8 @@ const MASOverview = (props: Props) => {
             index: index,
             identifier: machineAnnotationService.id,
             name: machineAnnotationService.name,
-            containerImage: machineAnnotationService.containerImage
+            containerImage: machineAnnotationService.containerImage,
+            type: "MAS"
         });
 
         index++;
@@ -79,25 +41,7 @@ const MASOverview = (props: Props) => {
         { field: 'index', hide: true },
         { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
         { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
-        { field: 'containerImage', flex: 1, suppressSizeToFit: true, sortable: true },
-        {
-            field: 'edit',
-            flex: 0.2,
-            suppressSizeToFit: true,
-            cellRenderer: EditButton,
-            cellRendererParams: {
-                EditTarget: (MASId: string) => EditMachineAnnotationService(MASId)
-            }
-        },
-        {
-            field: 'delete',
-            flex: 0.2,
-            suppressSizeToFit: true,
-            cellRenderer: DeleteButton,
-            cellRendererParams: {
-                DeleteTarget: (MASId: string) => RemoveMAS(MASId)
-            }
-        }
+        { field: 'containerImage', flex: 1, suppressSizeToFit: true, sortable: true }
     ];
 
     return <OverviewTable columns={columns} rows={rows} />

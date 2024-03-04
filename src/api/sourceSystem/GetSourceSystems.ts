@@ -5,7 +5,7 @@ import axios from "axios";
 import SourceSystemModel from "api/model/SourceSystemModel";
 
 /* Import Types */
-import { SourceSystem, JSONResult, Dict } from "global/Types";
+import { SourceSystem, JSONResult, Dict } from "app/Types";
 
 
 const GetSourceSystems = async () => {
