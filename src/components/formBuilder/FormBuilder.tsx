@@ -15,12 +15,13 @@ import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
 import { EditTarget, Dict } from 'app/Types';
 
 /* Import Utilities */
-import { DefineEditTarget, SubmitSourceSystem, SubmitMapping, SubmitMAS } from 'app/Utilities/FormBuilderUtilities';
+import { SubmitSourceSystem, SubmitMapping, SubmitMAS } from './SubmitFunctions';
+import { DefineEditTarget } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import Header from 'components/Header/Header';
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
-import MappingMetaForm from 'components/mapping/components/MappingMetaForm';
+import MappingForm from 'components/mapping/components/MappingForm';
 import MASForm from 'components/MAS/components/MASForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
@@ -42,11 +43,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'number':
             return <InputField name={fieldName} visibleName={visibleName} />
         case 'select':
-            if (options) {
-                return <SelectField name={fieldName} options={options} visibleName={visibleName} />;
-            } else {
-                return <> </>;
-            }
+            return <SelectField name={fieldName} options={options} visibleName={visibleName} />;
         case 'array':
             return <ArrayField name={fieldName} visibleName={visibleName} />
         case 'mappingSelect':
@@ -122,7 +119,7 @@ const FormBuilder = () => {
 
     if (location.pathname.includes('mapping') || (location.pathname.includes('sourceSystem') && !editTarget?.mapping)) {
         /* Generate form pages for Mapping */
-        const { formFieldsPages, initialValuesFields } = MappingMetaForm(DetermineFormField, editTarget?.mapping);
+        const { formFieldsPages, initialValuesFields } = MappingForm(DetermineFormField, editTarget?.mapping);
         const tabNames = ['Mapping', 'Default Mapping', 'Field Mapping'];
 
         formFieldsPages.forEach((formFields, index) => {

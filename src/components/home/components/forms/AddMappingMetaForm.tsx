@@ -16,7 +16,7 @@ interface Props {
 };
 
 
-const AddMappingMetaForm = (props: Props, secondary?: boolean) => {
+const AddMappingForm = (props: Props, secondary?: boolean) => {
     const { SetBaseStandard } = props;
 
     return (
@@ -64,4 +64,4 @@ const AddMappingMetaForm = (props: Props, secondary?: boolean) => {
     );
 }
 
-export default AddMappingMetaForm;
+export default AddMappingForm;

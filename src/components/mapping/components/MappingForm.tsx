@@ -5,11 +5,11 @@ import { Mapping, Dict } from 'app/Types';
 import MappingFields from 'sources/formFields/MappingFields.json';
 
 
-const MappingMetaForm = (DetermineFormField: Function, mapping?: Mapping) => {
+const MappingForm = (DetermineFormField: Function, mapping?: Mapping) => {
     const formFieldsPages: JSX.Element[][] = [];
     const initialValuesFields: Dict = {};
 
-    /* Generate Source System form fields */
+    /* Generate Mapping form fields */
     MappingFields.pages.forEach((page, index) => {
         formFieldsPages[index] = [];
 
@@ -39,4 +39,4 @@ const MappingMetaForm = (DetermineFormField: Function, mapping?: Mapping) => {
     return { formFieldsPages, initialValuesFields };
 }
 
-export default MappingMetaForm;
+export default MappingForm;

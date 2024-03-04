@@ -25,12 +25,20 @@ const ParseString = (string: string) => {
 
 /* Function that takes a readable string and returns a CamelCase version of it */
 const ReparseString = (string: string) => {
-    let newString: string = string;
+    let newString: string = '';
 
     /* Remove all spaces from string */
-    newString = newString.replaceAll(' ', '');
+    const stringSegments: string[] = string.split(' ');
 
-    return newString.charAt(0).toLowerCase() + newString.slice(1);
+    stringSegments.forEach((segment: string, index: number) => {
+        if (index > 0) {
+            newString += Capitalize(segment);
+        } else {
+            newString += segment.toLowerCase();
+        }
+    });
+
+    return newString;
 }
 
 

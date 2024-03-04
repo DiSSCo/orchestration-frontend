@@ -10,7 +10,7 @@ import { ParseString } from "app/Utilities";
 interface Props {
     name: string,
     visibleName: string,
-    options: {
+    options?: {
         name: string,
         label: string
     }[]
@@ -28,10 +28,10 @@ const SelectField = (props: Props) => {
                     className="w-100 formField"
                 >
                     <option value="" disabled>
-                        Select a Source Data Standard
+                        Select a {ParseString(name)}
                     </option>
 
-                    {options.map((option) => (
+                    {options?.map((option) => (
                         <option key={option.name} value={option.name}>
                             {option.label}
                         </option>
