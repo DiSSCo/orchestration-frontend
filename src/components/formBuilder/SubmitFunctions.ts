@@ -2,13 +2,15 @@
 import KeycloakService from "keycloak/Keycloak";
 
 /* Import Types */
-import { SourceSystem, Mapping, EditTarget, Dict } from "app/Types";
+import { SourceSystem, Mapping, MAS, EditTarget, Dict } from "app/Types";
 
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
 import PatchSourceSystem from 'api/sourceSystem/PatchSourceSystem';
 import InsertMapping from 'api/mapping/InsertMapping';
 import PatchMapping from 'api/mapping/PatchMapping';
+import InsertMAS from "api/mas/InsertMAS";
+import PatchMAS from "api/mas/PatchMAS";
 
 
 const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
@@ -94,7 +96,48 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     return mappingResponse;
 }
 
+const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
+    const MASRecord = {
+        data: {
+            type: 'machineAnnotationService',
+            attributes: {
+                name: form.MASName,
+                containerImage: form.MASContainerImage,
+                containerTag: form.MASContainerTag,
+                targetDigitalObjectFilters: form.targetDigitalObjectFilters,
+                topicName: form.MASTopicName,
+                serviceDescription: form.MASServiceDescription,
+                serviceState: form.MASServiceState,
+                sourceCodeRepository: form.MASSourceCodeRepository,
+                serviceAvailability: form.MASServiceAvailability,
+                codeMaintainer: form.MASCodeMaintainer,
+                codeLicense: form.MASCodeLicense,
+                dependencies: form.MASDependencies,
+                supportContact: form.MASSupportContact,
+                slaDocumentation: form.MASSlaDocumentation,
+                maxReplicas: form.MASMaxReplicas
+            }
+        }
+    }
+
+    /* If edit target is not empty, patch instead of insert */
+    let MASResponse: MAS | undefined;
+
+    if (editTarget?.MAS) {
+        await PatchMAS(MASRecord, editTarget?.MAS.id, KeycloakService.GetToken()).then((MAS) => {
+            MASResponse = MAS;
+        });
+    } else {
+        await InsertMAS(MASRecord, KeycloakService.GetToken()).then((MAS) => {
+            MASResponse = MAS;
+        });
+    }
+
+    return MASResponse;
+}
+
 export {
     SubmitSourceSystem,
-    SubmitMapping
+    SubmitMapping,
+    SubmitMAS
 }
