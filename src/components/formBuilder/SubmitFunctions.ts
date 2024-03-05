@@ -21,7 +21,8 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
                 name: form.sourceSystemName,
                 description: form.sourceSystemDescription,
                 endpoint: form.sourceSystemEndpoint,
-                mappingId: form.mappingId
+                mappingId: form.mappingId,
+                translatorType: form.translatorType
             }
         }
     }
