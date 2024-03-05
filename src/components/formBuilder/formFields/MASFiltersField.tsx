@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { FieldArray, Field } from 'formik';
+import { Field } from 'formik';
 import { cloneDeep } from 'lodash';
 
 /* Import Utilities */
@@ -9,15 +9,11 @@ import { ParseString } from 'app/Utilities';
 /* Import Types */
 import { Dict } from 'app/Types';
 
-/* Import Icons */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
-
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
 
 /* Import Components */
-import FilterField from './FilterField';
+import MappingFilter from './MappingFilter';
 
 
 /* Props Typing */
@@ -52,57 +48,12 @@ const MASFiltersField = (props: Props) => {
 
                             return (
                                 <div key={objectFilter} className="mt-3 mb-2">
-                                    <FieldArray name={`${name}.${objectFilter}`}>
-                                        {({ push, remove }) => (
-                                            <div className="bgc-grey px-4 py-2">
-                                                <Row>
-                                                    <Col>
-                                                        <p className="fw-lightBold">
-                                                            {objectFilter}
-                                                        </p>
-                                                    </Col>
-                                                    <Col className="col-md-auto pe-0">
-                                                        <button type="button"
-                                                            className="button-no-style c-secondary"
-                                                            onClick={() => push("")}
-                                                        >
-                                                            Add value
-                                                        </button>
-                                                    </Col>
-                                                    <Col className="col-md-auto">
-                                                        <button type="button"
-                                                            className="button-no-style c-denied"
-                                                            onClick={() => {
-                                                                const copyObjectFilters = { ...formValues?.targetDigitalObjectFilters };
-
-                                                                delete copyObjectFilters[
-                                                                    objectFilter as keyof typeof copyObjectFilters
-                                                                ];
-
-                                                                SetFieldValue?.('targetDigitalObjectFilters', copyObjectFilters);
-                                                            }}
-                                                        >
-                                                            Drop filter
-                                                        </button>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        {
-                                                            objectFilterValues.map((_objectFilterValue, index: number) => {
-                                                                const key = `${objectFilter}_${index}`;
-
-                                                                return <FilterField key={key}
-                                                                    filterName={`targetDigitalObjectFilters.${objectFilter}.${index}`}
-                                                                    Remove={() => remove(index)}
-                                                                />
-                                                            })
-                                                        }
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        )}
-                                    </FieldArray>
+                                    <MappingFilter name={name}
+                                        objectFilter={objectFilter}
+                                        formValues={formValues}
+                                        objectFilterValues={objectFilterValues}
+                                        SetFieldValue={(field: string, value: Dict) => SetFieldValue?.(field, value)}
+                                    />
                                 </div>
                             );
                         })}
@@ -116,7 +67,7 @@ const MASFiltersField = (props: Props) => {
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
                             {Object.keys(harmonisedAttributes).map((filterOption) => {
-                                if (!(filterOption in formValues?.targetDigitalObjectFilters)) {
+                                if (formValues?.targetDigitalObjectFilters && !(filterOption in formValues?.targetDigitalObjectFilters)) {
                                     return <option key={filterOption} value={filterOption}> {filterOption} </option>
                                 }
                             })}
