@@ -65,7 +65,7 @@ const MappingFilter = (props: Props) => {
                                     const key = `${objectFilter}_${index}`;
 
                                     return (
-                                        <Row>
+                                        <Row key={key}>
                                             <Col md={{ span: 9 }} className="pe-0">
                                                 <Field name={`targetDigitalObjectFilters.${objectFilter}.${index}`}
                                                     className="formField w-100 mb-2"

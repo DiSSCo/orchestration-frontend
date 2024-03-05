@@ -35,6 +35,8 @@ import MASFiltersField from './formFields/MASFiltersField';
 
 /* Function to determine the form field by type */
 const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[]) => {
+    console.log(fieldName, fieldType, options);
+
     switch (fieldType) {
         case 'text':
             return <InputField name={fieldName} visibleName={visibleName} />;
@@ -43,7 +45,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'number':
             return <InputField name={fieldName} visibleName={visibleName} />
         case 'select':
-            return <SelectField name={fieldName} options={options} visibleName={visibleName} />;
+            return <SelectField name={fieldName} visibleName={visibleName} options={options} />;
         case 'array':
             return <ArrayField name={fieldName} visibleName={visibleName} />
         case 'mappingSelect':

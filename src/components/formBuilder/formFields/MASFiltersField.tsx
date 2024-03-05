@@ -67,7 +67,7 @@ const MASFiltersField = (props: Props) => {
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
                             {Object.keys(harmonisedAttributes).map((filterOption) => {
-                                if (formValues?.targetDigitalObjectFilters && !(filterOption in formValues?.targetDigitalObjectFilters)) {
+                                if (formValues?.targetDigitalObjectFilters && !(filterOption in formValues.targetDigitalObjectFilters)) {
                                     return <option key={filterOption} value={filterOption}> {filterOption} </option>
                                 }
                             })}
