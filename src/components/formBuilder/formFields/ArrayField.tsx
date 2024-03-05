@@ -32,8 +32,8 @@ const ArrayField = (props: Props) => {
                 <FieldArray name={name}>
                     {({ push, remove }) => (
                         <>
-                            {formValues?.[name].map((_value: string, index: number) => (
-                                <Row className={index > 0 ? 'mt-2' : ''}>
+                            {formValues?.[name].map((value: string, index: number) => (
+                                <Row key={value} className={index > 0 ? 'mt-2' : ''}>
                                     <Col>
                                         <Field name={`${name}[${index}]`}
                                             className="formField w-100"

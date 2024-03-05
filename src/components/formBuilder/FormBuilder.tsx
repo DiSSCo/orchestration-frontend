@@ -258,7 +258,7 @@ const FormBuilder = () => {
                                                     >
                                                         {cloneElement(formTemplate, {
                                                             formValues: values,
-                                                            SetFieldValue: (field: string, value: String) => setFieldValue(field, value)
+                                                            SetFieldValue: (field: string, value: string) => setFieldValue(field, value)
                                                         })}
                                                     </TabPanel>
                                                 );

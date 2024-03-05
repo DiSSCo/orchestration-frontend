@@ -29,7 +29,7 @@ const MASDependenciesTab = (props: Props) => {
                     <Col>
                         {MAS.dependencies.length ? MAS.dependencies.map((dependency, index) => {
                             return (
-                                <Row className={index > 0 ? 'mt-3' : ''}>
+                                <Row key={dependency} className={index > 0 ? 'mt-3' : ''}>
                                     <Col>
                                         <div className="bgc-grey px-3 py-2">
                                             <p> {dependency} </p>

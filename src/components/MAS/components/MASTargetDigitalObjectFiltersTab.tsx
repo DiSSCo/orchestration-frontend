@@ -31,13 +31,13 @@ const MASTargetDigitalObjectFiltersTab = (props: Props) => {
                             const filterValues: string[] = MAS.targetDigitalObjectFilters[key as keyof typeof MAS.targetDigitalObjectFilters];
 
                             return (
-                                <Row className={index > 0 ? 'mt-3' : ''}>
+                                <Row key={key} className={index > 0 ? 'mt-3' : ''}>
                                     <Col>
                                         <p className="fw-lightBold">{key}</p>
 
                                         <div className="mt-2 px-3 py-2 bgc-grey">
                                             {filterValues.map((filterValue) => (
-                                                <p> {filterValue} </p>
+                                                <p key={filterValue}> {filterValue} </p>
                                             ))}
                                         </div>
                                     </Col>

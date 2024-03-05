@@ -16,6 +16,9 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
 
+/* Import Components */
+import FilterField from './FilterField';
+
 
 /* Props Typing */
 interface Props {
@@ -28,8 +31,6 @@ interface Props {
 
 const MASFiltersField = (props: Props) => {
     const { name, visibleName, formValues, SetFieldValue } = props;
-
-    console.log(formValues);
 
     /* Base variables */
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -91,21 +92,10 @@ const MASFiltersField = (props: Props) => {
                                                             objectFilterValues.map((_objectFilterValue, index: number) => {
                                                                 const key = `${objectFilter}_${index}`;
 
-                                                                return (
-                                                                    <Row key={key}>
-                                                                        <Col md={{ span: 9 }} className="pe-0">
-                                                                            <Field name={`targetDigitalObjectFilters.${objectFilter}.${index}`}
-                                                                                className="formField w-100 mb-2"
-                                                                            />
-                                                                        </Col>
-                                                                        <Col>
-                                                                            <FontAwesomeIcon icon={faX}
-                                                                                onClick={() => remove(index)}
-                                                                            />
-                                                                        </Col>
-                                                                    </Row>
-
-                                                                );
+                                                                return <FilterField key={key}
+                                                                    filterName={`targetDigitalObjectFilters.${objectFilter}.${index}`}
+                                                                    Remove={() => remove(index)}
+                                                                />
                                                             })
                                                         }
                                                     </Col>
@@ -136,7 +126,7 @@ const MASFiltersField = (props: Props) => {
                         <button type="button"
                             className="primaryButton fs-4 px-3 py-1 c-secondary"
                             onClick={() => {
-                                if (formValues?.targetDigitalObjectFiltersOptions !== "") {
+                                if (formValues?.targetDigitalObjectFiltersOptions && formValues.targetDigitalObjectFiltersOptions !== "") {
                                     /* Add filter to Target Digital Object Filters */
                                     SetFieldValue?.('targetDigitalObjectFilters', {
                                         ...formValues?.targetDigitalObjectFilters,

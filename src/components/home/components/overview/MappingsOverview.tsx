@@ -35,8 +35,6 @@ const MappingsOverview = () => {
     let index: number = 0;
 
     mappings.forEach((mapping) => {
-        console.log(mapping);
-
         rows.push({
             index: index,
             id: mapping.id,

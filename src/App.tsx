@@ -14,7 +14,7 @@ import Home from "components/home/Home";
 import Landing from "components/landing/Landing";
 import SourceSystem from "components/sourceSystem/SourceSystem";
 import Mapping from "components/mapping/Mapping";
-import MAS from "components/MAS/MAS";
+import Mas from "components/MAS/Mas";
 import FormBuilder from "components/formBuilder/FormBuilder";
 
 
@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/mapping/add" element={<FormBuilder />} />
           <Route path="/mapping/:prefix/:suffix/edit" element={<FormBuilder />} />
 
-          <Route path="/MAS/:prefix/:suffix" element={<MAS />} />
+          <Route path="/MAS/:prefix/:suffix" element={<Mas />} />
           <Route path="/MAS/add" element={<FormBuilder />} />
           <Route path="/MAS/:prefix/:suffix/edit" element={<FormBuilder />} />
         </Routes>
