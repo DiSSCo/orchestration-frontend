@@ -33,7 +33,7 @@ const MASTargetDigitalObjectFiltersTab = (props: Props) => {
                             return (
                                 <Row key={key} className={index > 0 ? 'mt-3' : ''}>
                                     <Col>
-                                        <p className="fw-lightBold">{key}</p>
+                                        <p className="fw-lightBold">{key.replace('$.', '')}</p>
 
                                         <div className="mt-2 px-3 py-2 bgc-grey">
                                             {filterValues.map((filterValue) => (
