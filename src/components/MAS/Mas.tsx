@@ -22,6 +22,7 @@ import MASDependenciesTab from './components/MASDependenciesTab';
 
 /* Import API */
 import GetMAS from 'api/mas/GetMAS';
+import DeleteMAS from 'api/mas/DeleteMAS';
 
 
 const MAS = () => {
@@ -75,14 +76,34 @@ const MAS = () => {
                                 />
                             </Col>
                             {KeycloakService.IsLoggedIn() &&
-                                <Col className="col-lg-auto">
-                                    <button type="button"
-                                        className="primaryButton px-3 py-1"
-                                        onClick={() => navigate(`edit`)}
-                                    >
-                                        Edit
-                                    </button>
-                                </Col>
+                                <>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton px-3 py-1"
+                                            onClick={() => navigate(`edit`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </Col>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton delete px-3 py-1"
+                                            onClick={() => {
+                                                if (window.confirm('Are you sure you want to delete this MAS?')) {
+                                                    DeleteMAS(MAS.id, KeycloakService.GetToken()).then((success) => {
+                                                        if (success) {
+                                                            navigate('/');
+                                                        }
+                                                    }).catch(error => {
+                                                        console.warn(error);
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </Col>
+                                </>
                             }
                         </Row>
                         <Row className="flex-grow-1">

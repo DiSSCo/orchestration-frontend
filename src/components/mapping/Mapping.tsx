@@ -20,6 +20,7 @@ import MappingTab from './components/MappingTab';
 
 /* Import API */
 import GetMapping from 'api/mapping/GetMapping';
+import DeleteMapping from 'api/mapping/DeleteMapping';
 
 
 const Mapping = () => {
@@ -73,14 +74,34 @@ const Mapping = () => {
                                 />
                             </Col>
                             {KeycloakService.IsLoggedIn() &&
-                                <Col className="col-lg-auto">
-                                    <button type="button"
-                                        className="primaryButton px-3 py-1"
-                                        onClick={() => navigate(`edit`)}
-                                    >
-                                        Edit
-                                    </button>
-                                </Col>
+                                <>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton px-3 py-1"
+                                            onClick={() => navigate(`edit`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </Col>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton delete px-3 py-1"
+                                            onClick={() => {
+                                                if (window.confirm('Are you sure you want to delete this Mapping?')) {
+                                                    DeleteMapping(mapping.id, KeycloakService.GetToken()).then((success) => {
+                                                        if (success) {
+                                                            navigate('/');
+                                                        }
+                                                    }).catch(error => {
+                                                        console.warn(error);
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </Col>
+                                </>
                             }
                         </Row>
                         <Row className="flex-grow-1">
