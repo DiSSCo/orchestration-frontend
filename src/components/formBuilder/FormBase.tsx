@@ -12,6 +12,7 @@ interface Props {
     title: string,
     formFields: JSX.Element[],
     formValues?: Dict,
+    SetFieldValue?: Function,
     numberOfFormPages?: number,
     currentPage: number,
     NextPage?: Function,
@@ -20,24 +21,28 @@ interface Props {
 
 
 const FormBase = (props: Props) => {
-    const { title, formFields, formValues, numberOfFormPages, currentPage, NextPage, PreviousPage } = props;
+    const { title, formFields, formValues, SetFieldValue, numberOfFormPages, currentPage, NextPage, PreviousPage } = props;
 
     /* Hooks */
     const location = useLocation();
 
     return (
-        <Card key="formTemplate_sourceSystem" className="h-100 d-flex flex-column px-4 py-3">
+        <Card key="formTemplate_sourceSystem" className="h-100 d-flex flex-column px-4 py-3 overflow-y-scroll">
             <p className="fs-2 fw-lightBold"> {title} </p>
 
             <Row className="flex-grow-1">
                 <Col>
                     {formFields.map((formField) => {
-                        return cloneElement(formField, { key: formField.props.name, formValues });
+                        return cloneElement(formField, {
+                            key: formField.props.name,
+                            formValues,
+                            SetFieldValue: SetFieldValue
+                        });
                     })}
                 </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
                 {numberOfFormPages && PreviousPage && (currentPage > 0) &&
                     <Col>
                         <button type="button"

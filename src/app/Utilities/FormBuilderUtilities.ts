@@ -4,6 +4,7 @@ import { EditTarget} from "app/Types";
 /* Import API */
 import GetSourceSystem from "api/sourceSystem/GetSourceSystem";
 import GetMapping from "api/mapping/GetMapping";
+import GetMAS from "api/mas/GetMAS";
 
 
 const DefineEditTarget = async (targetName: string, id: string) => {
@@ -26,13 +27,20 @@ const DefineEditTarget = async (targetName: string, id: string) => {
         }).catch(error => {
             console.warn(error);
         });
+    } else if (targetName === 'MAS') {
+        await GetMAS(id).then((MAS) => {
+            if (MAS) {
+                copyEditTarget = { ...editTarget, MAS: MAS };
+            }
+        }).catch(error => {
+            console.warn(error);
+        })
     }
 
     editTarget = copyEditTarget;
 
     return editTarget;
 }
-
 
 export {
     DefineEditTarget

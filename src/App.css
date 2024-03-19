@@ -90,8 +90,21 @@ p {
   color: var(--accent);
 }
 
+.c-white {
+  color: white;
+}
+
 .c-grey {
   color: #ACAAD4;
+}
+
+.c-denied {
+  color: var(--denied);
+}
+
+/* Border radius */
+.rounded-c {
+  border-radius: 8px;
 }
 
 /* Backgrounds */
@@ -105,6 +118,18 @@ p {
 
 .bgc-accent {
   backdrop-filter: var(--accent);
+}
+
+.bgc-tableHover {
+  background-color: rgb(152, 205, 191);
+}
+
+.bgc-white {
+  background-color: white;
+}
+
+.bgc-grey {
+  background-color: #E9E8E3;
 }
 
 .bgc-disabled {
@@ -128,6 +153,10 @@ p {
   border: 1px solid var(--accent);
 }
 
+.b-bottom-grey {
+  border-bottom: 1px solid var(--grey);
+}
+
 /* Font Weight */
 .fw-lightBold {
   font-weight: 500;
@@ -136,6 +165,23 @@ p {
 /* Cursor */
 .c-pointer {
   cursor: pointer;
+}
+
+/* Overflow */
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 
 /* Text overflow */

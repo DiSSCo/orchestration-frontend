@@ -26,7 +26,7 @@ import MASOverview from './components/overview/MASOverview';
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
 import GetMappings from 'api/mapping/GetMappings';
-import GetMAS from 'api/mas/GetMAS';
+import GetMASes from 'api/mas/GetMASes';
 
 
 const Home = () => {
@@ -48,7 +48,7 @@ const Home = () => {
             console.warn(error);
         });
 
-        GetMAS().then((machineAnnotationServices) => {
+        GetMASes().then((machineAnnotationServices) => {
             dispatch(setMachineAnnotationServices(machineAnnotationServices));
         }).catch(error => {
             console.warn(error);
@@ -92,7 +92,17 @@ const Home = () => {
                     <Col className="h-100">
                         <div className="position-relative">
                             <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
-                                onClick={() => navigate(`${ReparseString(chosenTab)}/add`)}
+                                onClick={() => {
+                                    let routeString: string;
+
+                                    if (chosenTab === 'MAS') {
+                                        routeString = chosenTab;
+                                    } else {
+                                        routeString = ReparseString(chosenTab);
+                                    }
+
+                                    navigate(`${routeString}/add`);
+                                }}
                             >
                                 Add {chosenTab}
                             </button>

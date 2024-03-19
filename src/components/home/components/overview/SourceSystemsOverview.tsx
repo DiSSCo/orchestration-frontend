@@ -1,3 +1,6 @@
+/* Import Dependencies */
+import { useNavigate } from 'react-router-dom';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
@@ -9,13 +12,27 @@ import { Dict } from 'app/Types';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
+/* Import Config */
+import SourceSystemsOverviewTableConfig from 'app/config/tables/SourceSystemsOverviewTableConfig';
+
 /* Import Components */
-import OverviewTable from './table/OverviewTable';
+import DataTable from 'components/general/tables/DataTable';
 
 
 const SourceSystemsOverview = () => {
+    /* Hooks */
+    const navigate = useNavigate();
+
     /* Base variables */
     const sourceSystems = useAppSelector(getSourceSystems);
+
+    /* Data Row Typing */
+    interface DataRow {
+        index: number,
+        id: string,
+        name: string,
+        endpoint: string
+    };
 
     /* Table rows */
     const rows: Dict[] = [];
@@ -24,7 +41,7 @@ const SourceSystemsOverview = () => {
     sourceSystems.forEach((sourceSystem) => {
         rows.push({
             index: index,
-            identifier: sourceSystem.id,
+            id: sourceSystem.id,
             name: sourceSystem.name,
             endpoint: sourceSystem.endpoint,
             type: "sourceSystem"
@@ -34,14 +51,16 @@ const SourceSystemsOverview = () => {
     });
 
     /* Table columns */
-    const columns = [
-        { field: 'index', hide: true },
-        { field: 'identifier', flex: 0.5, suppressSizeToFit: true, sortable: true },
-        { field: 'name', flex: 1, suppressSizeToFit: true, sortable: true },
-        { field: 'endpoint', flex: 1, suppressSizeToFit: true, sortable: true }
-    ];
+    const { columns } = SourceSystemsOverviewTableConfig();
 
-    return <OverviewTable columns={columns} rows={rows} />
+    return (
+        <div className="h-100 overflow-scroll b-secondary rounded-c">
+            <DataTable columns={columns}
+                data={rows}
+                SelectAction={(row: DataRow) => navigate(`/sourceSystem/${row.id}`)}
+            />
+        </div>
+    );
 }
 
 export default SourceSystemsOverview;
