@@ -33,14 +33,14 @@ const MAS = () => {
     /* Base variables */
     const MAS = useAppSelector(getMachineAnnotationService);
 
-    /* OnLoad: fetch Source System */
+    /* OnLoad: fetch Machine Annotation Service */
     useEffect(() => {
         const MASId = `${params.prefix}/${params.suffix}`;
 
         if (MAS?.id !== MASId) {
             GetMAS(MASId).then((MAS) => {
                 if (MAS) {
-                    /* Set Source System */
+                    /* Set Machine Annotation Service */
                     dispatch(setMachineAnnotationService(MAS));
                 } else {
                     /* Not found: return to Home */
@@ -98,7 +98,8 @@ const MAS = () => {
                                         codeLicense: MAS.codeLicense,
                                         supportContact: MAS.supportContact,
                                         slaDocumentation: MAS.slaDocumentation,
-                                        maxReplicas: MAS.maxReplicas
+                                        maxReplicas: MAS.maxReplicas,
+                                        batchingPermitted: MAS.batchingPermitted ? 'True' : 'False'
                                     }}
                                 />
                             </Col>

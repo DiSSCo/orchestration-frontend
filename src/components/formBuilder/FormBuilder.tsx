@@ -26,6 +26,7 @@ import MASForm from 'components/MAS/components/MASForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
+import BooleanField from './formFields/BooleanField';
 import SelectField from './formFields/SelectField';
 import ArrayField from './formFields/ArrayField';
 import MappingSelect from './formFields/MappingSelect';
@@ -35,19 +36,19 @@ import MASFiltersField from './formFields/MASFiltersField';
 
 /* Function to determine the form field by type */
 const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[]) => {
-    console.log(fieldName, fieldType, options);
-
     switch (fieldType) {
         case 'text':
             return <InputField name={fieldName} visibleName={visibleName} />;
         case 'textarea':
             return <InputTextArea name={fieldName} visibleName={visibleName} />;
         case 'number':
-            return <InputField name={fieldName} visibleName={visibleName} />
+            return <InputField name={fieldName} visibleName={visibleName} />;
+        case 'boolean':
+            return <BooleanField name={fieldName} visibleName={visibleName} />;
         case 'select':
             return <SelectField name={fieldName} visibleName={visibleName} options={options} />;
         case 'array':
-            return <ArrayField name={fieldName} visibleName={visibleName} />
+            return <ArrayField name={fieldName} visibleName={visibleName} />;
         case 'mappingSelect':
             return <MappingSelect />;
         case 'mapping':

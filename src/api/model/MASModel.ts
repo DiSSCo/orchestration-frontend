@@ -20,7 +20,8 @@ const MASModel = (result: Dict) => {
         dependencies: result.attributes.dependencies,
         supportContact: result.attributes.supportContact,
         slaDocumentation: result.attributes.slaDocumentation,
-        maxReplicas: result.attributes.maxReplicas
+        maxReplicas: result.attributes.maxReplicas,
+        batchingPermitted: result.attributes.batchingPermitted
     }
 
     return MAS;

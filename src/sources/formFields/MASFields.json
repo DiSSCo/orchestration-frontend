@@ -81,6 +81,12 @@
             "alias": "MASMaxReplicas",
             "type": "number",
             "defaultValue": 1
+        },
+        {
+            "name": "batchingPermitted",
+            "alias": "MASBatchingPermitted",
+            "type": "boolean",
+            "defaultValue": false
         }
     ]
 }

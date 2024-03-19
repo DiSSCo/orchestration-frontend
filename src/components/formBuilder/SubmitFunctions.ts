@@ -116,7 +116,8 @@ const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
                 dependencies: form.MASDependencies,
                 supportContact: form.MASSupportContact,
                 slaDocumentation: form.MASSlaDocumentation,
-                maxReplicas: form.MASMaxReplicas
+                maxReplicas: form.MASMaxReplicas,
+                batchingPermitted: form.MASBatchingPermitted
             }
         }
     }
