@@ -215,6 +215,15 @@ p {
   background-color: #CBCCD4;
 }
 
+.primaryButton.delete {
+  background-color: var(--denied);
+}
+
+.primaryButton.delete:hover {
+  background-color: var(--denied);
+  filter: brightness(130%);
+}
+
 .button-no-style {
   background-color: inherit;
   border: none;

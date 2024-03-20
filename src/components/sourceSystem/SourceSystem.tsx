@@ -18,6 +18,7 @@ import MappingTab from 'components/mapping/components/MappingTab';
 
 /* Import API */
 import GetSourceSystem from 'api/sourceSystem/GetSourceSystem';
+import DeleteSourceSystem from 'api/sourceSystem/DeleteSourceSystem';
 
 
 const SourceSystem = () => {
@@ -71,14 +72,34 @@ const SourceSystem = () => {
                                 />
                             </Col>
                             {KeycloakService.IsLoggedIn() &&
-                                <Col className="col-lg-auto">
-                                    <button type="button"
-                                        className="primaryButton px-3 py-1"
-                                        onClick={() => navigate(`edit`)}
-                                    >
-                                        Edit
-                                    </button>
-                                </Col>
+                                <>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton px-3 py-1"
+                                            onClick={() => navigate(`edit`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </Col>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton delete px-3 py-1"
+                                            onClick={() => {
+                                                if (window.confirm('Are you sure you want to delete this Source System?')) {
+                                                    DeleteSourceSystem(sourceSystem.id, KeycloakService.GetToken()).then((success) => {
+                                                        if (success) {
+                                                            navigate('/');
+                                                        }
+                                                    }).catch(error => {
+                                                        console.warn(error);
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </Col>
+                                </>
                             }
                         </Row>
                         <Row className="flex-grow-1">

@@ -73,7 +73,8 @@ export interface MAS {
     dependencies: [],
     supportContact: string,
     slaDocumentation: string,
-    maxReplicas: number
+    maxReplicas: number,
+    batchingPermitted: boolean
 }
 
 /* Edit Target Type */

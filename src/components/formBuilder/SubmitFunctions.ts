@@ -98,6 +98,14 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
 }
 
 const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
+    /* For each target filter, add the necessary prefix of '$/' */
+    const targetDigitalObjectFilters: Dict = {};
+
+    Object.entries(form.targetDigitalObjectFilters).forEach((filterKeyValuePair: [string, any]) => {
+        targetDigitalObjectFilters[`$.${filterKeyValuePair[0]}`] = filterKeyValuePair[1];
+    });
+
+    /* Create MAS record */
     const MASRecord = {
         data: {
             type: 'machineAnnotationService',
@@ -105,7 +113,7 @@ const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
                 name: form.MASName,
                 containerImage: form.MASContainerImage,
                 containerTag: form.MASContainerTag,
-                targetDigitalObjectFilters: form.targetDigitalObjectFilters,
+                targetDigitalObjectFilters: targetDigitalObjectFilters,
                 topicName: form.MASTopicName,
                 serviceDescription: form.MASServiceDescription,
                 serviceState: form.MASServiceState,
@@ -116,7 +124,8 @@ const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
                 dependencies: form.MASDependencies,
                 supportContact: form.MASSupportContact,
                 slaDocumentation: form.MASSlaDocumentation,
-                maxReplicas: form.MASMaxReplicas
+                maxReplicas: form.MASMaxReplicas,
+                batchingPermitted: form.MASBatchingPermitted
             }
         }
     }

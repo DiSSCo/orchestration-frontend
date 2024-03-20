@@ -22,6 +22,7 @@ import MASDependenciesTab from './components/MASDependenciesTab';
 
 /* Import API */
 import GetMAS from 'api/mas/GetMAS';
+import DeleteMAS from 'api/mas/DeleteMAS';
 
 
 const MAS = () => {
@@ -33,14 +34,14 @@ const MAS = () => {
     /* Base variables */
     const MAS = useAppSelector(getMachineAnnotationService);
 
-    /* OnLoad: fetch Source System */
+    /* OnLoad: fetch Machine Annotation Service */
     useEffect(() => {
         const MASId = `${params.prefix}/${params.suffix}`;
 
         if (MAS?.id !== MASId) {
             GetMAS(MASId).then((MAS) => {
                 if (MAS) {
-                    /* Set Source System */
+                    /* Set Machine Annotation Service */
                     dispatch(setMachineAnnotationService(MAS));
                 } else {
                     /* Not found: return to Home */
@@ -75,14 +76,34 @@ const MAS = () => {
                                 />
                             </Col>
                             {KeycloakService.IsLoggedIn() &&
-                                <Col className="col-lg-auto">
-                                    <button type="button"
-                                        className="primaryButton px-3 py-1"
-                                        onClick={() => navigate(`edit`)}
-                                    >
-                                        Edit
-                                    </button>
-                                </Col>
+                                <>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton px-3 py-1"
+                                            onClick={() => navigate(`edit`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </Col>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton delete px-3 py-1"
+                                            onClick={() => {
+                                                if (window.confirm('Are you sure you want to delete this MAS?')) {
+                                                    DeleteMAS(MAS.id, KeycloakService.GetToken()).then((success) => {
+                                                        if (success) {
+                                                            navigate('/');
+                                                        }
+                                                    }).catch(error => {
+                                                        console.warn(error);
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </Col>
+                                </>
                             }
                         </Row>
                         <Row className="flex-grow-1">
@@ -98,7 +119,8 @@ const MAS = () => {
                                         codeLicense: MAS.codeLicense,
                                         supportContact: MAS.supportContact,
                                         slaDocumentation: MAS.slaDocumentation,
-                                        maxReplicas: MAS.maxReplicas
+                                        maxReplicas: MAS.maxReplicas,
+                                        batchingPermitted: MAS.batchingPermitted ? 'True' : 'False'
                                     }}
                                 />
                             </Col>
