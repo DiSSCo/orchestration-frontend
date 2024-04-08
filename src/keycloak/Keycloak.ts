@@ -8,14 +8,16 @@ import { EmptyCallback } from "app/Types";
 const keycloak = new Keycloak({
     url: "https://login-demo.dissco.eu/auth",
     realm: "dissco",
-    clientId: "orchestration-service"
+    clientId: "orchestration-service",
+    
 });
 
 const InitKeyCloak = (callback: EmptyCallback) => {
     keycloak.init({
         onLoad: "check-sso",
         silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
-        pkceMethod: "S256"
+        pkceMethod: "S256",
+        scope: 'roles'
     })
         .then((_authenticated) => {
             callback();
@@ -40,7 +42,7 @@ const UpdateToken = (successCallback: EmptyCallback) =>
 
 const GetSubject = () => keycloak.subject;
 
-const HasRole = (roles: any) => roles.some((role: any) => keycloak.hasRealmRole(role));
+const HasRole = (roles: any) => roles.some((role: any) => keycloak.hasResourceRole(role));
 
 const KeycloakService = {
     InitKeyCloak,
