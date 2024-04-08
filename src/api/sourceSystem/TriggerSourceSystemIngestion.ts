@@ -6,7 +6,7 @@ import { JSONResult } from "app/Types";
 
 
 const TriggerSourceSystemIngestion = async (sourceSystemId?: string, token?: string) => {
-    let response;
+    let response: JSONResult | undefined;
 
     if (sourceSystemId && token) {
         const endPoint = `/source-system/${sourceSystemId}/run`;
@@ -22,9 +22,7 @@ const TriggerSourceSystemIngestion = async (sourceSystemId?: string, token?: str
                 }
             });
 
-            const data: JSONResult = result.data;
-
-            console.log(result);
+            response = result.data;
         } catch (error) {
             console.warn(error);
         }

@@ -52,9 +52,7 @@ const SourceSystem = () => {
 
     /* Function to run a Source System Ingestion */
     const RunIngestion = () => {
-        TriggerSourceSystemIngestion(sourceSystem?.id, KeycloakService.GetToken()).then((response) => {
-            console.log(response);
-        }).catch(error => {
+        TriggerSourceSystemIngestion(sourceSystem?.id, KeycloakService.GetToken()).then((_response) => {}).catch(error => {
             console.warn(error);
         })
     }
