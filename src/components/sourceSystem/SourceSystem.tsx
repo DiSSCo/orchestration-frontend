@@ -18,6 +18,7 @@ import MappingTab from 'components/mapping/components/MappingTab';
 
 /* Import API */
 import GetSourceSystem from 'api/sourceSystem/GetSourceSystem';
+import TriggerSourceSystemIngestion from 'api/sourceSystem/TriggerSourceSystemIngestion';
 import DeleteSourceSystem from 'api/sourceSystem/DeleteSourceSystem';
 
 
@@ -49,6 +50,15 @@ const SourceSystem = () => {
         }
     }, []);
 
+    /* Function to run a Source System Ingestion */
+    const RunIngestion = () => {
+        TriggerSourceSystemIngestion(sourceSystem?.id, KeycloakService.GetToken()).then((response) => {
+            console.log(response);
+        }).catch(error => {
+            console.warn(error);
+        })
+    }
+
     /* Class Names */
     const classTabList = classNames({
         'tabsList': true
@@ -73,6 +83,14 @@ const SourceSystem = () => {
                             </Col>
                             {(KeycloakService.IsLoggedIn() && KeycloakService.HasRole(['orchestration-admin'])) &&
                                 <>
+                                    <Col className="col-lg-auto">
+                                        <button type="button"
+                                            className="primaryButton px-3 py-1"
+                                            onClick={() => RunIngestion()}
+                                        >
+                                            Run Ingestion
+                                        </button>
+                                    </Col>
                                     <Col className="col-lg-auto">
                                         <button type="button"
                                             className="primaryButton px-3 py-1"
