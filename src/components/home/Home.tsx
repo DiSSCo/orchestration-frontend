@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
+import KeycloakService from 'keycloak/Keycloak';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
@@ -90,23 +91,25 @@ const Home = () => {
             <Container className="content py-5">
                 <Row className="h-100">
                     <Col className="h-100">
-                        <div className="position-relative">
-                            <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
-                                onClick={() => {
-                                    let routeString: string;
+                        {KeycloakService.HasRole(['orchestration-admin']) &&
+                            <div className="position-relative">
+                                <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
+                                    onClick={() => {
+                                        let routeString: string;
 
-                                    if (chosenTab === 'MAS') {
-                                        routeString = chosenTab;
-                                    } else {
-                                        routeString = ReparseString(chosenTab);
-                                    }
+                                        if (chosenTab === 'MAS') {
+                                            routeString = chosenTab;
+                                        } else {
+                                            routeString = ReparseString(chosenTab);
+                                        }
 
-                                    navigate(`${routeString}/add`);
-                                }}
-                            >
-                                Add {chosenTab}
-                            </button>
-                        </div>
+                                        navigate(`${routeString}/add`);
+                                    }}
+                                >
+                                    Add {chosenTab}
+                                </button>
+                            </div>
+                        }
 
                         {/* Tabs with different orchestration services */}
                         <Tabs className="h-100" onSelect={(tab) => SetChosenTab(tab)}>

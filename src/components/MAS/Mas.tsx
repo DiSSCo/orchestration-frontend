@@ -75,7 +75,7 @@ const MAS = () => {
                                     subTitle="Machine Annotation Services"
                                 />
                             </Col>
-                            {KeycloakService.IsLoggedIn() &&
+                            {(KeycloakService.IsLoggedIn() && KeycloakService.HasRole(['orchestration-admin'])) &&
                                 <>
                                     <Col className="col-lg-auto">
                                         <button type="button"

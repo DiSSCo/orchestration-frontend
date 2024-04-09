@@ -23,20 +23,25 @@ const App = () => {
   if (KeycloakService.IsLoggedIn()) {
     return (
       <Router>
-        <Routes>
+        <Routes>s
           <Route path="/" element={<Home />} />
 
           <Route path="/sourceSystem/:prefix/:suffix" element={<SourceSystem />} />
-          <Route path="/sourceSystem/add" element={<FormBuilder />} />
-          <Route path="/sourceSystem/:prefix/:suffix/edit" element={<FormBuilder />} />
-
           <Route path="/mapping/:prefix/:suffix" element={<Mapping />} />
-          <Route path="/mapping/add" element={<FormBuilder />} />
-          <Route path="/mapping/:prefix/:suffix/edit" element={<FormBuilder />} />
-
           <Route path="/MAS/:prefix/:suffix" element={<Mas />} />
-          <Route path="/MAS/add" element={<FormBuilder />} />
-          <Route path="/MAS/:prefix/:suffix/edit" element={<FormBuilder />} />
+
+          {KeycloakService.HasRole(['orchestration-admin']) &&
+            <>
+              <Route path="/sourceSystem/add" element={<FormBuilder />} />
+              <Route path="/sourceSystem/:prefix/:suffix/edit" element={<FormBuilder />} />
+
+              <Route path="/mapping/add" element={<FormBuilder />} />
+              <Route path="/mapping/:prefix/:suffix/edit" element={<FormBuilder />} />
+
+              <Route path="/MAS/add" element={<FormBuilder />} />
+              <Route path="/MAS/:prefix/:suffix/edit" element={<FormBuilder />} />
+            </>
+          }
         </Routes>
       </Router>
     );
