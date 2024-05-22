@@ -18,7 +18,7 @@ const GetUser = async (userId?: string, token?: string) => {
             const result = await axios({
                 method: "get",
                 url: endPoint,
-                baseURL: 'https://sandbox.dissco.tech/api/v1',
+                baseURL: `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api/v1`.replace('-orchestration', '').replace('orchestration', 'sandbox'),
                 responseType: 'json',
                 headers: {
                     'Content-type': 'application/json',
