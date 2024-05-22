@@ -37,7 +37,7 @@ const Profile = () => {
     const OnSelect = (eventKey: string | null) => {
         switch (eventKey) {
             case '1':
-                window.open('https://sandbox.dissco.tech/profile', '_blank', 'noopener');
+                window.open(`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/profile`.replace('-orchestration', '').replace('orchestration', 'sandbox'), '_blank', 'noopener');
                 break;
             case '2':
                 KeycloakService.Logout();
