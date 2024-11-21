@@ -1,349 +1,42 @@
-/* Root variables */
-
-:root {
-  --primary: #4d59a2;
-  --secondary: #51a993;
-  --accent: #28bacb;
-  --main-color: #0C86C6;
-  --main-color-light: #d6e0f5;
-  --main-color-dark: #1c497d;
-  --alt-color-1: #00BAAF;
-  --alt-color-2: #00BED1;
-  --alt-color-3: #0099B9;
-  --main-color-green: #009973;
-
-  --greyXLight: #F4F4F1;
-  --greyLight: #E9E8E3;
-  --grey: #D9D9DF;
-  --greyMedium: #B4B4BF;
-  --greyDark: #868696;
-
-  --new: #10C1FF;
-  --handled: #F7A112;
-  --approved: #3DCA77;
-  --denied: #E74C3C;
-  --resolved: var(--greyMedium);
-}
-
-
-/* Global Styling */
-
-html {
-  height: 100vh;
-  font-size: 0.85vw;
-}
-
-body {
-  height: 100%;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #F9FAFC;
-}
-
-.root {
-  height: 100%;
-}
-
-.content {
-  height: 90%;
-}
-
-p {
-  margin: 0;
-}
-
-/* Font sizes, default is 16px */
-.fs-1 {
-  font-size: 2.5rem !important;
-}
-
-.fs-2 {
-  font-size: 1.5rem !important;
-}
-
-.fs-3 {
-  font-size: 1.125rem !important;
-}
-
-.fs-4 {
-  font-size: 0.875rem !important;
-}
-
-.fs-5 {
-  font-size: 0.75rem !important;
-}
-
-/* Colors */
-.c-primary {
-  color: var(--primary);
-}
-
-.c-secondary {
-  color: var(--secondary);
-}
-
-.c-accent {
-  color: var(--accent);
-}
-
-.c-white {
-  color: white;
-}
-
-.c-grey {
-  color: #ACAAD4;
-}
-
-.c-denied {
-  color: var(--denied);
-}
-
-/* Border radius */
-.rounded-c {
-  border-radius: 8px;
-}
-
-/* Backgrounds */
-.bgc-primary {
-  background-color: var(--primary);
-}
-
-.bgc-secondary {
-  background-color: var(--secondary);
-}
-
-.bgc-accent {
-  backdrop-filter: var(--accent);
-}
-
-.bgc-tableHover {
-  background-color: rgb(152, 205, 191);
-}
-
-.bgc-white {
-  background-color: white;
-}
-
-.bgc-grey {
-  background-color: #E9E8E3;
-}
-
-.bgc-disabled {
-  opacity: 0.6;
-}
-
-/* Border */
-.b-none {
-  border: none;
-}
-
-.b-primary {
-  border: 1px solid var(--primary);
-}
-
-.b-secondary {
-  border: 1px solid var(--secondary);
-}
-
-.b-accent {
-  border: 1px solid var(--accent);
-}
-
-.b-bottom-grey {
-  border-bottom: 1px solid var(--grey);
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
-/* Font Weight */
-.fw-lightBold {
-  font-weight: 500;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-
-/* Cursor */
-.c-pointer {
-  cursor: pointer;
-}
-
-/* Overflow */
-.overflow-y-scroll {
-  overflow-y: scroll;
-}
-
-.overflow-y-hidden {
-  overflow-y: hidden;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
-}
-
-/* Text overflow */
-.textOverflow {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-
-/* Custom Component Styling */
-.title {
-  font-size: 1.875rem;
-}
-
-.primaryButton {
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 999px;
-  transition: 0.4s;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.primaryButton:hover {
-  background-color: var(--accent);
-}
-
-.primaryButton.cancel {
-  background-color: #CBCCD4;
-}
-
-.primaryButton.delete {
-  background-color: var(--denied);
-}
-
-.primaryButton.delete:hover {
-  background-color: var(--denied);
-  filter: brightness(130%);
-}
-
-.button-no-style {
-  background-color: inherit;
-  border: none;
-}
-
-.formField {
-  border: 1px solid var(--grey);
-  border-radius: 8px;
-}
-
-.formField.textArea {
-  resize: none;
-}
-
-
-/* Bootstrap class overwrite */
-.tab-content {
-  height: Calc(100% - 41px);
-  border-top: 1px solid #d9d9d9;
-}
-
-.nav-tabs .nav-item.show,
-.nav-tabs .nav-link.active {
-  color: white;
-  background-color: var(--main-color-dark);
-  border-color: none;
-}
-
-.nav-link {
-  color: #333333;
-  font-size: 14px;
-}
-
-.nav-tabs {
-  border-bottom: none;
-}
-
-.nav-tabs .nav-link:hover {
-  color: gray
-}
-
-.tab-pane {
-  height: 100%;
-  padding-top: 2%;
-}
-
-li.page-item.active .page-link {
-  background-color: var(--secondary);
-  border: none;
-}
-
-.dropdown {
-  padding-right: 0;
-}
-
-.dropdown-toggle {
-  background-color: #F9FAFC !important;
-  color: #333333 !important;
-  border: 1px solid #F9FAFC !important;
-}
-
-.dropdown-toggle:hover {
-  background-color: white !important;
-  border: 1px solid var(--secondary) !important;
-}
-
-
-/* AG Table Overwrite */
-.ag-root-wrapper {
-  border-radius: 8px;
-}
-
-.ag-row-hover {
-  background-color: #a1d8ca !important;
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
-
-.ag-header {
-  background-color: var(--secondary) !important;
-}
-
-.ag-header-cell {
-  color: white;
-}
-
-
-/* Bootstrap Modal */
-.modal-dialog {
-  height: 100%;
-  margin: 0 auto !important;
-}
-
-.modal-content {
-  background-color: rgba(255, 255, 255, 0);
-  height: 84.8%;
-  overflow: hidden;
-  padding-top: 11.2%;
-  border: none;
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.modalHeader {
-  background-color: var(--primary);
-  color: white
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* React Tabs */
-.tabsList {
-  padding: 0;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-.tab {
-  background-color: #E6E2F1;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  padding-left: 2%;
-  padding-right: 2%;
-  margin-right: 1%;
+.card {
+  padding: 2em;
 }
 
-.tab.active {
-  background-color: var(--primary);
-  color: white;
-  font-weight: bold;
+.read-the-docs {
+  color: #888;
 }
