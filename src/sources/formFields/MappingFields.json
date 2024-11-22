@@ -1,0 +1,53 @@
+{
+    "pages": [
+        {
+            "fields": [
+                {
+                    "name": "name",
+                    "alias": "mappingName",
+                    "type": "text"
+                },
+                {
+                    "name": "description",
+                    "alias": "mappingDescription",
+                    "type": "textarea"
+                },
+                {
+                    "name": "sourceDataStandard",
+                    "alias": "mappingSourceDataStandard",
+                    "type": "select",
+                    "options": [
+                        {
+                            "name": "dwca",
+                            "label": "DarwinCore"
+                        },
+                        {
+                            "name": "biocase",
+                            "label": "ABCD"
+                        },
+                        {
+                            "name": "biocase",
+                            "label": "ABCD-EFG"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "fields": [
+                {
+                    "name": "defaults",
+                    "type": "mapping"
+                }
+            ]
+        },
+        {
+            "fields": [
+                {
+                    "name": "mapping",
+                    "type": "mapping"
+                }
+            ]
+        }
+    ]
+}

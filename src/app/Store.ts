@@ -3,11 +3,19 @@ import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/t
 import type { PreloadedStateShapeFromReducersMapObject } from '@reduxjs/toolkit';
 
 /* Import Redux Slices */
+import GeneralReducer from 'redux-store/GeneralSlice';
 import SourceSystemReducer from 'redux-store/SourceSystemSlice';
+import MappingReducer from 'redux-store/MappingSlice';
+import MASReducer from 'redux-store/MasSlice';
+import EditReducer from 'redux-store/EditSlice';
 
 
 const rootReducer = combineReducers({
-  sourceSystem: SourceSystemReducer
+  general: GeneralReducer,
+  sourceSystem: SourceSystemReducer,
+  mapping: MappingReducer,
+  machineAnnotationServices: MASReducer,
+  edit: EditReducer
 });
 
 export const setupStore = (preloadedState?: PreloadedStateShapeFromReducersMapObject<RootState>) => {
