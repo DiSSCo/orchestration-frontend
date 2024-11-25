@@ -3,9 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-// import { SourceSystem } from 'app/Types';
-
-type SourceSystem = any;
+import { SourceSystem } from 'app/Types';
 
 
 export interface SourceSystemState {

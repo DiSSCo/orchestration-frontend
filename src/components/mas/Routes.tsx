@@ -8,9 +8,9 @@ import FormBuilder from "components/formBuilder/FormBuilder";
 
 /* Routes associated with the Home page */
 const routes = [
-    <Route path="/mas/:prefix/:suffix" element={<MAS/>} />,
-    <Route path="/mas/add" element={<FormBuilder />} />,
-    <Route path="/mas/:prefix/:suffix/edit" element={<FormBuilder />} />
+    <Route key="mas" path="/mas/:prefix/:suffix" element={<MAS/>} />,
+    <Route key="masAdd" path="/mas/add" element={<FormBuilder />} />,
+    <Route key="masEdit" path="/mas/:prefix/:suffix/edit" element={<FormBuilder />} />
 ];
 
 export default routes;
