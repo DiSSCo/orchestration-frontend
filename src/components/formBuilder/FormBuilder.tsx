@@ -30,7 +30,7 @@ import SelectField from './formFields/SelectField';
 import ArrayField from './formFields/ArrayField';
 import MappingSelect from './formFields/MappingSelect';
 import MappingField from './formFields/MappingField';
-import MASFiltersField from './formFields/MASFiltersField';
+import MasFiltersField from './formFields/MasFiltersField';
 import { Header } from 'components/elements/Elements';
 
 
@@ -54,7 +54,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'mapping':
             return <MappingField name={fieldName} visibleName={visibleName} />;
         case 'MASFilters':
-            return <MASFiltersField name={fieldName} visibleName={visibleName} />;
+            return <MasFiltersField name={fieldName} visibleName={visibleName} />;
         default:
             return;
     }
