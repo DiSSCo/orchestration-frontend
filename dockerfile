@@ -1,5 +1,5 @@
 # Pull official node image as base
-FROM node:18.7.0-alpine3.16 as build
+FROM node:20.15.1-alpine3.19 as build
 
 # Set working directory
 WORKDIR /orchestration-frontend
@@ -8,8 +8,7 @@ WORKDIR /orchestration-frontend
 COPY package.json ./
 COPY package-lock.json ./
 
-RUN npm install npm@9.6.0
-RUN npm install react-scripts@5.0.1
+RUN npm install npm@10.8.2
 
 # Copy application
 COPY . ./
