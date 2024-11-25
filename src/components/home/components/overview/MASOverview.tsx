@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getMachineAnnotationServices } from 'redux/MAS/MASSlice';
+import { getMachineAnnotationServices } from 'redux-store/MasSlice';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -13,13 +13,6 @@ import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
 
 /* Import Components */
 import DataTable from 'components/general/tables/DataTable';
-
-
-/* Props Typing */
-interface Props {
-    ToggleModal: Function,
-    UpdateMachineAnnotationServices: Function
-};
 
 
 const MASOverview = () => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
+import { getSourceSystems } from 'redux-store/SourceSystemSlice';
 
 /* Import Types */
 import { Dict } from 'app/Types';

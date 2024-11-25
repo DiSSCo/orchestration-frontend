@@ -12,7 +12,7 @@ import { RankingInfo, rankItem } from '@tanstack/match-sorter-utils'
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getWindowDimensions } from 'redux/general/GeneralSlice';
+import { getWindowDimensions } from 'redux-store/GeneralSlice';
 
 /* Import Types */
 import { Dict } from 'app/Types';

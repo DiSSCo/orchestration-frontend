@@ -2,21 +2,19 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import KeycloakService from 'app/Keycloak';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMapping, setMapping } from 'redux/mapping/MappingSlice';
-
-/* Import Utilities */
-import KeycloakService from 'keycloak/Keycloak';
+import { getMapping, setMapping } from 'redux-store/MappingSlice';
 
 /* Import Components */
-import Header from 'components/Header/Header';
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
 import MappingTab from './components/MappingTab';
+import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetMapping from 'api/mapping/GetMapping';

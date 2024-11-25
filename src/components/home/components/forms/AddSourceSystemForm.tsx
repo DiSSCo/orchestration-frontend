@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getMappings } from 'redux/mapping/MappingSlice'
+import { getMappings } from 'redux-store/MappingSlice'
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';

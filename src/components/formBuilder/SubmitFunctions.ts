@@ -1,5 +1,5 @@
-/* Import Utilities */
-import KeycloakService from "keycloak/Keycloak";
+/* Import Dependencies */
+import KeycloakService from "app/Keycloak";
 
 /* Import Types */
 import { SourceSystem, Mapping, MAS, EditTarget, Dict } from "app/Types";

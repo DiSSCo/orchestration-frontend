@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { useEffect, useState } from 'react';
-import KeycloakService from 'keycloak/Keycloak';
+import KeycloakService from 'app/Keycloak';
 import { Row, Col, Dropdown } from 'react-bootstrap';
 
 /* Import Types */

@@ -3,18 +3,18 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
-import KeycloakService from 'keycloak/Keycloak';
+import KeycloakService from 'app/Keycloak';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getSourceSystem, setSourceSystem } from 'redux/sourceSystem/SourceSystemSlice';
+import { getSourceSystem, setSourceSystem } from 'redux-store/SourceSystemSlice';
 
 /* Import Components */
-import Header from 'components/Header/Header';
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
 import MappingTab from 'components/mapping/components/MappingTab';
+import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystem from 'api/sourceSystem/GetSourceSystem';

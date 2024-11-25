@@ -16,7 +16,7 @@ interface Props {
 };
 
 
-const AddMappingForm = (props: Props, secondary?: boolean) => {
+const AddMappingForm = (props: Props) => {
     const { SetBaseStandard } = props;
 
     return (

@@ -6,8 +6,8 @@ import { Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMappings, setMappings } from 'redux/mapping/MappingSlice';
-import { getEditTarget } from 'redux/edit/EditSlice';
+import { getMappings, setMappings } from 'redux-store/MappingSlice';
+import { getEditTarget } from 'redux-store/EditSlice';
 
 /* Import API */
 import GetMappings from 'api/mapping/GetMappings';

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getMappings } from 'redux/mapping/MappingSlice';
+import { getMappings } from 'redux-store/MappingSlice';
 
 /* Import Types */
 import { Dict } from 'app/Types';

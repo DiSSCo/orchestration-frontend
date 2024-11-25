@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
-import KeycloakService from 'keycloak/Keycloak';
+import KeycloakService from 'app/Keycloak';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppDispatch } from 'app/Hooks';
-import { setSourceSystems } from 'redux/sourceSystem/SourceSystemSlice';
-import { setMappings } from 'redux/mapping/MappingSlice';
-import { setMachineAnnotationServices } from 'redux/MAS/MASSlice';
+import { setSourceSystems } from 'redux-store/SourceSystemSlice';
+import { setMappings } from 'redux-store/MappingSlice';
+import { setMachineAnnotationServices } from 'redux-store/MasSlice';
 
 /* Import Utilities */
 import { ReparseString } from 'app/Utilities';
@@ -19,10 +19,10 @@ import { ReparseString } from 'app/Utilities';
 import styles from 'components/home/home.module.scss';
 
 /* Import Components */
-import Header from 'components/Header/Header';
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
 import MappingsOverview from './components/overview/MappingsOverview';
 import MASOverview from './components/overview/MASOverview';
+import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
@@ -31,6 +31,8 @@ import GetMASes from 'api/mas/GetMASes';
 
 
 const Home = () => {
+    console.log(KeycloakService.GetParsedToken())
+
     /* Hooks */
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

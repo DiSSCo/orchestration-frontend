@@ -1,5 +1,5 @@
 /* Import Components */
-import KeycloakService from 'keycloak/Keycloak';
+import KeycloakService from 'app/Keycloak';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Webroot */

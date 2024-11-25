@@ -2,30 +2,28 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import KeycloakService from 'app/Keycloak';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMachineAnnotationService, setMachineAnnotationService } from 'redux/MAS/MASSlice';
-
-/* Import Utilities */
-import KeycloakService from 'keycloak/Keycloak';
+import { getMachineAnnotationService, setMachineAnnotationService } from 'redux-store/MasSlice';
 
 /* Import Components */
-import Header from 'components/Header/Header';
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
 import MASServiceTab from './components/MASServiceTab';
 import MASTargetDigitalObjectFiltersTab from './components/MASTargetDigitalObjectFiltersTab';
 import MASDependenciesTab from './components/MASDependenciesTab';
+import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetMAS from 'api/mas/GetMAS';
 import DeleteMAS from 'api/mas/DeleteMAS';
 
 
-const MAS = () => {
+const Mas = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const params = useParams();
@@ -156,4 +154,4 @@ const MAS = () => {
     );
 }
 
-export default MAS;
+export default Mas;

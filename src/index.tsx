@@ -1,9 +1,11 @@
 /* Import Dependencies */
-import ReactDOM from 'react-dom/client';
 import axios from "axios";
+import ReactDOM from 'react-dom/client';
+import KeycloakService from 'app/Keycloak';
 import { Provider } from 'react-redux';
-import { store } from 'app/Store';
-import KeycloakService from 'keycloak/Keycloak';
+
+/* Import Store */
+import { setupStore } from './app/Store';
 
 /* Import Styles */
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,7 +23,7 @@ const RenderRoot = () => {
   );
 
   root.render(
-    <Provider store={store}>
+    <Provider store={setupStore()}>
       <App />
     </Provider>
   );

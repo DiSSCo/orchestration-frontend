@@ -1,26 +1,33 @@
 /* Import Dependencies */
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import type { PreloadedStateShapeFromReducersMapObject } from '@reduxjs/toolkit';
 
 /* Import Redux Slices */
-import GeneralReducer from 'redux/general/GeneralSlice';
-import SourceSystemReducer from 'redux/sourceSystem/SourceSystemSlice';
-import MappingReducer from 'redux/mapping/MappingSlice';
-import MASReducer from 'redux/MAS/MASSlice';
-import EditReducer from 'redux/edit/EditSlice';
+import GeneralReducer from 'redux-store/GeneralSlice';
+import SourceSystemReducer from 'redux-store/SourceSystemSlice';
+import MappingReducer from 'redux-store/MappingSlice';
+import MASReducer from 'redux-store/MasSlice';
+import EditReducer from 'redux-store/EditSlice';
 
 
-export const store = configureStore({
-  reducer: {
-    general: GeneralReducer,
-    sourceSystem: SourceSystemReducer,
-    mapping: MappingReducer,
-    machineAnnotationServices: MASReducer,
-    edit: EditReducer
-  },
+const rootReducer = combineReducers({
+  general: GeneralReducer,
+  sourceSystem: SourceSystemReducer,
+  mapping: MappingReducer,
+  machineAnnotationServices: MASReducer,
+  edit: EditReducer
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export const setupStore = (preloadedState?: PreloadedStateShapeFromReducersMapObject<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState
+  });
+};
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

@@ -9,7 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getEditTarget, setEditTarget } from 'redux/edit/EditSlice';
+import { getEditTarget, setEditTarget } from 'redux-store/EditSlice';
 
 /* Import Types */
 import { EditTarget, Dict } from 'app/Types';
@@ -19,10 +19,9 @@ import { SubmitSourceSystem, SubmitMapping, SubmitMAS } from './SubmitFunctions'
 import { DefineEditTarget } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
-import Header from 'components/Header/Header';
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
 import MappingForm from 'components/mapping/components/MappingForm';
-import MASForm from 'components/MAS/components/MASForm';
+import MASForm from 'components/mas/components/MASForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
@@ -32,6 +31,7 @@ import ArrayField from './formFields/ArrayField';
 import MappingSelect from './formFields/MappingSelect';
 import MappingField from './formFields/MappingField';
 import MASFiltersField from './formFields/MASFiltersField';
+import { Header } from 'components/elements/Elements';
 
 
 /* Function to determine the form field by type */
