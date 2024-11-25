@@ -23,7 +23,7 @@ import GetMAS from 'api/mas/GetMAS';
 import DeleteMAS from 'api/mas/DeleteMAS';
 
 
-const MAS = () => {
+const Mas = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const params = useParams();
@@ -154,4 +154,4 @@ const MAS = () => {
     );
 }
 
-export default MAS;
+export default Mas;
