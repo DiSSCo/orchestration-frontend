@@ -15,13 +15,6 @@ import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
 import DataTable from 'components/general/tables/DataTable';
 
 
-/* Props Typing */
-interface Props {
-    ToggleModal: Function,
-    UpdateMachineAnnotationServices: Function
-};
-
-
 const MASOverview = () => {
     /* Hooks */
     const navigate = useNavigate();
