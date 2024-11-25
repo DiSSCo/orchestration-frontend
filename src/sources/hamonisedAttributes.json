@@ -1,22 +1,25 @@
 {
-    "ods:physicalSpecimenId": {
+    "ods:physicalSpecimenID": {
         "displayName": "Physical Specimen ID"
     },
     "ods:type": {
         "displayName": "Specimen Type"
     },
-    "ods:physicalSpecimenIdType": {
+    "ods:physicalSpecimenIDType": {
         "displayName": "Physical Specimen ID Type"
     },
-    "ods:organisationId": {
+    "ods:organisationID": {
         "displayName": "Organisation",
         "annotate": {
             "fieldType": "select",
             "options": []
         }
     },
-    "ods:sourceSystemId": {
+    "ods:sourceSystemID": {
         "displayName": "Source System"
+    },
+    "ods:topicDiscipline": {
+        "displayName": "Topic Discipline"
     },
     "dwca:id": {
         "displayName": "DarwinCore Archive ID"
@@ -27,7 +30,7 @@
     "ods:physicalSpecimenCollection": {
         "displayName": "Physical Specimen Collection"
     },
-    "ods:datasetId": {
+    "ods:datasetID": {
         "displayName": "Dataset ID"
     },
     "ods:objectType": {

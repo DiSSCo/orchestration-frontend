@@ -2,17 +2,17 @@
 import { Row, Col, Card } from 'react-bootstrap';
 
 /* Import Types */
-import { MAS } from 'app/Types';
+import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
 
 /* Props Typing */
 interface Props {
-    MAS: MAS
+    mas: MachineAnnotationService
 };
 
 
-const MASDependenciesTab = (props: Props) => {
-    const { MAS } = props;
+const MasDependenciesTab = (props: Props) => {
+    const { mas } = props;
 
     return (
         <Card className="h-100">
@@ -27,7 +27,7 @@ const MASDependenciesTab = (props: Props) => {
 
                 <Row className="mt-3">
                     <Col>
-                        {MAS.dependencies.length ? MAS.dependencies.map((dependency, index) => {
+                        {/* {mas.dependencies.length ? mas.dependencies.map((dependency, index) => {
                             return (
                                 <Row key={dependency} className={index > 0 ? 'mt-3' : ''}>
                                     <Col>
@@ -37,9 +37,9 @@ const MASDependenciesTab = (props: Props) => {
                                     </Col>
                                 </Row>
                             );
-                        })
+                        }) */}
                             : <p> No dependencies attached to MAS </p>
-                        }
+                        {/* } */}
                     </Col>
                 </Row>
             </Card.Body>
@@ -47,4 +47,4 @@ const MASDependenciesTab = (props: Props) => {
     );
 }
 
-export default MASDependenciesTab;
+export default MasDependenciesTab;

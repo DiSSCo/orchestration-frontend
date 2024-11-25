@@ -1,15 +1,13 @@
 /* Import Dependencies */
 import axios from "axios";
 
-/* Import Model */
-import MappingModel from "api/model/MappingModel";
-
 /* Import Types */
-import { Mapping, JSONResult, Dict } from "app/Types";
+import { DataMapping } from "app/types/DataMapping";
+import { JSONResultArray } from "app/Types";
 
 
 const GetMappings = async () => {
-    let mappings = <Mapping[]>[];
+    let mappings = <DataMapping[]>[];
 
     const endPoint = "/mapping"
 
@@ -23,16 +21,16 @@ const GetMappings = async () => {
             responseType: 'json'
         });
 
-        const data: JSONResult = result.data;
+        const data: JSONResultArray = result.data;
 
-        Object.values(data.data).forEach((mapping) => {
-            mappings.push(MappingModel(mapping as Dict));
+        data.data.forEach((mapping) => {
+            mappings.push(mapping.attributes as DataMapping);
         });
     } catch (error) {
         console.warn(error);
     }
 
     return mappings;
-}
+};
 
 export default GetMappings;

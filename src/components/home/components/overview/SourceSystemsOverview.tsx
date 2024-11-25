@@ -41,9 +41,9 @@ const SourceSystemsOverview = () => {
     sourceSystems.forEach((sourceSystem) => {
         rows.push({
             index: index,
-            id: sourceSystem.id,
-            name: sourceSystem.name,
-            endpoint: sourceSystem.endpoint,
+            id: sourceSystem['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            name: sourceSystem['schema:name'],
+            endpoint: sourceSystem['schema:url'],
             type: "sourceSystem"
         });
 
@@ -61,6 +61,6 @@ const SourceSystemsOverview = () => {
             />
         </div>
     );
-}
+};
 
 export default SourceSystemsOverview;

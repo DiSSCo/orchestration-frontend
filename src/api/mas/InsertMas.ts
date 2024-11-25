@@ -2,20 +2,18 @@
 import axios from 'axios';
 
 /* Import Types */
-import { MAS, JSONResult, Dict } from 'app/Types';
-
-/* Import Model */
-import MASModel from 'api/model/MASModel';
+import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
+import { JSONResult, Dict } from 'app/Types';
 
 
-const PatchMAS = async (MASRecord: Dict, MASId: string, token?: string) => {
+const InsertMas = async (MASRecord: Dict, token?: string) => {
     if (MASRecord && token) {
-        let machineAnnoationService = <MAS>{};
+        let machineAnnoationService = <MachineAnnotationService>{};
 
-        const endPoint = `/mas/${MASId}`;
+        const endPoint = '/mas';
 
         await axios({
-            method: "patch",
+            method: "post",
             url: endPoint,
             data: MASRecord,
             responseType: 'json',
@@ -24,16 +22,16 @@ const PatchMAS = async (MASRecord: Dict, MASId: string, token?: string) => {
                 'Authorization': `Bearer ${token}`
             },
         }).then((result) => {
-            /* Set Machine annotation service */
+            /* Set Machine Annotation Service */
             const data: JSONResult = result.data;
 
-            machineAnnoationService = MASModel(data.data);
+            machineAnnoationService = data.data.attributes as MachineAnnotationService;
         }).catch((error) => {
             console.warn(error);
         });
 
         return machineAnnoationService;
     }
-}
+};
 
-export default PatchMAS;
+export default InsertMas;

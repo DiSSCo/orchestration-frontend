@@ -1,11 +1,12 @@
 /* Import Types */
-import { Mapping, Dict } from 'app/Types';
+import { DataMapping } from 'app/types/DataMapping';
+import { Dict } from 'app/Types';
 
 /* Import Sources */
 import MappingFields from 'sources/formFields/MappingFields.json';
 
 
-const MappingForm = (DetermineFormField: Function, mapping?: Mapping) => {
+const MappingForm = (DetermineFormField: Function, mapping?: DataMapping) => {
     const formFieldsPages: JSX.Element[][] = [];
     const initialValuesFields: Dict = {};
 
@@ -22,7 +23,9 @@ const MappingForm = (DetermineFormField: Function, mapping?: Mapping) => {
                 const reformatMappings: Dict[] = [];
 
                 /* Reformat mappings for form input */
-                mapping?.fieldMapping?.[field.name as keyof typeof mapping.fieldMapping].forEach((mapping) => {
+                console.log(mapping);
+
+                (mapping?.[field.name as keyof typeof mapping] as Dict[])?.forEach((mapping) => {
                     reformatMappings.push({
                         field: Object.keys(mapping)[0],
                         value: Object.values(mapping)[0]

@@ -13,34 +13,34 @@ import { getMachineAnnotationService, setMachineAnnotationService } from 'redux-
 /* Import Components */
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
-import MASServiceTab from './components/MASServiceTab';
-import MASTargetDigitalObjectFiltersTab from './components/MASTargetDigitalObjectFiltersTab';
-import MASDependenciesTab from './components/MASDependenciesTab';
+import MasServiceTab from './components/masServiceTab';
+import MasTargetDigitalObjectFiltersTab from './components/masTargetDigitalObjectFiltersTab';
+import MasDependenciesTab from './components/MasDependenciesTab';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
-import GetMAS from 'api/mas/GetMAS';
-import DeleteMAS from 'api/mas/DeleteMAS';
+import GetMAS from 'api/mas/GetMas';
+import DeleteMas from 'api/mas/DeleteMas';
 
 
-const MAS = () => {
+const Mas = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const params = useParams();
     const navigate = useNavigate();
 
     /* Base variables */
-    const MAS = useAppSelector(getMachineAnnotationService);
+    const mas = useAppSelector(getMachineAnnotationService);
 
     /* OnLoad: fetch Machine Annotation Service */
     useEffect(() => {
-        const MASId = `${params.prefix}/${params.suffix}`;
+        const masId = `${params.prefix}/${params.suffix}`;
 
-        if (MAS?.id !== MASId) {
-            GetMAS(MASId).then((MAS) => {
-                if (MAS) {
+        if (mas?.['@id'] !== masId) {
+            GetMAS(masId).then((mas) => {
+                if (mas) {
                     /* Set Machine Annotation Service */
-                    dispatch(setMachineAnnotationService(MAS));
+                    dispatch(setMachineAnnotationService(mas));
                 } else {
                     /* Not found: return to Home */
                     navigate('/');
@@ -65,11 +65,11 @@ const MAS = () => {
             <Header />
 
             <Container className="flex-grow-1 py-5">
-                {MAS &&
+                {mas &&
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={MAS.name}
+                                <TitleBar title={mas['schema:name']}
                                     subTitle="Machine Annotation Services"
                                 />
                             </Col>
@@ -88,7 +88,7 @@ const MAS = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this MAS?')) {
-                                                    DeleteMAS(MAS.id, KeycloakService.GetToken()).then((success) => {
+                                                    DeleteMas(mas['@id'], KeycloakService.GetToken()).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -106,19 +106,19 @@ const MAS = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={MAS.id}
+                                <IDCard identifier={mas['@id'] ?? mas['schema:identifier']}
                                     IDCardProperties={{
-                                        name: MAS.name,
-                                        containerImage: MAS.containerImage,
-                                        containerTag: MAS.containerTag,
-                                        topicName: MAS.topicName,
-                                        sourceCodeRepository: MAS.sourceCodeRepository,
-                                        codeMaintainer: MAS.codeMaintainer,
-                                        codeLicense: MAS.codeLicense,
-                                        supportContact: MAS.supportContact,
-                                        slaDocumentation: MAS.slaDocumentation,
-                                        maxReplicas: MAS.maxReplicas,
-                                        batchingPermitted: MAS.batchingPermitted ? 'True' : 'False'
+                                        name: mas['schema:name'],
+                                        containerImage: mas['ods:containerImage'],
+                                        containerTag: mas['ods:containerTag'],
+                                        topicName: mas['ods:topicName'],
+                                        sourceCodeRepository: mas['schema:codeRepository'],
+                                        codeMaintainer: mas['schema:maintainer']?.['schema:name'],
+                                        codeLicense: mas['schema:license'],
+                                        supportContact: mas['schema:ContactPoint']?.['schema:url'],
+                                        slaDocumentation: mas['ods:slaDocumentation'],
+                                        maxReplicas: mas['ods:maxReplicas'],
+                                        batchingPermitted: mas['ods:batchingPermitted']? 'True' : 'False'
                                     }}
                                 />
                             </Col>
@@ -132,17 +132,17 @@ const MAS = () => {
 
                                     {/* MAS Service Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MASServiceTab MAS={MAS} />
+                                        <MasServiceTab mas={mas} />
                                     </TabPanel>
 
                                     {/* MAS Target Digital Object Filters */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MASTargetDigitalObjectFiltersTab MAS={MAS} />
+                                        <MasTargetDigitalObjectFiltersTab mas={mas} />
                                     </TabPanel>
 
                                     {/* MAS Dependencies */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MASDependenciesTab MAS={MAS} />
+                                        <MasDependenciesTab mas={mas} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>
@@ -154,4 +154,4 @@ const MAS = () => {
     );
 }
 
-export default MAS;
+export default Mas;

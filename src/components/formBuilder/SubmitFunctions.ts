@@ -2,15 +2,18 @@
 import KeycloakService from "app/Keycloak";
 
 /* Import Types */
-import { SourceSystem, Mapping, MAS, EditTarget, Dict } from "app/Types";
+import { DataMapping } from "app/types/DataMapping";
+import { MachineAnnotationService } from "app/types/MachineAnnotationService";
+import { SourceSystem } from "app/types/SourceSystem";
+import { EditTarget, Dict } from "app/Types";
 
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
 import PatchSourceSystem from 'api/sourceSystem/PatchSourceSystem';
 import InsertMapping from 'api/mapping/InsertMapping';
 import PatchMapping from 'api/mapping/PatchMapping';
-import InsertMAS from "api/mas/InsertMAS";
-import PatchMAS from "api/mas/PatchMAS";
+import InsertMas from "api/mas/InsertMas";
+import PatchMas from "api/mas/PatchMas";
 
 
 const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
@@ -31,7 +34,7 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
     let sourceSystemResponse: SourceSystem | undefined;
 
     if (editTarget?.sourceSystem) {
-        await PatchSourceSystem(sourceSystemRecord, editTarget?.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
+        await PatchSourceSystem(sourceSystemRecord, editTarget?.sourceSystem["@id"] ?? '', KeycloakService.GetToken()).then((sourceSystem) => {
             sourceSystemResponse = sourceSystem;
         });
     } else {
@@ -78,10 +81,10 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     }
 
     /* If edit target is not empty, patch instead of insert */
-    let mappingResponse: Mapping | undefined;
+    let mappingResponse: DataMapping | undefined;
 
     if (editTarget?.mapping) {
-        await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
+        await PatchMapping(mappingRecord, editTarget.mapping["@id"] ?? '', KeycloakService.GetToken()).then((mapping) => {
             mappingResponse = mapping;
         }).catch(error => {
             console.warn(error);
@@ -97,7 +100,7 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     return mappingResponse;
 }
 
-const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
+const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
     /* For each target filter, add the necessary prefix of '$/' */
     const targetDigitalObjectFilters: Dict = {};
 
@@ -106,7 +109,7 @@ const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
     });
 
     /* Create MAS record */
-    const MASRecord = {
+    const MasRecord = {
         data: {
             type: 'machineAnnotationService',
             attributes: {
@@ -131,23 +134,23 @@ const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
     }
 
     /* If edit target is not empty, patch instead of insert */
-    let MASResponse: MAS | undefined;
+    let masResponse: MachineAnnotationService | undefined;
 
-    if (editTarget?.MAS) {
-        await PatchMAS(MASRecord, editTarget?.MAS.id, KeycloakService.GetToken()).then((MAS) => {
-            MASResponse = MAS;
+    if (editTarget?.mas) {
+        await PatchMas(MasRecord, editTarget?.mas["@id"] ?? '', KeycloakService.GetToken()).then((mas) => {
+            masResponse = mas;
         });
     } else {
-        await InsertMAS(MASRecord, KeycloakService.GetToken()).then((MAS) => {
-            MASResponse = MAS;
+        await InsertMas(MasRecord, KeycloakService.GetToken()).then((mas) => {
+            masResponse = mas;
         });
     }
 
-    return MASResponse;
+    return masResponse;
 }
 
 export {
     SubmitSourceSystem,
     SubmitMapping,
-    SubmitMAS
+    SubmitMas
 }

@@ -37,9 +37,9 @@ const MappingsOverview = () => {
     mappings.forEach((mapping) => {
         rows.push({
             index: index,
-            id: mapping.id,
-            name: mapping.name,
-            description: mapping.description,
+            id: mapping['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            name: mapping['schema:name'],
+            description: mapping['schema:description'],
             type: "mapping"
         });
 

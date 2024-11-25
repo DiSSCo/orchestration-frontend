@@ -35,7 +35,7 @@ const SourceSystem = () => {
     useEffect(() => {
         const sourceSystemId = `${params.prefix}/${params.suffix}`;
 
-        if (!sourceSystem || sourceSystem.id !== sourceSystemId) {
+        if (!sourceSystem || sourceSystem['@id'] !== sourceSystemId) {
             GetSourceSystem(sourceSystemId).then((sourceSystem) => {
                 if (sourceSystem) {
                     /* Set Source System */
@@ -52,7 +52,7 @@ const SourceSystem = () => {
 
     /* Function to run a Source System Ingestion */
     const RunIngestion = () => {
-        TriggerSourceSystemIngestion(sourceSystem?.id, KeycloakService.GetToken()).then((_response) => {}).catch(error => {
+        TriggerSourceSystemIngestion(sourceSystem?.['@id'], KeycloakService.GetToken()).then((_response) => {}).catch(error => {
             console.warn(error);
         })
     }
@@ -75,7 +75,7 @@ const SourceSystem = () => {
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={sourceSystem.name}
+                                <TitleBar title={sourceSystem['schema:name'] ?? sourceSystem['@id'] ?? sourceSystem['schema:identifier']}
                                     subTitle="Source Systems"
                                 />
                             </Col>
@@ -102,7 +102,7 @@ const SourceSystem = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Source System?')) {
-                                                    DeleteSourceSystem(sourceSystem.id, KeycloakService.GetToken()).then((success) => {
+                                                    DeleteSourceSystem(sourceSystem['@id'], KeycloakService.GetToken()).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -120,12 +120,12 @@ const SourceSystem = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={sourceSystem.id}
+                                <IDCard identifier={sourceSystem['@id'] ?? sourceSystem['schema:identifier']}
                                     IDCardProperties={{
-                                        name: sourceSystem.name,
-                                        endpoint: sourceSystem.endpoint,
-                                        description: sourceSystem.description,
-                                        created: sourceSystem.created
+                                        name: sourceSystem['schema:name'],
+                                        endpoint: sourceSystem['schema:url'],
+                                        description: sourceSystem['schema:description'],
+                                        created: sourceSystem['schema:dateCreated']
                                     }}
                                 />
                             </Col>
@@ -137,7 +137,7 @@ const SourceSystem = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={sourceSystem.mappingId} />
+                                        <MappingTab mappingId={sourceSystem['ods:dataMappingID']} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

@@ -1,11 +1,12 @@
 /* Import Types */
-import { MAS, Dict } from 'app/Types';
+import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
+import { Dict } from 'app/Types';
 
 /* Import Sources */
 import MASFields from 'sources/formFields/MASFields.json';
 
 
-const MASForm = (DetermineFormField: Function, MAS?: MAS) => {
+const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) => {
     const formFields: JSX.Element[] = [];
     const initialValuesFields: Dict = {};
 
@@ -19,21 +20,21 @@ const MASForm = (DetermineFormField: Function, MAS?: MAS) => {
         }
 
         /* Add to initial form values */
-        if (field.name === 'targetDigitalObjectFilters' && MAS) {
+        if (field.name === 'ods:hasTargetDigitalObjectFilter' && mas) {
             /* If form field is: Target Digital Object Filters, remove JSON path prefixes */
             const filterValues: Dict = {};
 
-            Object.entries(MAS?.[field.name] as keyof typeof MAS).forEach((keyValuePair) => {
+            Object.entries(mas[field.name] ?? {}).forEach((keyValuePair) => {
                 filterValues[keyValuePair[0].replace('$.', '')] = keyValuePair[1];
             });
 
             initialValuesFields[field?.alias ?? field.name] = filterValues;
         } else {
-            initialValuesFields[field?.alias ?? field.name] = MAS?.[field.name as keyof typeof MAS] ?? (field.defaultValue ?? '');
+            initialValuesFields[field?.alias ?? field.name] = mas?.[field.name as keyof typeof mas] ?? (field.defaultValue ?? '');
         }
     });
 
     return { formFields, initialValuesFields };
 }
 
-export default MASForm;
+export default MasForm;

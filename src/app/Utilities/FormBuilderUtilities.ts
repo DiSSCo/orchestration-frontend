@@ -4,7 +4,7 @@ import { EditTarget} from "app/Types";
 /* Import API */
 import GetSourceSystem from "api/sourceSystem/GetSourceSystem";
 import GetMapping from "api/mapping/GetMapping";
-import GetMAS from "api/mas/GetMAS";
+import GetMas from "api/mas/GetMas";
 
 
 const DefineEditTarget = async (targetName: string, id: string) => {
@@ -14,7 +14,7 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     if (targetName === 'sourceSystem') {
         await GetSourceSystem(id).then(async (sourceSystem) => {
             if (sourceSystem) {
-                copyEditTarget = { ...copyEditTarget, sourceSystem: { ...sourceSystem, id } };
+                copyEditTarget = { ...copyEditTarget, sourceSystem: sourceSystem };
             }
         }).catch(error => {
             console.warn(error);
@@ -22,15 +22,15 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     } else if (targetName === 'mapping') {
         await GetMapping(id).then((mapping) => {
             if (mapping) {
-                copyEditTarget = { ...editTarget, mapping: mapping };
+                copyEditTarget = { ...editTarget, mapping };
             }
         }).catch(error => {
             console.warn(error);
         });
-    } else if (targetName === 'MAS') {
-        await GetMAS(id).then((MAS) => {
-            if (MAS) {
-                copyEditTarget = { ...editTarget, MAS: MAS };
+    } else if (targetName === 'mas') {
+        await GetMas(id).then((mas) => {
+            if (mas) {
+                copyEditTarget = { ...editTarget, mas };
             }
         }).catch(error => {
             console.warn(error);
@@ -40,8 +40,8 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     editTarget = copyEditTarget;
 
     return editTarget;
-}
+};
 
 export {
     DefineEditTarget
-}
+};

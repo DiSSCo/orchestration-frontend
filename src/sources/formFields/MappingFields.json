@@ -3,17 +3,17 @@
         {
             "fields": [
                 {
-                    "name": "name",
+                    "name": "schema:name",
                     "alias": "mappingName",
                     "type": "text"
                 },
                 {
-                    "name": "description",
+                    "name": "schema:description",
                     "alias": "mappingDescription",
                     "type": "textarea"
                 },
                 {
-                    "name": "sourceDataStandard",
+                    "name": "ods:mappingDataStandard",
                     "alias": "mappingSourceDataStandard",
                     "type": "select",
                     "options": [
@@ -36,7 +36,7 @@
         {
             "fields": [
                 {
-                    "name": "defaults",
+                    "name": "ods:hasDefaultMapping",
                     "type": "mapping"
                 }
             ]
@@ -44,7 +44,7 @@
         {
             "fields": [
                 {
-                    "name": "mapping",
+                    "name": "ods:hasTermMapping",
                     "type": "mapping"
                 }
             ]

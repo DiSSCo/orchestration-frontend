@@ -2,10 +2,8 @@
 import axios from 'axios';
 
 /* Import Types */
-import { SourceSystem, JSONResult, Dict } from 'app/Types';
-
-/* Import Model */
-import SourceSystemModel from 'api/model/SourceSystemModel';
+import { SourceSystem } from 'app/types/SourceSystem';
+import { JSONResult, Dict } from 'app/Types';
 
 
 const PatchSourceSystem = async (sourceSystemRecord: Dict, sourceSystemId: string, token?: string) => {
@@ -27,13 +25,13 @@ const PatchSourceSystem = async (sourceSystemRecord: Dict, sourceSystemId: strin
             /* Set Mapping */
             const data: JSONResult = result.data;
 
-            sourceSystem = SourceSystemModel(data.data);
+            sourceSystem = data.data.attributes as SourceSystem;
         }).catch((error) => {
             console.warn(error);
         });
 
         return sourceSystem;
     }
-}
+};
 
 export default PatchSourceSystem;

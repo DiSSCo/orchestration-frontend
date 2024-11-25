@@ -1,85 +1,55 @@
+/* Import Types */
+import { SourceSystem } from "./types/SourceSystem";
+import { MachineAnnotationService } from "./types/MachineAnnotationService";
+import { DataMapping } from "./types/DataMapping";
+
+
 /* Generic Types */
 export type EmptyCallback = () => void;
 
+/* General type for a dictionary */
 export type Dict = {
     [name: string]: any;
 };
 
-/* JSON Result Interface */
+/* Types for JSON Result Interfaces */
+type DataFragment = {
+    id: string,
+    type: string,
+    attributes: {
+        sourceSystem?: SourceSystem,
+        Mapping?: DataMapping,
+        Mas?: MachineAnnotationService
+        [property: string]: any
+    }
+};
+
 export type JSONResult = {
-    data: {
-        id: string,
-        type: string,
-        attributes: Dict
-    },
+    data: DataFragment,
     links: {
         self: string
+    },
+    meta?: {
+        totalRecords: number
     }
 };
 
-/* User Type */
-export type User = {
-    id: string,
-    firstName?: string,
-    lastName?: string,
-    email?: string,
-    organisation?: string
-    orcid?: string,
-};
-
-/* Source System Type */
-export interface SourceSystem {
-    id: string,
-    created: Date,
-    name: string,
-    endpoint: string,
-    description: string,
-    mappingId: string
-};
-
-/* Mapping Type */
-export interface Mapping {
-    id: string,
-    version: number,
-    created: Date,
-    creator: string,
-    name: string,
-    description: string,
-    sourceDataStandard: string,
-    fieldMapping: {
-        mapping: [{
-            [property: string]: string;
-        }],
-        defaults: [{
-            [property: string]: string;
-        }]
+export type JSONResultArray = {
+    data: DataFragment[] | Dict[],
+    links: {
+        self: string,
+        first?: string,
+        next?: string,
+        previous?: string
+    },
+    meta?: {
+        totalRecords: number
     }
-}
+};
 
-/* Machine Annotation System (MAS) Type */
-export interface MAS {
-    id: string,
-    name: string,
-    containerImage: string,
-    containerTag: string,
-    targetDigitalObjectFilters: {},
-    topicName: string,
-    serviceDescription: string,
-    serviceState: string,
-    sourceCodeRepository: string,
-    serviceAvailability: string,
-    codeMaintainer: string,
-    codeLicense: string,
-    dependencies: [],
-    supportContact: string,
-    slaDocumentation: string,
-    maxReplicas: number,
-    batchingPermitted: boolean
-}
-
-/* Edit Target Type */
+/* Edit Target */
 export interface EditTarget {
     sourceSystem?: SourceSystem,
-    mapping?: Mapping,
-    MAS?: MAS
+    mapping?: DataMapping,
+    mas?: MachineAnnotationService
 }

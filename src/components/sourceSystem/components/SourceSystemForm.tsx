@@ -1,5 +1,6 @@
 /* Import Types */
-import { SourceSystem, Dict } from 'app/Types';
+import { SourceSystem } from 'app/types/SourceSystem';
+import { Dict } from 'app/Types';
 
 /* Import Sources */
 import SourceSystemFields from 'sources/formFields/SourceSystemFields.json';

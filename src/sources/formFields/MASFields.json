@@ -2,22 +2,22 @@
     "fields": [
         {
             "name": "name",
-            "alias": "MASName",
+            "alias": "masName",
             "type": "text"
         },
         {
             "name": "containerImage",
-            "alias": "MASContainerImage",
+            "alias": "masContainerImage",
             "type": "text"
         },
         {
             "name": "containerTag",
-            "alias": "MASContainerTag",
+            "alias": "masContainerTag",
             "type": "text"
         },
         {
             "name": "targetDigitalObjectFilters",
-            "type": "MASFilters",
+            "type": "masFilters",
             "defaultValue": {}
         },
         {
@@ -27,64 +27,64 @@
         },
         {
             "name": "topicName",
-            "alias": "MASTopicName",
+            "alias": "masTopicName",
             "type": "text"
         },
         {
             "name": "serviceDescription",
-            "alias": "MASServiceDescription",
+            "alias": "masServiceDescription",
             "type": "textarea"
         },
         {
             "name": "serviceState",
-            "alias": "MASServiceState",
+            "alias": "masServiceState",
             "type": "text"
         },
         {
             "name": "sourceCodeRepository",
-            "alias": "MASSourceCodeRepository",
+            "alias": "masSourceCodeRepository",
             "type": "text"
         },
         {
             "name": "serviceAvailability",
-            "alias": "MASServiceAvailability",
+            "alias": "masServiceAvailability",
             "type": "text"
         },
         {
             "name": "codeMaintainer",
-            "alias": "MASCodeMaintainer",
+            "alias": "masCodeMaintainer",
             "type": "text"
         },
         {
             "name": "codeLicense",
-            "alias": "MASCodeLicense",
+            "alias": "masCodeLicense",
             "type": "text"
         },
         {
             "name": "dependencies",
-            "alias": "MASDependencies",
+            "alias": "masDependencies",
             "type": "array",
             "defaultValue": []
         },
         {
             "name": "supportContact",
-            "alias": "MASSupportContact",
+            "alias": "masSupportContact",
             "type": "text"
         },
         {
             "name": "SLADocumentation",
-            "alias": "MASSLADocumentation",
+            "alias": "masSLADocumentation",
             "type": "text"
         },
         {
             "name": "maxReplicas",
-            "alias": "MASMaxReplicas",
+            "alias": "masMaxReplicas",
             "type": "number",
             "defaultValue": 1
         },
         {
             "name": "batchingPermitted",
-            "alias": "MASBatchingPermitted",
+            "alias": "masBatchingPermitted",
             "type": "boolean",
             "defaultValue": false
         }

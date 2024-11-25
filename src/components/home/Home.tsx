@@ -21,18 +21,16 @@ import styles from 'components/home/home.module.scss';
 /* Import Components */
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
 import MappingsOverview from './components/overview/MappingsOverview';
-import MASOverview from './components/overview/MASOverview';
+import MASOverview from './components/overview/MasOverview';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
 import GetMappings from 'api/mapping/GetMappings';
-import GetMASes from 'api/mas/GetMASes';
+import GetMASes from 'api/mas/GetMases';
 
 
 const Home = () => {
-    console.log(KeycloakService.GetParsedToken())
-
     /* Hooks */
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

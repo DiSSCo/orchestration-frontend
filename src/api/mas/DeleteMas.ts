@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 
-const DeleteMAS = async (handle?: string, token?: string) => {
+const DeleteMas = async (handle?: string, token?: string) => {
     if (handle && token) {
         let response;
 
@@ -22,6 +22,6 @@ const DeleteMAS = async (handle?: string, token?: string) => {
 
         return response;
     }
-}
+};
 
-export default DeleteMAS;
+export default DeleteMas;

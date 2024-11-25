@@ -25,7 +25,7 @@ interface Props {
 };
 
 
-const MASFiltersField = (props: Props) => {
+const MasFiltersField = (props: Props) => {
     const { name, visibleName, formValues, SetFieldValue } = props;
 
     /* Base variables */
@@ -97,4 +97,4 @@ const MASFiltersField = (props: Props) => {
     );
 }
 
-export default MASFiltersField;
+export default MasFiltersField;

@@ -1,22 +1,22 @@
 {
     "fields": [
         {
-            "name": "name",
+            "name": "schema:name",
             "alias": "sourceSystemName",
             "type": "text"
         },
         {
-            "name": "description",
+            "name": "schema:description",
             "alias": "sourceSystemDescription",
             "type": "textarea"
         },
         {
-            "name": "endpoint",
+            "name": "schema:url",
             "alias": "sourceSystemEndpoint",
             "type": "text"
         },
         {
-            "name": "translatorType",
+            "name": "ods:translatorType",
             "alias": "sourceSystemTranslatorType",
             "type": "select",
             "options": [
@@ -35,7 +35,7 @@
             ]
         },
         {
-            "name": "mappingId",
+            "name": "ods:dataMappingID",
             "type": "mappingSelect"
         }
     ]

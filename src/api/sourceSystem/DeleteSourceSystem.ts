@@ -22,6 +22,6 @@ const DeleteSourceSystem = async (handle?: string, token?: string) => {
 
         return response;
     }
-}
+};
 
 export default DeleteSourceSystem;

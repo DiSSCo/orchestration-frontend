@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-import { SourceSystem } from 'app/Types';
+import { SourceSystem } from 'app/types/SourceSystem';
 
 
 export interface SourceSystemState {

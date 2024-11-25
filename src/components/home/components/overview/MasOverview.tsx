@@ -15,14 +15,7 @@ import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
 import DataTable from 'components/general/tables/DataTable';
 
 
-/* Props Typing */
-interface Props {
-    ToggleModal: Function,
-    UpdateMachineAnnotationServices: Function
-};
-
-
-const MASOverview = () => {
+const MasOverview = () => {
     /* Hooks */
     const navigate = useNavigate();
 
@@ -44,9 +37,9 @@ const MASOverview = () => {
     machineAnnotationServices.forEach((machineAnnotationService) => {
         rows.push({
             index: index,
-            id: machineAnnotationService.id,
-            name: machineAnnotationService.name,
-            containerImage: machineAnnotationService.containerImage,
+            id: machineAnnotationService['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            name: machineAnnotationService['schema:name'],
+            containerImage: machineAnnotationService['ods:containerImage'],
             type: "MAS"
         });
 
@@ -66,4 +59,4 @@ const MASOverview = () => {
     );
 }
 
-export default MASOverview;
+export default MasOverview;

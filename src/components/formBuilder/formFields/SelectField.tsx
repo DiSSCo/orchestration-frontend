@@ -31,11 +31,15 @@ const SelectField = (props: Props) => {
                         Select a {ParseString(name)}
                     </option>
 
-                    {options?.map((option) => (
-                        <option key={option.name} value={option.name}>
-                            {option.label}
-                        </option>
-                    ))}
+                    {options?.map((option, index) => {
+                        const key = `${option.name}-${index}`;
+
+                        return (
+                            <option key={key} value={option.name}>
+                                {option.label}
+                            </option>
+                        );
+                    })}
                 </Field>
             </Col>
         </Row>

@@ -2,15 +2,13 @@
 import axios from 'axios';
 
 /* Import Types */
-import { Mapping, JSONResult, Dict } from 'app/Types';
-
-/* Import Model */
-import MappingModel from 'api/model/MappingModel';
+import { DataMapping } from 'app/types/DataMapping';
+import { JSONResult, Dict } from 'app/Types';
 
 
 const InsertMapping = async (mappingRecord: Dict, token?: string) => {
     if (mappingRecord && token) {
-        let mapping = <Mapping>{};
+        let mapping = <DataMapping>{};
 
         const endPoint = '/mapping';
 
@@ -27,13 +25,13 @@ const InsertMapping = async (mappingRecord: Dict, token?: string) => {
             /* Set Mapping */
             const data: JSONResult = result.data;
 
-            mapping = MappingModel(data.data);
+            mapping = data.data.attributes as DataMapping;
         }).catch((error) => {
             console.warn(error);
         });
 
         return mapping;
     }
-}
+};
 
 export default InsertMapping;

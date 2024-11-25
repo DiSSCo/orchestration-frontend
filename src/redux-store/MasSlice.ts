@@ -3,27 +3,27 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-import { MAS } from 'app/Types';
+import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
 
 export interface MASState {
-    machineAnnotationService: MAS | undefined,
-    machineAnnotationServices: MAS[];
+    machineAnnotationService: MachineAnnotationService | undefined,
+    machineAnnotationServices: MachineAnnotationService[];
 }
 
 const initialState: MASState = {
     machineAnnotationService: undefined,
-    machineAnnotationServices: <MAS[]>[]
+    machineAnnotationServices: <MachineAnnotationService[]>[]
 };
 
 export const MASSlice = createSlice({
     name: 'machineAnnotationServices',
     initialState,
     reducers: {
-        setMachineAnnotationService: (state, action: PayloadAction<MAS>) => {
+        setMachineAnnotationService: (state, action: PayloadAction<MachineAnnotationService>) => {
             state.machineAnnotationService = action.payload;
         },
-        setMachineAnnotationServices: (state, action: PayloadAction<MAS[]>) => {
+        setMachineAnnotationServices: (state, action: PayloadAction<MachineAnnotationService[]>) => {
             state.machineAnnotationServices = action.payload;
         }
     }

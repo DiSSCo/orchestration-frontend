@@ -1,11 +1,9 @@
 /* Import Dependencies */
 import axios from "axios";
 
-/* Import Model */
-import SourceSystemModel from "api/model/SourceSystemModel";
-
 /* Import Types */
-import { SourceSystem, JSONResult, Dict } from "app/Types";
+import { SourceSystem } from "app/types/SourceSystem";
+import { JSONResultArray } from "app/Types";
 
 
 const GetSourceSystems = async () => {
@@ -23,16 +21,16 @@ const GetSourceSystems = async () => {
             responseType: 'json'
         });
 
-        const data: JSONResult = result.data;
+        const data: JSONResultArray = result.data;
 
-        Object.values(data.data).forEach((sourceSystem) => {
-            sourceSystems.push(SourceSystemModel(sourceSystem as Dict));
+        data.data.forEach((sourceSystem) => {
+            sourceSystems.push(sourceSystem.attributes as SourceSystem);
         });
     } catch (error) {
         console.warn(error);
     }
 
     return sourceSystems;
-}
+};
 
 export default GetSourceSystems;

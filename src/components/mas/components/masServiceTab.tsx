@@ -2,17 +2,17 @@
 import { Row, Col, Card } from 'react-bootstrap';
 
 /* Import Types */
-import { MAS } from 'app/Types';
+import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
 
 /* Props Typing */
 interface Props {
-    MAS: MAS
+    mas: MachineAnnotationService
 };
 
 
 const MASServiceTab = (props: Props) => {
-    const { MAS } = props;
+    const { mas } = props;
 
     return (
         <Card className="h-100">
@@ -27,11 +27,11 @@ const MASServiceTab = (props: Props) => {
 
                 <Row className="mt-2">
                     <Col>
-                        <p className="bgc-grey px-3 py-1"> {MAS.serviceDescription} </p>
+                        <p className="bgc-grey px-3 py-1"> {mas['schema:description']} </p>
 
-                        <p className="mt-4"> State: {MAS.serviceState} </p>
+                        <p className="mt-4"> State: {mas['ods:status']} </p>
 
-                        <p className="mt-1"> Availability: {MAS.serviceAvailability} </p>
+                        <p className="mt-1"> Availability: {mas['ods:serviceAvailability']} </p>
                     </Col>
                 </Row>
             </Card.Body>

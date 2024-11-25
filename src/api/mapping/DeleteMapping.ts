@@ -23,6 +23,6 @@ const DeleteMapping = async (handle?: string, token?: string) => {
 
         return response;
     }
-}
+};
 
 export default DeleteMapping;
