@@ -16,7 +16,7 @@ const initialState: masState = {
     machineAnnotationServices: <MachineAnnotationService[]>[]
 };
 
-export const masSlice = createSlice({
+export const MasSlice = createSlice({
     name: 'machineAnnotationServices',
     initialState,
     reducers: {
@@ -33,10 +33,10 @@ export const masSlice = createSlice({
 export const { 
     setMachineAnnotationService,
     setMachineAnnotationServices
-} = masSlice.actions;
+} = MasSlice.actions;
 
 /* Connect with Root State */
 export const getMachineAnnotationService = (state: RootState) => state.machineAnnotationServices.machineAnnotationService;
 export const getMachineAnnotationServices = (state: RootState) => state.machineAnnotationServices.machineAnnotationServices;
 
-export default masSlice.reducer;
+export default MasSlice.reducer;

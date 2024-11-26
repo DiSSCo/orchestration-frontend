@@ -35,7 +35,7 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
 
     if (editTarget?.sourceSystem) {
         await PatchSourceSystem(sourceSystemRecord,
-            (editTarget?.sourceSystem["@id"] ?? editTarget?.sourceSystem["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+            (editTarget?.sourceSystem["@id"] ?? editTarget?.sourceSystem["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
         ).then((sourceSystem) => {
             sourceSystemResponse = sourceSystem;
         });
@@ -143,7 +143,7 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
 
     if (editTarget?.mas) {
         await PatchMas(
-            MasRecord, (editTarget?.mas["@id"] ?? editTarget?.mas["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+            MasRecord, (editTarget?.mas["@id"] ?? editTarget?.mas["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
         ).then((mas) => {
             masResponse = mas;
         });
