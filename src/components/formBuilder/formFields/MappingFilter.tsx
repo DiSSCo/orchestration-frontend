@@ -45,13 +45,13 @@ const MappingFilter = (props: Props) => {
                             <button type="button"
                                 className="button-no-style c-denied"
                                 onClick={() => {
-                                    const copyObjectFilters = { ...formValues?.targetDigitalObjectFilters };
+                                    const copyObjectFilters = { ...formValues?.['ods:hasTargetDigitalObjectFilter'] };
 
                                     delete copyObjectFilters[
                                         objectFilter as keyof typeof copyObjectFilters
                                     ];
 
-                                    SetFieldValue?.('targetDigitalObjectFilters', copyObjectFilters);
+                                    SetFieldValue?.('ods:hasTargetDigitalObjectFilter', copyObjectFilters);
                                 }}
                             >
                                 Drop filter
@@ -67,7 +67,7 @@ const MappingFilter = (props: Props) => {
                                     return (
                                         <Row key={key}>
                                             <Col md={{ span: 9 }} className="pe-0">
-                                                <Field name={`targetDigitalObjectFilters.${objectFilter}.${index}`}
+                                                <Field name={`ods:hasTargetDigitalObjectFilter.${objectFilter}.${index}`}
                                                     className="formField w-100 mb-2"
                                                 />
                                             </Col>

@@ -52,7 +52,7 @@ const SourceSystem = () => {
 
     /* Function to run a Source System Ingestion */
     const RunIngestion = () => {
-        TriggerSourceSystemIngestion(sourceSystem?.['@id'], KeycloakService.GetToken()).then((_response) => {}).catch(error => {
+        TriggerSourceSystemIngestion(sourceSystem?.['@id'], KeycloakService.GetToken()).then((_response) => { }).catch(error => {
             console.warn(error);
         })
     }
@@ -75,7 +75,7 @@ const SourceSystem = () => {
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={sourceSystem['schema:name'] ?? sourceSystem['@id'] ?? sourceSystem['schema:identifier']}
+                                <TitleBar title={sourceSystem['schema:name'] ?? (sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     subTitle="Source Systems"
                                 />
                             </Col>
@@ -102,7 +102,9 @@ const SourceSystem = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Source System?')) {
-                                                    DeleteSourceSystem(sourceSystem['@id'], KeycloakService.GetToken()).then((success) => {
+                                                    DeleteSourceSystem((sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, ''),
+                                                        KeycloakService.GetToken()
+                                                    ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -120,7 +122,7 @@ const SourceSystem = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={sourceSystem['@id'] ?? sourceSystem['schema:identifier']}
+                                <IDCard identifier={(sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     IDCardProperties={{
                                         name: sourceSystem['schema:name'],
                                         endpoint: sourceSystem['schema:url'],
@@ -137,7 +139,7 @@ const SourceSystem = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={sourceSystem['ods:dataMappingID']} />
+                                        <MappingTab mappingId={sourceSystem['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

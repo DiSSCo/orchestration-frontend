@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 import { Dict } from 'app/Types';
 
 /* Import Utitlities */
-import { ParseString } from 'app/Utilities';
+import { MakeJsonPathReadableString } from 'app/Utilities';
 
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
@@ -45,7 +45,7 @@ const MappingField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (

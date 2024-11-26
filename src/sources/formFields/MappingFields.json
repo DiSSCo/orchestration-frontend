@@ -18,15 +18,15 @@
                     "type": "select",
                     "options": [
                         {
-                            "name": "dwca",
+                            "name": "DwC",
                             "label": "DarwinCore"
                         },
                         {
-                            "name": "biocase",
+                            "name": "ABCD",
                             "label": "ABCD"
                         },
                         {
-                            "name": "biocase",
+                            "name": "ABCDEFG",
                             "label": "ABCD-EFG"
                         }
                     ]

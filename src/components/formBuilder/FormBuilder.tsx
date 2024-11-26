@@ -53,7 +53,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <MappingSelect />;
         case 'mapping':
             return <MappingField name={fieldName} visibleName={visibleName} />;
-        case 'MasFilters':
+        case 'masFilters':
             return <MasFiltersField name={fieldName} visibleName={visibleName} />;
         default:
             return;
@@ -82,8 +82,6 @@ const FormBuilder = () => {
             if (!editTarget?.[route as keyof typeof editTarget]) {
                 /* Set edit target */
                 DefineEditTarget(route, id).then((editTarget) => {
-                    console.log(editTarget);
-
                     dispatch(setEditTarget(editTarget));
                 }).catch(error => {
                     console.warn(error);
@@ -110,7 +108,8 @@ const FormBuilder = () => {
 
         /* Push to form template */
         formTemplates.push(
-            <FormBase title="Source System"
+            <FormBase key="sourceSystemFormBase"
+                title="Source System"
                 formFields={formFields}
                 numberOfFormPages={numberOfFormPages}
                 currentPage={1}
@@ -131,7 +130,8 @@ const FormBuilder = () => {
             const currentPage = numberOfFormPages === 4 ? index + 2 : index + 1;
 
             formTemplates.push(
-                <FormBase title={tabNames[index]}
+                <FormBase key="mappingFormBase"
+                    title={tabNames[index]}
                     formFields={formFields}
                     numberOfFormPages={numberOfFormPages}
                     currentPage={currentPage}
@@ -151,7 +151,8 @@ const FormBuilder = () => {
 
         /* Push to form template */
         formTemplates.push(
-            <FormBase title="Machine Annotation Service"
+            <FormBase key="masFormBase"
+                title="Machine Annotation Service"
                 formFields={formFields}
                 numberOfFormPages={numberOfFormPages}
                 currentPage={1}
@@ -165,12 +166,12 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.['@id'])) {
+        if (location.pathname.includes('mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.['@id'])) {
             await SubmitMapping(form, editTarget as EditTarget).then((mapping) => {
-                form.mappingId = mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
+                form['ods:dataMappingID'] = mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
 
                 /* If editing a Mapping, return to mapping detail page */
-                if (mapping && editTarget?.mapping?.['@id']) {
+                if (mapping && (editTarget?.mapping?.['@id'] || location.pathname.includes('mapping'))) {
                     navigate(`/mapping/${mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
                 }
             }).catch(error => {

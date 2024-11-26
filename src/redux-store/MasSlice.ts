@@ -6,17 +6,17 @@ import { RootState } from 'app/Store';
 import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
 
-export interface MASState {
+export interface masState {
     machineAnnotationService: MachineAnnotationService | undefined,
     machineAnnotationServices: MachineAnnotationService[];
 }
 
-const initialState: MASState = {
+const initialState: masState = {
     machineAnnotationService: undefined,
     machineAnnotationServices: <MachineAnnotationService[]>[]
 };
 
-export const MASSlice = createSlice({
+export const masSlice = createSlice({
     name: 'machineAnnotationServices',
     initialState,
     reducers: {
@@ -33,10 +33,10 @@ export const MASSlice = createSlice({
 export const { 
     setMachineAnnotationService,
     setMachineAnnotationServices
-} = MASSlice.actions;
+} = masSlice.actions;
 
 /* Connect with Root State */
 export const getMachineAnnotationService = (state: RootState) => state.machineAnnotationServices.machineAnnotationService;
 export const getMachineAnnotationServices = (state: RootState) => state.machineAnnotationServices.machineAnnotationServices;
 
-export default MASSlice.reducer;
+export default masSlice.reducer;

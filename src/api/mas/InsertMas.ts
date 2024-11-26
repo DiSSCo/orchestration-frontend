@@ -6,8 +6,8 @@ import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 import { JSONResult, Dict } from 'app/Types';
 
 
-const InsertMas = async (MASRecord: Dict, token?: string) => {
-    if (MASRecord && token) {
+const InsertMas = async (masRecord: Dict, token?: string) => {
+    if (masRecord && token) {
         let machineAnnoationService = <MachineAnnotationService>{};
 
         const endPoint = '/mas';
@@ -15,7 +15,7 @@ const InsertMas = async (MASRecord: Dict, token?: string) => {
         await axios({
             method: "post",
             url: endPoint,
-            data: MASRecord,
+            data: masRecord,
             responseType: 'json',
             headers: {
                 'Content-type': 'application/json',

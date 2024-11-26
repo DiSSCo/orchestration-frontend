@@ -86,7 +86,9 @@ const Mapping = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Mapping?')) {
-                                                    DeleteMapping(mapping['@id'], KeycloakService.GetToken()).then((success) => {
+                                                    DeleteMapping((mapping['@id'] ?? mapping['schema:identifier']).replace(
+                                                        import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+                                                    ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -104,7 +106,7 @@ const Mapping = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={mapping['@id'] ?? mapping['schema:identifier']}
+                                <IDCard identifier={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     IDCardProperties={{
                                         name: mapping['schema:name'],
                                         description: mapping['schema:description'],
@@ -121,7 +123,7 @@ const Mapping = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={mapping['@id'] ?? mapping['schema:identifier']} />
+                                        <MappingTab mappingId={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

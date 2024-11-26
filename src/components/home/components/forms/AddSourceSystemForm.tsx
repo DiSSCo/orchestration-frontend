@@ -56,11 +56,12 @@ const AddSourceSystemForm = () => {
                             </option>
 
                             {mappings.map((mapping, index) => {
-                                const key: string = mapping.name + index;
+                                const key: string = `${mapping['schema:name']}_${index}`;
 
                                 return (
-                                    <option key={key} value={mapping.id}
-                                        label={mapping.name}
+                                    <option key={key}
+                                        value={mapping['@id']}
+                                        label={mapping['schema:name']}
                                     />
                                 );
                             })}

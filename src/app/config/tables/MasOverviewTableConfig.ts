@@ -2,7 +2,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 
-const MASOverviewTableConfig = () => {
+const MasOverviewTableConfig = () => {
     interface DataRow {
         index: number,
         id: string,
@@ -41,4 +41,4 @@ const MASOverviewTableConfig = () => {
     };
 }
 
-export default MASOverviewTableConfig;
+export default MasOverviewTableConfig;

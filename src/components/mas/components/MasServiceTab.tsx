@@ -11,7 +11,7 @@ interface Props {
 };
 
 
-const MASServiceTab = (props: Props) => {
+const MasServiceTab = (props: Props) => {
     const { mas } = props;
 
     return (
@@ -39,4 +39,4 @@ const MASServiceTab = (props: Props) => {
     );
 }
 
-export default MASServiceTab;
+export default MasServiceTab;

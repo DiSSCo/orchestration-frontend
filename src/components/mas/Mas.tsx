@@ -13,9 +13,8 @@ import { getMachineAnnotationService, setMachineAnnotationService } from 'redux-
 /* Import Components */
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
-import MasServiceTab from './components/masServiceTab';
-import MasTargetDigitalObjectFiltersTab from './components/masTargetDigitalObjectFiltersTab';
-import MasDependenciesTab from './components/MasDependenciesTab';
+import MasServiceTab from './components/MasServiceTab';
+import MasTargetDigitalObjectFiltersTab from './components/MasTargetDigitalObjectFiltersTab';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
@@ -88,7 +87,9 @@ const Mas = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this MAS?')) {
-                                                    DeleteMas(mas['@id'], KeycloakService.GetToken()).then((success) => {
+                                                    DeleteMas((mas['@id'] ?? mas['schema:identifier']).replace(
+                                                        import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+                                                    ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -106,19 +107,19 @@ const Mas = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={mas['@id'] ?? mas['schema:identifier']}
+                                <IDCard identifier={(mas['@id'] ?? mas['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     IDCardProperties={{
                                         name: mas['schema:name'],
                                         containerImage: mas['ods:containerImage'],
                                         containerTag: mas['ods:containerTag'],
                                         topicName: mas['ods:topicName'],
                                         sourceCodeRepository: mas['schema:codeRepository'],
-                                        codeMaintainer: mas['schema:maintainer']?.['schema:name'],
+                                        codeMaintainer: mas['schema:maintainer']?.['schema:identifier'],
                                         codeLicense: mas['schema:license'],
                                         supportContact: mas['schema:ContactPoint']?.['schema:url'],
                                         slaDocumentation: mas['ods:slaDocumentation'],
                                         maxReplicas: mas['ods:maxReplicas'],
-                                        batchingPermitted: mas['ods:batchingPermitted']? 'True' : 'False'
+                                        batchingPermitted: mas['ods:batchingPermitted'] ? 'True' : 'False'
                                     }}
                                 />
                             </Col>
@@ -127,7 +128,6 @@ const Mas = () => {
                                     <TabList className={classTabList}>
                                         <Tab className={classTab} selectedClassName="active"> Service description </Tab>
                                         <Tab className={classTab} selectedClassName="active"> Target Digital Object Filters </Tab>
-                                        <Tab className={classTab} selectedClassName="active"> Dependencies </Tab>
                                     </TabList>
 
                                     {/* MAS Service Tab */}
@@ -138,11 +138,6 @@ const Mas = () => {
                                     {/* MAS Target Digital Object Filters */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
                                         <MasTargetDigitalObjectFiltersTab mas={mas} />
-                                    </TabPanel>
-
-                                    {/* MAS Dependencies */}
-                                    <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MasDependenciesTab mas={mas} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

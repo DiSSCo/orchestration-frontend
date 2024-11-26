@@ -9,7 +9,7 @@ import { getMachineAnnotationServices } from 'redux-store/MasSlice';
 import { Dict } from 'app/Types';
 
 /* Import Config */
-import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
+import MasOverviewTableConfig from 'app/config/tables/MasOverviewTableConfig';
 
 /* Import Components */
 import DataTable from 'components/general/tables/DataTable';
@@ -47,13 +47,13 @@ const MasOverview = () => {
     });
 
     /* Table columns */
-    const { columns } = MASOverviewTableConfig();
+    const { columns } = MasOverviewTableConfig();
 
     return (
         <div className="h-100 overflow-scroll b-secondary rounded-c">
             <DataTable columns={columns}
                 data={rows}
-                SelectAction={(row: DataRow) => navigate(`/MAS/${row.id}`)}
+                SelectAction={(row: DataRow) => navigate(`/mas/${row.id}`)}
             />
         </div>
     );

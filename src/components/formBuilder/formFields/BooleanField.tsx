@@ -3,7 +3,7 @@ import { Field } from "formik";
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Utitilies */
-import { ParseString } from "app/Utilities";
+import { MakeJsonPathReadableString } from "app/Utilities";
 
 
 /* Props Typing */
@@ -19,7 +19,7 @@ const BooleanField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col className="col-lg-auto">
-                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
             </Col>
             <Col>
                 <Field name={name}

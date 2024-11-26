@@ -21,13 +21,13 @@ import styles from 'components/home/home.module.scss';
 /* Import Components */
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
 import MappingsOverview from './components/overview/MappingsOverview';
-import MASOverview from './components/overview/MasOverview';
+import MasOverview from './components/overview/MasOverview';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
 import GetMappings from 'api/mapping/GetMappings';
-import GetMASes from 'api/mas/GetMases';
+import GetMases from 'api/mas/GetMases';
 
 
 const Home = () => {
@@ -49,7 +49,7 @@ const Home = () => {
             console.warn(error);
         });
 
-        GetMASes().then((machineAnnotationServices) => {
+        GetMases().then((machineAnnotationServices) => {
             dispatch(setMachineAnnotationServices(machineAnnotationServices));
         }).catch(error => {
             console.warn(error);
@@ -65,7 +65,7 @@ const Home = () => {
         } else if (tabNumber === 1) {
             setChosenTab('Mapping');
         } else if (tabNumber === 2) {
-            setChosenTab('MAS')
+            setChosenTab('mas')
         }
     }
 
@@ -95,13 +95,7 @@ const Home = () => {
                             <div className="position-relative">
                                 <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
                                     onClick={() => {
-                                        let routeString: string;
-
-                                        if (chosenTab === 'MAS') {
-                                            routeString = chosenTab;
-                                        } else {
-                                            routeString = ReparseString(chosenTab);
-                                        }
+                                        const routeString = ReparseString(chosenTab);
 
                                         navigate(`${routeString}/add`);
                                     }}
@@ -131,7 +125,7 @@ const Home = () => {
 
                             {/* Machine Annotation Services */}
                             <TabPanel className={classTabPanel}>
-                                <MASOverview />
+                                <MasOverview />
                             </TabPanel>
                         </Tabs>
                     </Col>

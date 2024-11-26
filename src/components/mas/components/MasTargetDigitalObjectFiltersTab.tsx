@@ -1,6 +1,9 @@
 /* Import Dependencies */
 import { Row, Col, Card } from 'react-bootstrap';
 
+/* Import Utilities */
+import { MakeJsonPathReadableString } from 'app/Utilities';
+
 /* Import Types */
 import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
@@ -34,7 +37,7 @@ const MasTargetDigitalObjectFiltersTab = (props: Props) => {
                                 return (
                                     <Row key={key} className={index > 0 ? 'mt-3' : ''}>
                                         <Col>
-                                            <p className="fw-lightBold">{key.replace('$.', '')}</p>
+                                            <p className="fw-lightBold">{MakeJsonPathReadableString(key)}</p>
 
                                             <div className="mt-2 px-3 py-2 bgc-grey">
                                                 {filterValues.map((filterValue) => (

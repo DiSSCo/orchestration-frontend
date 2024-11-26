@@ -23,8 +23,6 @@ const MappingForm = (DetermineFormField: Function, mapping?: DataMapping) => {
                 const reformatMappings: Dict[] = [];
 
                 /* Reformat mappings for form input */
-                console.log(mapping);
-
                 (mapping?.[field.name as keyof typeof mapping] as Dict[])?.forEach((mapping) => {
                     reformatMappings.push({
                         field: Object.keys(mapping)[0],
