@@ -6,12 +6,12 @@ import { RootState } from 'app/Store';
 import { MachineAnnotationService } from 'app/types/MachineAnnotationService';
 
 
-export interface masState {
+export interface MasState {
     machineAnnotationService: MachineAnnotationService | undefined,
     machineAnnotationServices: MachineAnnotationService[];
 }
 
-const initialState: masState = {
+const initialState: MasState = {
     machineAnnotationService: undefined,
     machineAnnotationServices: <MachineAnnotationService[]>[]
 };
