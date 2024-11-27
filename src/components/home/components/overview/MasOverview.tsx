@@ -9,13 +9,13 @@ import { getMachineAnnotationServices } from 'redux-store/MasSlice';
 import { Dict } from 'app/Types';
 
 /* Import Config */
-import MASOverviewTableConfig from 'app/config/tables/MASOverviewTableConfig';
+import MasOverviewTableConfig from 'app/config/tables/MasOverviewTableConfig';
 
 /* Import Components */
 import DataTable from 'components/general/tables/DataTable';
 
 
-const MASOverview = () => {
+const MasOverview = () => {
     /* Hooks */
     const navigate = useNavigate();
 
@@ -37,9 +37,9 @@ const MASOverview = () => {
     machineAnnotationServices.forEach((machineAnnotationService) => {
         rows.push({
             index: index,
-            id: machineAnnotationService.id,
-            name: machineAnnotationService.name,
-            containerImage: machineAnnotationService.containerImage,
+            id: machineAnnotationService['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            name: machineAnnotationService['schema:name'],
+            containerImage: machineAnnotationService['ods:containerImage'],
             type: "MAS"
         });
 
@@ -47,16 +47,16 @@ const MASOverview = () => {
     });
 
     /* Table columns */
-    const { columns } = MASOverviewTableConfig();
+    const { columns } = MasOverviewTableConfig();
 
     return (
         <div className="h-100 overflow-scroll b-secondary rounded-c">
             <DataTable columns={columns}
                 data={rows}
-                SelectAction={(row: DataRow) => navigate(`/MAS/${row.id}`)}
+                SelectAction={(row: DataRow) => navigate(`/mas/${row.id}`)}
             />
         </div>
     );
 }
 
-export default MASOverview;
+export default MasOverview;

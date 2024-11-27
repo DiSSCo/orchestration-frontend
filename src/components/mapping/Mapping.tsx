@@ -34,7 +34,7 @@ const Mapping = () => {
     useEffect(() => {
         const mappingId = `${params.prefix}/${params.suffix}`;
 
-        if (mapping?.id !== mappingId) {
+        if (mapping?.['@id'] !== mappingId) {
             GetMapping(mappingId).then((mapping) => {
                 if (mapping) {
                     /* Set Mapping */
@@ -67,7 +67,7 @@ const Mapping = () => {
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={mapping.name}
+                                <TitleBar title={mapping['schema:name'] ?? mapping['@id'] ?? mapping['schema:identifier']}
                                     subTitle="Mappings"
                                 />
                             </Col>
@@ -86,7 +86,9 @@ const Mapping = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Mapping?')) {
-                                                    DeleteMapping(mapping.id, KeycloakService.GetToken()).then((success) => {
+                                                    DeleteMapping((mapping['@id'] ?? mapping['schema:identifier']).replace(
+                                                        import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+                                                    ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
                                                         }
@@ -104,12 +106,12 @@ const Mapping = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={mapping.id}
+                                <IDCard identifier={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     IDCardProperties={{
-                                        name: mapping.name,
-                                        description: mapping.description,
-                                        sourceDataStandard: mapping.sourceDataStandard,
-                                        created: mapping.created
+                                        name: mapping['schema:name'],
+                                        description: mapping['schema:description'],
+                                        sourceDataStandard: mapping['ods:mappingDataStandard'],
+                                        created: mapping['schema:dateCreated']
                                     }}
                                 />
                             </Col>
@@ -121,7 +123,7 @@ const Mapping = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={mapping.id} />
+                                        <MappingTab mappingId={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

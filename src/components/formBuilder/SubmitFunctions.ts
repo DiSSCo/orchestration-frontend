@@ -2,36 +2,41 @@
 import KeycloakService from "app/Keycloak";
 
 /* Import Types */
-import { SourceSystem, Mapping, MAS, EditTarget, Dict } from "app/Types";
+import { DataMapping } from "app/types/DataMapping";
+import { MachineAnnotationService } from "app/types/MachineAnnotationService";
+import { SourceSystem } from "app/types/SourceSystem";
+import { EditTarget, Dict } from "app/Types";
 
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
 import PatchSourceSystem from 'api/sourceSystem/PatchSourceSystem';
 import InsertMapping from 'api/mapping/InsertMapping';
 import PatchMapping from 'api/mapping/PatchMapping';
-import InsertMAS from "api/mas/InsertMAS";
-import PatchMAS from "api/mas/PatchMAS";
+import InsertMas from 'api/mas/InsertMas';
+import PatchMas from "api/mas/PatchMas";
 
 
 const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
     const sourceSystemRecord = {
         data: {
-            type: 'sourceSystem',
+            type: 'ods:SourceSystem',
             attributes: {
-                name: form.sourceSystemName,
-                description: form.sourceSystemDescription,
-                endpoint: form.sourceSystemEndpoint,
-                mappingId: form.mappingId,
-                translatorType: form.sourceSystemTranslatorType
+                "schema:name": form.sourceSystemName,
+                "schema:description": form.sourceSystemDescription,
+                "schema:url": form.sourceSystemEndpoint,
+                "ods:dataMappingID": form['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, ''),
+                "ods:translatorType": form.sourceSystemTranslatorType
             }
         }
-    }
+    };
 
     /* If edit target is not empty, patch instead of insert */
     let sourceSystemResponse: SourceSystem | undefined;
 
     if (editTarget?.sourceSystem) {
-        await PatchSourceSystem(sourceSystemRecord, editTarget?.sourceSystem.id, KeycloakService.GetToken()).then((sourceSystem) => {
+        await PatchSourceSystem(sourceSystemRecord,
+            (editTarget?.sourceSystem["@id"] ?? editTarget?.sourceSystem["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+        ).then((sourceSystem) => {
             sourceSystemResponse = sourceSystem;
         });
     } else {
@@ -47,7 +52,7 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     /* Format default mappings */
     const defaultMappings: Dict[] = [];
 
-    form.defaults.forEach((mapping: Dict) => {
+    form['ods:hasDefaultMapping'].forEach((mapping: Dict) => {
         if (mapping.field) {
             defaultMappings.push({ [mapping.field]: mapping.value });
         }
@@ -56,7 +61,7 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     /* Format field mappings */
     const fieldMappings: Dict[] = [];
 
-    form.mapping.forEach((mapping: Dict) => {
+    form['ods:hasTermMapping'].forEach((mapping: Dict) => {
         if (mapping.field) {
             fieldMappings.push({ [mapping.field]: mapping.value });
         }
@@ -64,24 +69,24 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
 
     const mappingRecord = {
         data: {
-            type: "mapping",
+            type: "ods:DataMapping",
             attributes: {
-                name: form.mappingName,
-                description: form.mappingDescription,
-                sourceDataStandard: form.mappingSourceDataStandard,
-                fieldMapping: {
-                    mapping: fieldMappings,
-                    defaults: defaultMappings
-                }
+                "schema:name": form.mappingName,
+                "schema:description": form.mappingDescription,
+                "ods:mappingDataStandard": form.mappingSourceDataStandard,
+                "ods:hasDefaultMapping": defaultMappings,
+                "ods:hasTermMapping": fieldMappings
             }
         }
-    }
+    };
 
     /* If edit target is not empty, patch instead of insert */
-    let mappingResponse: Mapping | undefined;
+    let mappingResponse: DataMapping | undefined;
 
     if (editTarget?.mapping) {
-        await PatchMapping(mappingRecord, editTarget.mapping.id, KeycloakService.GetToken()).then((mapping) => {
+        await PatchMapping(
+            mappingRecord, (editTarget.mapping["@id"] ?? editTarget.mapping["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+        ).then((mapping) => {
             mappingResponse = mapping;
         }).catch(error => {
             console.warn(error);
@@ -95,59 +100,64 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     }
 
     return mappingResponse;
-}
+};
 
-const SubmitMAS = async (form: Dict, editTarget: EditTarget) => {
+const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
     /* For each target filter, add the necessary prefix of '$/' */
     const targetDigitalObjectFilters: Dict = {};
 
-    Object.entries(form.targetDigitalObjectFilters).forEach((filterKeyValuePair: [string, any]) => {
-        targetDigitalObjectFilters[`$.${filterKeyValuePair[0]}`] = filterKeyValuePair[1];
+    Object.entries(form['ods:hasTargetDigitalObjectFilter']).forEach((filterKeyValuePair: [string, any]) => {
+        targetDigitalObjectFilters[`$['${filterKeyValuePair[0]}']`] = filterKeyValuePair[1];
     });
 
     /* Create MAS record */
-    const MASRecord = {
+    const MasRecord = {
         data: {
-            type: 'machineAnnotationService',
+            type: 'ods:MachineAnnotationService',
             attributes: {
-                name: form.MASName,
-                containerImage: form.MASContainerImage,
-                containerTag: form.MASContainerTag,
-                targetDigitalObjectFilters: targetDigitalObjectFilters,
-                topicName: form.MASTopicName,
-                serviceDescription: form.MASServiceDescription,
-                serviceState: form.MASServiceState,
-                sourceCodeRepository: form.MASSourceCodeRepository,
-                serviceAvailability: form.MASServiceAvailability,
-                codeMaintainer: form.MASCodeMaintainer,
-                codeLicense: form.MASCodeLicense,
-                dependencies: form.MASDependencies,
-                supportContact: form.MASSupportContact,
-                slaDocumentation: form.MASSlaDocumentation,
-                maxReplicas: form.MASMaxReplicas,
-                batchingPermitted: form.MASBatchingPermitted
+                "schema:name": form.masName,
+                "ods:containerImage": form.masContainerImage,
+                "ods:containerTag": form.masContainerTag,
+                "ods:hasTargetDigitalObjectFilter": targetDigitalObjectFilters,
+                "ods:topicName": form.masTopicName,
+                "schema:description": form.masServiceDescription,
+                "schema:codeRepository": form.masSourceCodeRepository,
+                "ods:serviceAvailability": form.masServiceAvailability,
+                "schema:maintainer": {
+                    "@type": "schema:Person",
+                    "schema:identifier": form.masCodeMaintainer
+                },
+                "schema:license": form.masCodeLicense,
+                "schema:ContactPoint": {
+                    "schema:url": form.masSupportContact
+                },
+                "ods:slaDocumentation": form.masSlaDocumentation,
+                "ods:maxReplicas": form.masMaxReplicas,
+                "ods:batchingPermitted": form.masBatchingPermitted
             }
         }
-    }
+    };
 
     /* If edit target is not empty, patch instead of insert */
-    let MASResponse: MAS | undefined;
+    let masResponse: MachineAnnotationService | undefined;
 
-    if (editTarget?.MAS) {
-        await PatchMAS(MASRecord, editTarget?.MAS.id, KeycloakService.GetToken()).then((MAS) => {
-            MASResponse = MAS;
+    if (editTarget?.mas) {
+        await PatchMas(
+            MasRecord, (editTarget?.mas["@id"] ?? editTarget?.mas["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+        ).then((mas) => {
+            masResponse = mas;
         });
     } else {
-        await InsertMAS(MASRecord, KeycloakService.GetToken()).then((MAS) => {
-            MASResponse = MAS;
+        await InsertMas(MasRecord, KeycloakService.GetToken()).then((mas) => {
+            masResponse = mas;
         });
     }
 
-    return MASResponse;
-}
+    return masResponse;
+};
 
 export {
     SubmitSourceSystem,
     SubmitMapping,
-    SubmitMAS
-}
+    SubmitMas
+};

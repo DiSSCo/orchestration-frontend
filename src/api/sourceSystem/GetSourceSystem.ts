@@ -2,7 +2,8 @@
 import axios from "axios";
 
 /* Import Types */
-import { SourceSystem, JSONResult } from "app/Types";
+import { SourceSystem } from "app/types/SourceSystem";
+import { JSONResult } from "app/Types";
 
 
 const GetSourceSystem = async (sourceSystemId: string) => {
@@ -20,16 +21,13 @@ const GetSourceSystem = async (sourceSystemId: string) => {
 
             const data: JSONResult = result.data;
 
-            sourceSystem = {
-                ...data.data.attributes,
-                id: data.data.id
-            } as SourceSystem;
+            sourceSystem = data.data.attributes as SourceSystem;
         } catch (error) {
             console.warn(error);
         }
     }
 
     return sourceSystem;
-}
+};
 
 export default GetSourceSystem;

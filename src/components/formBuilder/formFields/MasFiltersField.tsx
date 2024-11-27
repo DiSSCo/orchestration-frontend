@@ -4,7 +4,7 @@ import { Field } from 'formik';
 import { cloneDeep } from 'lodash';
 
 /* Import Utilities */
-import { ParseString } from 'app/Utilities';
+import { MakeJsonPathReadableString } from 'app/Utilities';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -25,7 +25,7 @@ interface Props {
 };
 
 
-const MASFiltersField = (props: Props) => {
+const MasFiltersField = (props: Props) => {
     const { name, visibleName, formValues, SetFieldValue } = props;
 
     /* Base variables */
@@ -36,14 +36,14 @@ const MASFiltersField = (props: Props) => {
             <Col>
                 <Row>
                     <Col>
-                        <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                        <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
                     </Col>
                 </Row>
                 <Row className="mb-2">
                     <Col>
-                        {Object.keys(formValues?.targetDigitalObjectFilters).map((objectFilter) => {
-                            const objectFilterValues: [] = formValues?.targetDigitalObjectFilters[
-                                objectFilter as keyof typeof formValues.targetDigitalObjectFilters
+                        {Object.keys(formValues?.['ods:hasTargetDigitalObjectFilter']).map((objectFilter) => {
+                            const objectFilterValues: [] = formValues?.['ods:hasTargetDigitalObjectFilter'][
+                                objectFilter as keyof typeof formValues['ods:hasTargetDigitalObjectFilter']
                             ];
 
                             return (
@@ -67,7 +67,7 @@ const MASFiltersField = (props: Props) => {
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
                             {Object.keys(harmonisedAttributes).map((filterOption) => {
-                                if (formValues?.targetDigitalObjectFilters && !(filterOption in formValues.targetDigitalObjectFilters)) {
+                                if (formValues?.['ods:hasTargetDigitalObjectFilter'] && !(filterOption in formValues['ods:hasTargetDigitalObjectFilter'])) {
                                     return <option key={filterOption} value={filterOption}> {filterOption} </option>
                                 }
                             })}
@@ -79,8 +79,8 @@ const MASFiltersField = (props: Props) => {
                             onClick={() => {
                                 if (formValues?.targetDigitalObjectFiltersOptions && formValues.targetDigitalObjectFiltersOptions !== "") {
                                     /* Add filter to Target Digital Object Filters */
-                                    SetFieldValue?.('targetDigitalObjectFilters', {
-                                        ...formValues?.targetDigitalObjectFilters,
+                                    SetFieldValue?.('ods:hasTargetDigitalObjectFilter', {
+                                        ...formValues?.['ods:hasTargetDigitalObjectFilter'],
                                         [formValues?.targetDigitalObjectFiltersOptions]: [""]
                                     });
                                     /* Set options list value to next attribute in array */
@@ -97,4 +97,4 @@ const MASFiltersField = (props: Props) => {
     );
 }
 
-export default MASFiltersField;
+export default MasFiltersField;

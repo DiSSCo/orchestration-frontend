@@ -3,7 +3,7 @@ import { FieldArray, Field } from "formik"
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Utilities */
-import { ParseString } from "app/Utilities";
+import { MakeJsonPathReadableString } from "app/Utilities";
 
 /* Import Types */
 import { Dict } from "app/Types";
@@ -27,7 +27,7 @@ const ArrayField = (props: Props) => {
     return (
         <Row className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (

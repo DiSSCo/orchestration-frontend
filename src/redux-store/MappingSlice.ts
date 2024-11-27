@@ -3,31 +3,31 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/Store';
 
 /* Import Types */
-import { Mapping } from 'app/Types';
+import { DataMapping } from 'app/types/DataMapping';
 
 
 export interface MappingState {
-    mapping: Mapping | undefined;
-    mappings: Mapping[];
+    mapping: DataMapping | undefined;
+    mappings: DataMapping[];
 }
 
 const initialState: MappingState = {
     mapping: undefined,
-    mappings: <Mapping[]>[]
+    mappings: <DataMapping[]>[]
 };
 
 export const MappingSlice = createSlice({
     name: 'mapping',
     initialState,
     reducers: {
-        setMapping: (state, action: PayloadAction<Mapping>) => {
+        setMapping: (state, action: PayloadAction<DataMapping>) => {
             state.mapping = action.payload;
         },
-        setMappings: (state, action: PayloadAction<Mapping[]>) => {
+        setMappings: (state, action: PayloadAction<DataMapping[]>) => {
             state.mappings = action.payload;
         }
     }
-})
+});
 
 /* Action Creators */
 export const { setMapping, setMappings } = MappingSlice.actions;

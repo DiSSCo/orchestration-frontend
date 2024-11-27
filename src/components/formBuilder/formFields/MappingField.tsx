@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 import { Dict } from 'app/Types';
 
 /* Import Utitlities */
-import { ParseString } from 'app/Utilities';
+import { MakeJsonPathReadableString } from 'app/Utilities';
 
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
@@ -34,7 +34,7 @@ const MappingField = (props: Props) => {
 
     /* Check which harmonised properties still may be used to map */
     if (formValues) {
-        (formValues.defaults.concat(formValues.mapping)).forEach((mapping: Dict) => {
+        (formValues['ods:hasDefaultMapping'].concat(formValues['ods:hasTermMapping'])).forEach((mapping: Dict) => {
             /* Remove mapping property from Harmonised Attributes */
             if (mapping.field) {
                 delete harmonisedAttributes[mapping.field];
@@ -45,7 +45,7 @@ const MappingField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (
@@ -58,7 +58,7 @@ const MappingField = (props: Props) => {
                                 }
 
                                 return (
-                                    <Row key={value.key} className="py-1">
+                                    <Row key={value.field} className="py-1">
                                         <Col>
                                             <Row>
                                                 <Col md={{ span: 6 }}>

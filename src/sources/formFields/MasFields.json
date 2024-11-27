@@ -1,0 +1,81 @@
+{
+    "fields": [
+        {
+            "name": "schema:name",
+            "alias": "masName",
+            "type": "text"
+        },
+        {
+            "name": "ods:containerImage",
+            "alias": "masContainerImage",
+            "type": "text"
+        },
+        {
+            "name": "ods:containerTag",
+            "alias": "masContainerTag",
+            "type": "text"
+        },
+        {
+            "name": "ods:hasTargetDigitalObjectFilter",
+            "type": "masFilters",
+            "defaultValue": {}
+        },
+        {
+            "name": "targetDigitalObjectFiltersOptions",
+            "type": "hidden",
+            "defaultValue": ""
+        },
+        {
+            "name": "ods:topicName",
+            "alias": "masTopicName",
+            "type": "text"
+        },
+        {
+            "name": "schema:description",
+            "alias": "masServiceDescription",
+            "type": "textarea"
+        },
+        {
+            "name": "schema:codeRepository",
+            "alias": "masSourceCodeRepository",
+            "type": "text"
+        },
+        {
+            "name": "ods:serviceAvailability",
+            "alias": "masServiceAvailability",
+            "type": "text"
+        },
+        {
+            "name": "schema:maintainer",
+            "alias": "masCodeMaintainer",
+            "type": "text"
+        },
+        {
+            "name": "schema:license",
+            "alias": "masCodeLicense",
+            "type": "text"
+        },
+        {
+            "name": "schema:ContactPoint",
+            "alias": "masSupportContact",
+            "type": "text"
+        },
+        {
+            "name": "ods:slaDocumentation",
+            "alias": "masSlaDocumentation",
+            "type": "text"
+        },
+        {
+            "name": "ods:maxReplicas",
+            "alias": "masMaxReplicas",
+            "type": "number",
+            "defaultValue": 1
+        },
+        {
+            "name": "ods:batchingPermitted",
+            "alias": "masBatchingPermitted",
+            "type": "boolean",
+            "defaultValue": false
+        }
+    ]
+}

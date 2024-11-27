@@ -29,6 +29,6 @@ const TriggerSourceSystemIngestion = async (sourceSystemId?: string, token?: str
     }
 
     return response;
-}
+};
 
 export default TriggerSourceSystemIngestion;

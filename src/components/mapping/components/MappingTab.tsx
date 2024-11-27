@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
 /* Import Types */
-import { Mapping } from 'app/Types';
+import { DataMapping } from 'app/types/DataMapping';
 
 /* Import Components */
 import MappingField from './MappingField';
@@ -22,7 +22,7 @@ const MappingTab = (props: Props) => {
     const { mappingId } = props;
 
     /* Base variables */
-    const [mapping, setMapping] = useState<Mapping | undefined>();
+    const [mapping, setMapping] = useState<DataMapping | undefined>();
 
     /* OnLoad: Fetch Mapping with provided ID */
     useEffect(() => {
@@ -42,10 +42,10 @@ const MappingTab = (props: Props) => {
                     <Card.Subtitle className="text-muted">
                         <Row>
                             <Col className="col-lg-auto pe-1">
-                                <p> {mapping.name} </p>
+                                <p> {mapping['schema:name'] ?? mapping['@id']} </p>
                             </Col>
                             <Col className="ps-0">
-                                <p> | {mapping.sourceDataStandard} </p>
+                                <p> | {mapping['ods:mappingDataStandard']} </p>
                             </Col>
                         </Row>
                     </Card.Subtitle>
@@ -53,7 +53,7 @@ const MappingTab = (props: Props) => {
                     <Row className="flex-grow-1 overflow-y-scroll">
                         <Col>
                             {/* Defaults */}
-                            {!!mapping.fieldMapping.defaults.length &&
+                            {!!mapping['ods:hasDefaultMapping']?.length &&
                                 <Row className="mt-2">
                                     <Col>
                                         <p className="fs-4 fw-lightBold mb-1"> Default Mapping </p>
@@ -67,17 +67,21 @@ const MappingTab = (props: Props) => {
                                             </Col>
                                         </Row>
 
-                                        {mapping.fieldMapping.defaults.map((defaultMapping) => (
-                                            <MappingField key={Object.entries(defaultMapping)[0][0]}
-                                                harmonisedProperty={Object.entries(defaultMapping)[0][0]}
-                                                givenValue={Object.entries(defaultMapping)[0][1]}
-                                            />
-                                        ))}
+                                        {mapping['ods:hasDefaultMapping'].map((defaultMapping) => {
+                                            const [key, value] = Object.entries(defaultMapping)[0];
+
+                                            return (
+                                                <MappingField key={key}
+                                                    harmonisedProperty={key}
+                                                    givenValue={value as string}
+                                                />
+                                            );
+                                        })}
                                     </Col>
                                 </Row>
                             }
                             {/* Field mapping */}
-                            {!!mapping.fieldMapping.mapping.length &&
+                            {!!mapping['ods:hasTermMapping']?.length &&
                                 <Row className="mt-2">
                                     <Col>
                                         <p className="fs-4 fw-lightBold mb-1"> Field Mapping </p>
@@ -87,21 +91,25 @@ const MappingTab = (props: Props) => {
                                                 <p className="fs-5 fw-lightBold c-secondary"> Field </p>
                                             </Col>
                                             <Col lg={{ offset: 3 }}>
-                                                <p className="fs-5 fw-lightBold c-secondary"> {mapping.sourceDataStandard} property </p>
+                                                <p className="fs-5 fw-lightBold c-secondary"> {mapping['ods:mappingDataStandard']} property </p>
                                             </Col>
                                         </Row>
 
-                                        {mapping.fieldMapping.mapping.map((fieldMapping) => (
-                                            <MappingField key={Object.entries(fieldMapping)[0][0]}
-                                                harmonisedProperty={Object.entries(fieldMapping)[0][0]}
-                                                givenValue={Object.entries(fieldMapping)[0][1]}
-                                            />
-                                        ))}
+                                        {mapping['ods:hasTermMapping'].map((fieldMapping) => {
+                                            const [key, value] = Object.entries(fieldMapping)[0];
+
+                                            return (
+                                                <MappingField key={key}
+                                                    harmonisedProperty={key}
+                                                    givenValue={value as string}
+                                                />
+                                            );
+                                        })}
                                     </Col>
                                 </Row>
                             }
                             {/* Placeholder if there are no mappings */}
-                            {!mapping.fieldMapping.defaults.length && !mapping.fieldMapping.mapping.length &&
+                            {!mapping['ods:hasDefaultMapping']?.length && !mapping['ods:hasTermMapping']?.length &&
                                 <Row className="h-100 justify-content-center align-items-center">
                                     <Col>
                                         <p> No mapping present </p>

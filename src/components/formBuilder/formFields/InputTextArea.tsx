@@ -3,7 +3,7 @@ import { Field } from "formik";
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Utilities */
-import { ParseString } from "app/Utilities";
+import { MakeJsonPathReadableString } from "app/Utilities";
 
 
 /* Props Typing */
@@ -19,7 +19,7 @@ const InputTextArea = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${ParseString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
                 <Field name={name}
                     as="textarea"
                     rows="4"

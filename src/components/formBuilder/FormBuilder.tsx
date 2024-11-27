@@ -15,13 +15,13 @@ import { getEditTarget, setEditTarget } from 'redux-store/EditSlice';
 import { EditTarget, Dict } from 'app/Types';
 
 /* Import Utilities */
-import { SubmitSourceSystem, SubmitMapping, SubmitMAS } from './SubmitFunctions';
+import { SubmitSourceSystem, SubmitMapping, SubmitMas } from './SubmitFunctions';
 import { DefineEditTarget } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
 import MappingForm from 'components/mapping/components/MappingForm';
-import MASForm from 'components/mas/components/MASForm';
+import MasForm from 'components/mas/components/MasForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
 import InputTextArea from './formFields/InputTextArea';
@@ -30,7 +30,7 @@ import SelectField from './formFields/SelectField';
 import ArrayField from './formFields/ArrayField';
 import MappingSelect from './formFields/MappingSelect';
 import MappingField from './formFields/MappingField';
-import MASFiltersField from './formFields/MASFiltersField';
+import MasFiltersField from './formFields/MasFiltersField';
 import { Header } from 'components/elements/Elements';
 
 
@@ -53,12 +53,12 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <MappingSelect />;
         case 'mapping':
             return <MappingField name={fieldName} visibleName={visibleName} />;
-        case 'MASFilters':
-            return <MASFiltersField name={fieldName} visibleName={visibleName} />;
+        case 'masFilters':
+            return <MasFiltersField name={fieldName} visibleName={visibleName} />;
         default:
             return;
     }
-}
+};
 
 
 const FormBuilder = () => {
@@ -108,7 +108,8 @@ const FormBuilder = () => {
 
         /* Push to form template */
         formTemplates.push(
-            <FormBase title="Source System"
+            <FormBase key="sourceSystemFormBase"
+                title="Source System"
                 formFields={formFields}
                 numberOfFormPages={numberOfFormPages}
                 currentPage={1}
@@ -129,7 +130,8 @@ const FormBuilder = () => {
             const currentPage = numberOfFormPages === 4 ? index + 2 : index + 1;
 
             formTemplates.push(
-                <FormBase title={tabNames[index]}
+                <FormBase key="mappingFormBase"
+                    title={tabNames[index]}
                     formFields={formFields}
                     numberOfFormPages={numberOfFormPages}
                     currentPage={currentPage}
@@ -143,13 +145,14 @@ const FormBuilder = () => {
         initialValues = { ...initialValues, ...initialValuesFields };
     }
 
-    if (location.pathname.includes('MAS')) {
+    if (location.pathname.includes('mas')) {
         /* Generate form page for MAS */
-        const { formFields, initialValuesFields } = MASForm(DetermineFormField, editTarget?.MAS);
+        const { formFields, initialValuesFields } = MasForm(DetermineFormField, editTarget?.mas);
 
         /* Push to form template */
         formTemplates.push(
-            <FormBase title="Machine Annotation Service"
+            <FormBase key="masFormBase"
+                title="Machine Annotation Service"
                 formFields={formFields}
                 numberOfFormPages={numberOfFormPages}
                 currentPage={1}
@@ -163,13 +166,13 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.id)) {
+        if (location.pathname.includes('mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.['@id'])) {
             await SubmitMapping(form, editTarget as EditTarget).then((mapping) => {
-                form.mappingId = mapping?.id;
+                form['ods:dataMappingID'] = mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
 
                 /* If editing a Mapping, return to mapping detail page */
-                if (mapping && editTarget?.mapping?.id) {
-                    navigate(`/mapping/${mapping?.id}`);
+                if (mapping && (editTarget?.mapping?.['@id'] || location.pathname.includes('mapping'))) {
+                    navigate(`/mapping/${mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -181,7 +184,7 @@ const FormBuilder = () => {
             await SubmitSourceSystem(form, editTarget as EditTarget).then((sourceSystem) => {
                 /* On finish: navigate to detail page of Source System */
                 if (sourceSystem) {
-                    navigate(`/sourceSystem/${sourceSystem.id}`);
+                    navigate(`/sourceSystem/${sourceSystem['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -189,11 +192,11 @@ const FormBuilder = () => {
         }
 
         /* Submit MAS */
-        if (location.pathname.includes('MAS')) {
-            await SubmitMAS(form, editTarget as EditTarget).then((MAS) => {
+        if (location.pathname.includes('mas')) {
+            await SubmitMas(form, editTarget as EditTarget).then((mas) => {
                 /* On finish: navigate to detail page of MAS */
-                if (MAS) {
-                    navigate(`/MAS/${MAS.id}`);
+                if (mas) {
+                    navigate(`/mas/${mas['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
                 }
             });
         }
@@ -205,7 +208,7 @@ const FormBuilder = () => {
     });
 
     const ClassTab = (tab: string, mappingId: string) => {
-        if ((tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping') && !location.pathname.includes('MAS'))) {
+        if ((tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping') && !location.pathname.includes('mas'))) {
             return classNames({
                 'react-tabs__tab tab bgc-disabled': true,
             });
@@ -225,8 +228,7 @@ const FormBuilder = () => {
             <Header />
 
             <Container className="flex-grow-1 py-5 overflow-y-hidden">
-                <Formik
-                    initialValues={initialValues}
+                <Formik initialValues={initialValues}
                     enableReinitialize={true}
                     onSubmit={async (form: any) => {
                         await new Promise((resolve) => setTimeout(resolve, 100));

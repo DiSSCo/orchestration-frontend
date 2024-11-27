@@ -1,38 +1,9 @@
 /* Import Dependencies */
-import { useEffect, useState } from 'react';
 import KeycloakService from 'app/Keycloak';
 import { Row, Col, Dropdown } from 'react-bootstrap';
 
-/* Import Types */
-import { User } from 'app/Types';
-
-/* Import API */
-import GetUser from 'api/user/GetUser';
-
 
 const Profile = () => {
-    /* Base variables */
-    const [user, setUser] = useState<User>();
-    const token = KeycloakService.GetToken();
-    const subject = KeycloakService.GetSubject();
-
-    /* User initialization */
-    useEffect(() => {
-        if (token && subject) {
-            GetUser(subject, token).then((user) => {
-                if (user) {
-                    let copyUser = { ...user };
-
-                    if (!user.firstName) {
-                        copyUser.firstName = 'User';
-                    }
-
-                    setUser(copyUser);
-                }
-            });
-        }
-    }, []);
-
     /* Handling Dropdown */
     const OnSelect = (eventKey: string | null) => {
         switch (eventKey) {
@@ -47,7 +18,7 @@ const Profile = () => {
         }
     };
 
-    if (user) {
+    if (KeycloakService.IsLoggedIn()) {
         return (
             <Row>
                 <Col md={{ span: 12 }} className="mt-1">
@@ -57,10 +28,7 @@ const Profile = () => {
                         }>
                             <Dropdown.Toggle>
                                 <span className="text-end textOverflow">
-                                    {(user.firstName && user.firstName !== 'User') ?
-                                        <> {`${user['firstName'][0]}. ${user['lastName']}`} </>
-                                        : <> {user['firstName']} </>
-                                    }
+                                    {`${KeycloakService.GetParsedToken()?.given_name?.[0]}. ${KeycloakService.GetParsedToken()?.family_name}`}
                                 </span>
                             </Dropdown.Toggle>
 
@@ -78,6 +46,6 @@ const Profile = () => {
             <> </>
         );
     }
-}
+};
 
 export default Profile;

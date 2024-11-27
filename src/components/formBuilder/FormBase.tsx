@@ -27,14 +27,16 @@ const FormBase = (props: Props) => {
     const location = useLocation();
 
     return (
-        <Card key="formTemplate_sourceSystem" className="h-100 d-flex flex-column px-4 py-3 overflow-y-scroll">
+        <Card className="h-100 d-flex flex-column px-4 py-3 overflow-y-scroll">
             <p className="fs-2 fw-lightBold"> {title} </p>
 
             <Row className="flex-grow-1">
                 <Col>
-                    {formFields.map((formField) => {
+                    {formFields.map((formField, index) => {
+                        const key = `${formField.props.name}_${index}`;
+
                         return cloneElement(formField, {
-                            key: formField.props.name,
+                            key,
                             formValues,
                             SetFieldValue: SetFieldValue
                         });
