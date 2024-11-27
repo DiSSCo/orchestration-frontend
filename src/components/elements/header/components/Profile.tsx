@@ -43,7 +43,14 @@ const Profile = () => {
         );
     } else {
         return (
-            <> </>
+            <button type="button"
+                className="button-no-style"
+                onClick={() => KeycloakService.Login()}
+            >
+                <p className="fs-4">
+                    Login / Sign-up
+                </p>
+            </button>
         );
     }
 };
