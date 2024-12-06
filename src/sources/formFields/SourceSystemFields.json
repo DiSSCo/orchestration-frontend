@@ -36,7 +36,7 @@
         },
         {
             "name": "ods:dataMappingID",
-            "type": "mappingSelect"
+            "type": "dataMappingSelect"
         }
     ]
 }

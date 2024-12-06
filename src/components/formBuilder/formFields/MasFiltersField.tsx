@@ -13,7 +13,7 @@ import { Dict } from 'app/Types';
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
 
 /* Import Components */
-import MappingFilter from './MappingFilter';
+import MappingFilter from './DataMappingFilter';
 
 
 /* Props Typing */

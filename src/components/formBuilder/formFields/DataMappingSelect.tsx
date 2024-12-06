@@ -6,26 +6,26 @@ import { Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMappings, setMappings } from 'redux-store/MappingSlice';
+import { getDataMappings, setDataMappings } from 'redux-store/DataMappingSlice';
 import { getEditTarget } from 'redux-store/EditSlice';
 
 /* Import API */
-import GetMappings from 'api/mapping/GetMappings';
+import GetDataMappings from 'api/dataMapping/GeDatatMappings';
 
 
-const MappingSelect = () => {
+const DataMappingSelect = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
 
     /* Base variables */
-    const mappings = useAppSelector(getMappings);
+    const dataMappings = useAppSelector(getDataMappings);
     const editTarget = useAppSelector(getEditTarget);
 
     /* OnLoad: Check if Mappings are present in state, otherwise fetch and set */
     useEffect(() => {
-        if (isEmpty(mappings)) {
-            GetMappings().then((mappings) => {
-                dispatch(setMappings(mappings));
+        if (isEmpty(dataMappings)) {
+            GetDataMappings().then((dataMappings) => {
+                dispatch(setDataMappings(dataMappings));
             }).catch(error => {
                 console.warn(error);
             });
@@ -35,25 +35,25 @@ const MappingSelect = () => {
     return (
         <Row className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> Mapping: </p>
-                <Field name="mappingId" as="select"
+                <p className="ms-1 mb-1"> Data Mapping: </p>
+                <Field name="dataMappingId" as="select"
                     className="w-100 formField"
                 >
                     {isEmpty(editTarget) &&
                         <option key={'new'} value="new">
-                            Add New Mapping
+                            Add New Data Mapping
                         </option>
                     }
                     <option key={'choose'} value="" disabled>
-                        Choose Mapping
+                        Choose Data Mapping
                     </option>
 
-                    {mappings.map((mapping, index) => {
-                        const key: string = (mapping['schema:name'] ?? mapping['schema:identifier']) + index;
+                    {dataMappings.map((dataMapping, index) => {
+                        const key: string = (dataMapping['schema:name'] ?? dataMapping['schema:identifier']) + index;
 
                         return (
-                            <option key={key} value={mapping['@id']}
-                                label={mapping['schema:name'] ?? mapping['schema:identifier']}
+                            <option key={key} value={dataMapping['@id']}
+                                label={dataMapping['schema:name'] ?? dataMapping['schema:identifier']}
                             />
                         );
                     })}
@@ -63,4 +63,4 @@ const MappingSelect = () => {
     );
 }
 
-export default MappingSelect;
+export default DataMappingSelect;

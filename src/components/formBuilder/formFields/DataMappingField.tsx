@@ -25,7 +25,7 @@ interface Props {
 };
 
 
-const MappingField = (props: Props) => {
+const DataMappingField = (props: Props) => {
     const { name, visibleName, formValues } = props;
 
     /* Base variables */
@@ -34,10 +34,10 @@ const MappingField = (props: Props) => {
 
     /* Check which harmonised properties still may be used to map */
     if (formValues) {
-        (formValues['ods:hasDefaultMapping'].concat(formValues['ods:hasTermMapping'])).forEach((mapping: Dict) => {
+        (formValues['ods:hasDefaultMapping'].concat(formValues['ods:hasTermMapping'])).forEach((dataMapping: Dict) => {
             /* Remove mapping property from Harmonised Attributes */
-            if (mapping.field) {
-                delete harmonisedAttributes[mapping.field];
+            if (dataMapping.field) {
+                delete harmonisedAttributes[dataMapping.field];
             }
         });
     }
@@ -101,7 +101,7 @@ const MappingField = (props: Props) => {
                                 );
                             })}
 
-                            {/* Button for adding additional mappings */}
+                            {/* Button for adding additional data mappings */}
                             {formValues &&
                                 <button type="button"
                                     className="w-100 mt-2"
@@ -120,4 +120,4 @@ const MappingField = (props: Props) => {
     );
 }
 
-export default MappingField;
+export default DataMappingField;

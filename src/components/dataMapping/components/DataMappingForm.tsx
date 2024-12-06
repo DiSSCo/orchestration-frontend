@@ -3,15 +3,15 @@ import { DataMapping } from 'app/types/DataMapping';
 import { Dict } from 'app/Types';
 
 /* Import Sources */
-import MappingFields from 'sources/formFields/MappingFields.json';
+import DataMappingFields from 'sources/formFields/DataMappingFields.json';
 
 
-const MappingForm = (DetermineFormField: Function, mapping?: DataMapping) => {
+const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping) => {
     const formFieldsPages: JSX.Element[][] = [];
     const initialValuesFields: Dict = {};
 
-    /* Generate Mapping form fields */
-    MappingFields.pages.forEach((page, index) => {
+    /* Generate Data Mapping form fields */
+    DataMappingFields.pages.forEach((page, index) => {
         formFieldsPages[index] = [];
 
         /* Iterate to prepare initial form values */
@@ -19,20 +19,20 @@ const MappingForm = (DetermineFormField: Function, mapping?: DataMapping) => {
             formFieldsPages[index].push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field.options));
 
             /* Add to initial form values */
-            if (field.type === 'mapping') {
+            if (field.type === 'dataMapping') {
                 const reformatMappings: Dict[] = [];
 
                 /* Reformat mappings for form input */
-                (mapping?.[field.name as keyof typeof mapping] as Dict[])?.forEach((mapping) => {
+                (dataMapping?.[field.name as keyof typeof dataMapping] as Dict[])?.forEach((dataMapping) => {
                     reformatMappings.push({
-                        field: Object.keys(mapping)[0],
-                        value: Object.values(mapping)[0]
+                        field: Object.keys(dataMapping)[0],
+                        value: Object.values(dataMapping)[0]
                     });
                 });
 
                 initialValuesFields[field.name] = reformatMappings ?? [];
             } else {
-                initialValuesFields[field?.alias ?? field.name] = mapping?.[field.name as keyof typeof mapping] ?? '';
+                initialValuesFields[field?.alias ?? field.name] = dataMapping?.[field.name as keyof typeof dataMapping] ?? '';
             }
         });
     });
@@ -40,4 +40,4 @@ const MappingForm = (DetermineFormField: Function, mapping?: DataMapping) => {
     return { formFieldsPages, initialValuesFields };
 }
 
-export default MappingForm;
+export default DataMappingForm;

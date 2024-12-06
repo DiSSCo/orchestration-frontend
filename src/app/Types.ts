@@ -18,7 +18,7 @@ type DataFragment = {
     type: string,
     attributes: {
         sourceSystem?: SourceSystem,
-        Mapping?: DataMapping,
+        dataMapping?: DataMapping,
         Mas?: MachineAnnotationService
         [property: string]: any
     }
@@ -50,6 +50,6 @@ export type JSONResultArray = {
 /* Edit Target */
 export interface EditTarget {
     sourceSystem?: SourceSystem,
-    mapping?: DataMapping,
+    dataMapping?: DataMapping,
     mas?: MachineAnnotationService
 }

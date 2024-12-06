@@ -13,7 +13,7 @@ import styles from 'components/home/home.module.scss';
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
 
 /* Import Components */
-import MappingFields from './MappingFields';
+import DataMappingFields from './DataMappingFields';
 
 
 /* Props Typing */
@@ -23,7 +23,7 @@ interface Props {
 };
 
 
-const AddMappingForm = (props: Props) => {
+const AddDataMappingForm = (props: Props) => {
     const { formValues, baseStandard } = props;
 
     /* Base variables */
@@ -56,14 +56,14 @@ const AddMappingForm = (props: Props) => {
 
                     <Row className="flex-grow-1">
                         <Col className="h-100">
-                            <MappingFields mappingType={'Defaults'}
+                            <DataMappingFields dataMappingType={'Defaults'}
                                 formValues={formValues}
                                 harmonisedAttributes={harmonisedAttributes}
                                 originalHarmonisedAttributes={originalHarmonisedAttributes}
                                 classCoverDiv={classCoverDiv}
                             />
 
-                            <MappingFields mappingType={'FieldMapping'}
+                            <DataMappingFields dataMappingType={'FieldMapping'}
                                 formValues={formValues}
                                 harmonisedAttributes={harmonisedAttributes}
                                 originalHarmonisedAttributes={originalHarmonisedAttributes}
@@ -77,4 +77,4 @@ const AddMappingForm = (props: Props) => {
     );
 }
 
-export default AddMappingForm;
+export default AddDataMappingForm;

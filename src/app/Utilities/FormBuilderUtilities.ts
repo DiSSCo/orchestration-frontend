@@ -3,7 +3,7 @@ import { EditTarget} from "app/Types";
 
 /* Import API */
 import GetSourceSystem from "api/sourceSystem/GetSourceSystem";
-import GetMapping from "api/mapping/GetMapping";
+import GetDataMapping from "api/dataMapping/GetDataMapping";
 import GetMas from "api/mas/GetMas";
 
 
@@ -19,10 +19,10 @@ const DefineEditTarget = async (targetName: string, id: string) => {
         }).catch(error => {
             console.warn(error);
         });
-    } else if (targetName === 'mapping') {
-        await GetMapping(id).then((mapping) => {
-            if (mapping) {
-                copyEditTarget = { ...editTarget, mapping };
+    } else if (targetName === 'dataMapping') {
+        await GetDataMapping(id).then((dataMapping) => {
+            if (dataMapping) {
+                copyEditTarget = { ...editTarget, dataMapping };
             }
         }).catch(error => {
             console.warn(error);

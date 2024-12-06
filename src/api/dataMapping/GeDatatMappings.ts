@@ -6,10 +6,10 @@ import { DataMapping } from "app/types/DataMapping";
 import { JSONResultArray } from "app/Types";
 
 
-const GetMappings = async () => {
-    let mappings = <DataMapping[]>[];
+const GetDataMappings = async () => {
+    let dataMappings = <DataMapping[]>[];
 
-    const endPoint = "/mapping"
+    const endPoint = "/data-mapping"
 
     try {
         const result = await axios({
@@ -23,14 +23,14 @@ const GetMappings = async () => {
 
         const data: JSONResultArray = result.data;
 
-        data.data.forEach((mapping) => {
-            mappings.push(mapping.attributes as DataMapping);
+        data.data.forEach((dataMapping) => {
+            dataMappings.push(dataMapping.attributes as DataMapping);
         });
     } catch (error) {
         console.warn(error);
     }
 
-    return mappings;
+    return dataMappings;
 };
 
-export default GetMappings;
+export default GetDataMappings;

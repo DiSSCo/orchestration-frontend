@@ -22,7 +22,7 @@ const InsertSourceSystem = async (sourceSystemRecord: Dict, token?: string) => {
                 'Authorization': `Bearer ${token}`
             }
         }).then((result) => {
-            /* Set Mapping */
+            /* Set Data Mapping */
             const data: JSONResult = result.data;
 
             sourceSystem = data.data.attributes as SourceSystem;

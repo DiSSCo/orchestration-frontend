@@ -10,8 +10,8 @@ import { EditTarget, Dict } from "app/Types";
 /* Import API */
 import InsertSourceSystem from 'api/sourceSystem/InsertSourceSystem';
 import PatchSourceSystem from 'api/sourceSystem/PatchSourceSystem';
-import InsertMapping from 'api/mapping/InsertMapping';
-import PatchMapping from 'api/mapping/PatchMapping';
+import InsertDataMapping from 'api/dataMapping/InsertDataMapping';
+import PatchDataMapping from 'api/dataMapping/PatchDataMapping';
 import InsertMas from 'api/mas/InsertMas';
 import PatchMas from "api/mas/PatchMas";
 
@@ -48,26 +48,26 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
     return sourceSystemResponse;
 }
 
-const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
+const SubmitDataMapping = async (form: Dict, editTarget: EditTarget) => {
     /* Format default mappings */
     const defaultMappings: Dict[] = [];
 
-    form['ods:hasDefaultMapping'].forEach((mapping: Dict) => {
-        if (mapping.field) {
-            defaultMappings.push({ [mapping.field]: mapping.value });
+    form['ods:hasDefaultMapping'].forEach((dataMapping: Dict) => {
+        if (dataMapping.field) {
+            defaultMappings.push({ [dataMapping.field]: dataMapping.value });
         }
     });
 
     /* Format field mappings */
     const fieldMappings: Dict[] = [];
 
-    form['ods:hasTermMapping'].forEach((mapping: Dict) => {
-        if (mapping.field) {
-            fieldMappings.push({ [mapping.field]: mapping.value });
+    form['ods:hasTermMapping'].forEach((dataMapping: Dict) => {
+        if (dataMapping.field) {
+            fieldMappings.push({ [dataMapping.field]: dataMapping.value });
         }
     });
 
-    const mappingRecord = {
+    const dataMappingRecord = {
         data: {
             type: "ods:DataMapping",
             attributes: {
@@ -81,25 +81,25 @@ const SubmitMapping = async (form: Dict, editTarget: EditTarget) => {
     };
 
     /* If edit target is not empty, patch instead of insert */
-    let mappingResponse: DataMapping | undefined;
+    let dataMappingResponse: DataMapping | undefined;
 
-    if (editTarget?.mapping) {
-        await PatchMapping(
-            mappingRecord, (editTarget.mapping["@id"] ?? editTarget.mapping["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
-        ).then((mapping) => {
-            mappingResponse = mapping;
+    if (editTarget?.dataMapping) {
+        await PatchDataMapping(
+            dataMappingRecord, (editTarget.dataMapping["@id"] ?? editTarget.dataMapping["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+        ).then((dataMapping) => {
+            dataMappingResponse = dataMapping;
         }).catch(error => {
             console.warn(error);
         });
     } else {
-        await InsertMapping(mappingRecord, KeycloakService.GetToken()).then((mapping) => {
-            mappingResponse = mapping;
+        await InsertDataMapping(dataMappingRecord, KeycloakService.GetToken()).then((dataMapping) => {
+            dataMappingResponse = dataMapping;
         }).catch(error => {
             console.warn(error);
         });
     }
 
-    return mappingResponse;
+    return dataMappingResponse;
 };
 
 const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
@@ -158,6 +158,6 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
 
 export {
     SubmitSourceSystem,
-    SubmitMapping,
+    SubmitDataMapping,
     SubmitMas
 };

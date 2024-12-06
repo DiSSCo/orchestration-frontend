@@ -8,37 +8,37 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
-import { getMapping, setMapping } from 'redux-store/MappingSlice';
+import { getDataMapping, setDataMapping } from 'redux-store/DataMappingSlice';
 
 /* Import Components */
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
-import MappingTab from './components/MappingTab';
+import DataMappingTab from './components/DataMappingTab';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
-import GetMapping from 'api/mapping/GetMapping';
-import DeleteMapping from 'api/mapping/DeleteMapping';
+import GetDataMapping from 'api/dataMapping/GetDataMapping';
+import DeleteDataMapping from 'api/dataMapping/DeleteDataMapping';
 
 
-const Mapping = () => {
+const DataMapping = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const params = useParams();
     const navigate = useNavigate();
 
     /* Base variables */
-    const mapping = useAppSelector(getMapping);
+    const dataMapping = useAppSelector(getDataMapping);
 
-    /* OnLoad: fetch Mapping */
+    /* OnLoad: fetch Data Mapping */
     useEffect(() => {
-        const mappingId = `${params.prefix}/${params.suffix}`;
+        const dataMappingId = `${params.prefix}/${params.suffix}`;
 
-        if (mapping?.['@id'] !== mappingId) {
-            GetMapping(mappingId).then((mapping) => {
-                if (mapping) {
-                    /* Set Mapping */
-                    dispatch(setMapping(mapping));
+        if (dataMapping?.['@id'] !== dataMappingId) {
+            GetDataMapping(dataMappingId).then((dataMapping) => {
+                if (dataMapping) {
+                    /* Set Data Mapping */
+                    dispatch(setDataMapping(dataMapping));
                 } else {
                     /* Not found: return to Home */
                     navigate('/');
@@ -63,11 +63,11 @@ const Mapping = () => {
             <Header />
 
             <Container className="flex-grow-1 py-5">
-                {mapping &&
+                {dataMapping &&
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={mapping['schema:name'] ?? mapping['@id'] ?? mapping['schema:identifier']}
+                                <TitleBar title={dataMapping['schema:name'] ?? dataMapping['@id'] ?? dataMapping['schema:identifier']}
                                     subTitle="Mappings"
                                 />
                             </Col>
@@ -85,8 +85,8 @@ const Mapping = () => {
                                         <button type="button"
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
-                                                if (window.confirm('Are you sure you want to delete this Mapping?')) {
-                                                    DeleteMapping((mapping['@id'] ?? mapping['schema:identifier']).replace(
+                                                if (window.confirm('Are you sure you want to delete this Data Mapping?')) {
+                                                    DeleteDataMapping((dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(
                                                         import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
                                                     ).then((success) => {
                                                         if (success) {
@@ -106,24 +106,24 @@ const Mapping = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
+                                <IDCard identifier={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
                                     IDCardProperties={{
-                                        name: mapping['schema:name'],
-                                        description: mapping['schema:description'],
-                                        sourceDataStandard: mapping['ods:mappingDataStandard'],
-                                        created: mapping['schema:dateCreated']
+                                        name: dataMapping['schema:name'],
+                                        description: dataMapping['schema:description'],
+                                        sourceDataStandard: dataMapping['ods:mappingDataStandard'],
+                                        created: dataMapping['schema:dateCreated']
                                     }}
                                 />
                             </Col>
                             <Col lg={{ span: 8 }}>
                                 <Tabs className="h-100 d-flex flex-column">
                                     <TabList className={classTabList}>
-                                        <Tab className={classTab} selectedClassName="active"> Mapping </Tab>
+                                        <Tab className={classTab} selectedClassName="active"> Data Mapping </Tab>
                                     </TabList>
 
-                                    {/* Mappings Tab */}
+                                    {/* Data Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={(mapping['@id'] ?? mapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')} />
+                                        <DataMappingTab dataMappingId={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>
@@ -135,4 +135,4 @@ const Mapping = () => {
     );
 }
 
-export default Mapping;
+export default DataMapping;

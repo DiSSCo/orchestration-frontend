@@ -9,7 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 /* Import Store */
 import { useAppDispatch } from 'app/Hooks';
 import { setSourceSystems } from 'redux-store/SourceSystemSlice';
-import { setMappings } from 'redux-store/MappingSlice';
+import { setDataMappings } from 'redux-store/DataMappingSlice';
 import { setMachineAnnotationServices } from 'redux-store/MasSlice';
 
 /* Import Utilities */
@@ -20,13 +20,13 @@ import styles from 'components/home/home.module.scss';
 
 /* Import Components */
 import SourceSystemsOverview from './components/overview/SourceSystemsOverview';
-import MappingsOverview from './components/overview/MappingsOverview';
+import DataMappingsOverview from './components/overview/DataMappingsOverview';
 import MasOverview from './components/overview/MasOverview';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystems from 'api/sourceSystem/GetSourceSystems';
-import GetMappings from 'api/mapping/GetMappings';
+import GetDataMappings from 'api/dataMapping/GeDatatMappings';
 import GetMases from 'api/mas/GetMases';
 
 
@@ -43,8 +43,8 @@ const Home = () => {
             console.warn(error);
         });
 
-        GetMappings().then((mappings) => {
-            dispatch(setMappings(mappings));
+        GetDataMappings().then((dataMappings) => {
+            dispatch(setDataMappings(dataMappings));
         }).catch(error => {
             console.warn(error);
         });
@@ -63,11 +63,11 @@ const Home = () => {
         if (tabNumber === 0) {
             setChosenTab('Source System');
         } else if (tabNumber === 1) {
-            setChosenTab('Mapping');
+            setChosenTab('Data Mapping');
         } else if (tabNumber === 2) {
             setChosenTab('mas')
         }
-    }
+    };
 
     /* Class Names for Tabs */
     const classTabsList = classNames({
@@ -109,7 +109,7 @@ const Home = () => {
                         <Tabs className="h-100" onSelect={(tab) => SetChosenTab(tab)}>
                             <TabList className={classTabsList}>
                                 <Tab className={classTab} selectedClassName={styles.active}> Source Systems </Tab>
-                                <Tab className={classTab} selectedClassName={styles.active}> Mappings </Tab>
+                                <Tab className={classTab} selectedClassName={styles.active}> Data Mappings </Tab>
                                 <Tab className={classTab} selectedClassName={styles.active}> Machine Annotation Services </Tab>
                             </TabList>
 
@@ -120,7 +120,7 @@ const Home = () => {
 
                             {/* Mappings */}
                             <TabPanel className={classTabPanel}>
-                                <MappingsOverview />
+                                <DataMappingsOverview />
                             </TabPanel>
 
                             {/* Machine Annotation Services */}

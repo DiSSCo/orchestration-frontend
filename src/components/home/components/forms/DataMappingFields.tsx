@@ -15,7 +15,7 @@ import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 
 /* Props Typing */
 interface Props {
-    mappingType: string,
+    dataMappingType: string,
     formValues: Dict,
     harmonisedAttributes: Dict,
     originalHarmonisedAttributes: Dict,
@@ -23,8 +23,8 @@ interface Props {
 };
 
 
-const MappingFields = (props: Props) => {
-    const { mappingType, formValues, harmonisedAttributes, originalHarmonisedAttributes, classCoverDiv } = props;
+const DataMappingFields = (props: Props) => {
+    const { dataMappingType, formValues, harmonisedAttributes, originalHarmonisedAttributes, classCoverDiv } = props;
 
     return (
         <Row className="h-50 py-2">
@@ -35,12 +35,12 @@ const MappingFields = (props: Props) => {
                         Set a base data standard to continue
                     </div>
 
-                    <p className={`${styles.mappingTitle} ms-1 mb-1`}> {mappingType}: </p>
+                    <p className={`${styles.mappingTitle} ms-1 mb-1`}> {dataMappingType}: </p>
 
-                    <FieldArray name={`mapping${mappingType}`}>
+                    <FieldArray name={`dataMapping${dataMappingType}`}>
                         {({ push, remove }) => (
                             <>
-                                {formValues[`mapping${mappingType}`].map((value: Dict, index: number) => {
+                                {formValues[`dataMapping${dataMappingType}`].map((value: Dict, index: number) => {
                                     const localAttributes = { ...harmonisedAttributes };
 
                                     if (value.field) {
@@ -52,7 +52,7 @@ const MappingFields = (props: Props) => {
                                             <Col>
                                                 <Row>
                                                     <Col md={{ span: 6 }}>
-                                                        <Field name={`mapping${mappingType}.${index}.field`}
+                                                        <Field name={`dataMapping${dataMappingType}.${index}.field`}
                                                             as="select" className={`${styles.formField} py-1 px-2 w-100 h-100`}
                                                         >
                                                             <option value="" label="Harmonised property" disabled />
@@ -71,7 +71,7 @@ const MappingFields = (props: Props) => {
                                                         </Field>
                                                     </Col>
                                                     <Col md={{ span: 6 }}>
-                                                        <Field name={`mapping${mappingType}.${index}.value`}
+                                                        <Field name={`dataMapping${dataMappingType}.${index}.value`}
                                                             className={`${styles.formField} py-1 px-2 w-100`}
                                                         />
                                                     </Col>
@@ -90,7 +90,7 @@ const MappingFields = (props: Props) => {
                                 <button type="button"
                                     className={`${styles.addMappingButton} w-100 mt-2`}
                                     onClick={() => push({
-                                        field: '', value: '', key: formValues[`mapping${mappingType}`].length
+                                        field: '', value: '', key: formValues[`dataMapping${dataMappingType}`].length
                                     })}
                                 >
                                     <FontAwesomeIcon icon={faPlus} />
@@ -104,4 +104,4 @@ const MappingFields = (props: Props) => {
     );
 }
 
-export default MappingFields;
+export default DataMappingFields;
