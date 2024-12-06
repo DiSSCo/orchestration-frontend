@@ -15,12 +15,12 @@ import { getEditTarget, setEditTarget } from 'redux-store/EditSlice';
 import { EditTarget, Dict } from 'app/Types';
 
 /* Import Utilities */
-import { SubmitSourceSystem, SubmitMapping, SubmitMas } from './SubmitFunctions';
+import { SubmitSourceSystem, SubmitDataMapping, SubmitMas } from './SubmitFunctions';
 import { DefineEditTarget } from 'app/Utilities/FormBuilderUtilities';
 
 /* Import Components */
 import SourceSystemForm from 'components/sourceSystem/components/SourceSystemForm';
-import MappingForm from 'components/mapping/components/MappingForm';
+import DataMappingForm from 'components/dataMapping/components/DataMappingForm';
 import MasForm from 'components/mas/components/MasForm';
 import FormBase from './FormBase';
 import InputField from './formFields/InputField';
@@ -28,8 +28,8 @@ import InputTextArea from './formFields/InputTextArea';
 import BooleanField from './formFields/BooleanField';
 import SelectField from './formFields/SelectField';
 import ArrayField from './formFields/ArrayField';
-import MappingSelect from './formFields/MappingSelect';
-import MappingField from './formFields/MappingField';
+import DataMappingSelect from './formFields/DataMappingSelect';
+import DataMappingField from './formFields/DataMappingField';
 import MasFiltersField from './formFields/MasFiltersField';
 import { Header } from 'components/elements/Elements';
 
@@ -49,10 +49,10 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <SelectField name={fieldName} visibleName={visibleName} options={options} />;
         case 'array':
             return <ArrayField name={fieldName} visibleName={visibleName} />;
-        case 'mappingSelect':
-            return <MappingSelect />;
-        case 'mapping':
-            return <MappingField name={fieldName} visibleName={visibleName} />;
+        case 'dataMappingSelect':
+            return <DataMappingSelect />;
+        case 'dataMapping':
+            return <DataMappingField name={fieldName} visibleName={visibleName} />;
         case 'masFilters':
             return <MasFiltersField name={fieldName} visibleName={visibleName} />;
         default:
@@ -95,9 +95,9 @@ const FormBuilder = () => {
     /* Depict number of form pages */
     let numberOfFormPages: number = 1;
 
-    if ((location.pathname.includes('sourceSystem') && !editTarget?.sourceSystem)) {
+    if ((location.pathname.includes('sourceSystem') || editTarget?.sourceSystem)) {
         numberOfFormPages = 4;
-    } else if (location.pathname.includes('mapping')) {
+    } else if (location.pathname.includes('dataMapping')) {
         numberOfFormPages = 3;
     }
 
@@ -121,16 +121,16 @@ const FormBuilder = () => {
         initialValues = { ...initialValues, ...initialValuesFields };
     }
 
-    if (location.pathname.includes('mapping') || (location.pathname.includes('sourceSystem') && !editTarget?.mapping)) {
+    if (location.pathname.includes('dataMapping') || (location.pathname.includes('sourceSystem') && !editTarget?.dataMapping)) {
         /* Generate form pages for Mapping */
-        const { formFieldsPages, initialValuesFields } = MappingForm(DetermineFormField, editTarget?.mapping);
-        const tabNames = ['Mapping', 'Default Mapping', 'Field Mapping'];
+        const { formFieldsPages, initialValuesFields } = DataMappingForm(DetermineFormField, editTarget?.dataMapping);
+        const tabNames = ['Data Mapping', 'Default Mapping', 'Field Mapping'];
 
         formFieldsPages.forEach((formFields, index) => {
             const currentPage = numberOfFormPages === 4 ? index + 2 : index + 1;
 
             formTemplates.push(
-                <FormBase key="mappingFormBase"
+                <FormBase key="dataMappingFormBase"
                     title={tabNames[index]}
                     formFields={formFields}
                     numberOfFormPages={numberOfFormPages}
@@ -166,13 +166,13 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (location.pathname.includes('mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.mapping?.['@id'])) {
-            await SubmitMapping(form, editTarget as EditTarget).then((mapping) => {
-                form['ods:dataMappingID'] = mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
+        if (location.pathname.includes('dataMapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
+            await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
+                form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
 
-                /* If editing a Mapping, return to mapping detail page */
-                if (mapping && (editTarget?.mapping?.['@id'] || location.pathname.includes('mapping'))) {
-                    navigate(`/mapping/${mapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
+                /* If editing a Data Mapping, return to data mapping detail page */
+                if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('dataMapping'))) {
+                    navigate(`/dataMapping/${dataMapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -207,8 +207,10 @@ const FormBuilder = () => {
         'tabsList p-0': true
     });
 
-    const ClassTab = (tab: string, mappingId: string) => {
-        if ((tab !== 'Source System' && mappingId !== 'new' && !location.pathname.includes('mapping') && !location.pathname.includes('mas'))) {
+    const ClassTab = (tab: string, dataMappingId: string) => {
+        console.log(dataMappingId);
+
+        if ((tab !== 'Source System' && dataMappingId !== 'new' && !location.pathname.includes('dataMapping') && !location.pathname.includes('mas')) && !location.pathname.includes('edit')) {
             return classNames({
                 'react-tabs__tab tab bgc-disabled': true,
             });
@@ -248,7 +250,7 @@ const FormBuilder = () => {
                                             <TabList className={classTabList}>
                                                 {formTemplates.map((formTemplate) => (
                                                     <Tab key={formTemplate.props.title}
-                                                        className={ClassTab(formTemplate.props.title, values.mappingId ?? '')}
+                                                        className={ClassTab(formTemplate.props.title, values.dataMappingId ?? '')}
                                                         selectedClassName="active"
                                                     >
                                                         {formTemplate.props.title}
@@ -278,6 +280,6 @@ const FormBuilder = () => {
             </Container>
         </div>
     );
-}
+};
 
 export default FormBuilder;

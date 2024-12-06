@@ -13,7 +13,7 @@ import { getSourceSystem, setSourceSystem } from 'redux-store/SourceSystemSlice'
 /* Import Components */
 import TitleBar from 'components/general/IDCard/titleBar/TitleBar';
 import IDCard from 'components/general/IDCard/IDCard';
-import MappingTab from 'components/mapping/components/MappingTab';
+import DataMappingTab from 'components/dataMapping/components/DataMappingTab';
 import { Header } from 'components/elements/Elements';
 
 /* Import API */
@@ -134,12 +134,12 @@ const SourceSystem = () => {
                             <Col lg={{ span: 8 }}>
                                 <Tabs className="h-100 d-flex flex-column">
                                     <TabList className={classTabList}>
-                                        <Tab className={classTab} selectedClassName="active"> Mapping </Tab>
+                                        <Tab className={classTab} selectedClassName="active"> Data Mapping </Tab>
                                     </TabList>
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <MappingTab mappingId={sourceSystem['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, '')} />
+                                        <DataMappingTab dataMappingId={sourceSystem['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

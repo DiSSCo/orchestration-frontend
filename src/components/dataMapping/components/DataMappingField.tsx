@@ -13,7 +13,7 @@ interface Props {
 };
 
 
-const MappingField = (props: Props) => {
+const DataMappingField = (props: Props) => {
     const { harmonisedProperty, givenValue } = props;
 
     return (
@@ -40,4 +40,4 @@ const MappingField = (props: Props) => {
     );
 }
 
-export default MappingField;
+export default DataMappingField;
