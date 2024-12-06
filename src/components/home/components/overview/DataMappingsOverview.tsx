@@ -1,6 +1,9 @@
 /* Import Dependencies */
 import { useNavigate } from 'react-router-dom';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getDataMappings } from 'redux-store/DataMappingSlice';
@@ -37,7 +40,7 @@ const DataMappingsOverview = () => {
     dataMappings.forEach((dataMapping) => {
         rows.push({
             index: index,
-            id: dataMapping['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            id: dataMapping['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), ''),
             name: dataMapping['schema:name'],
             description: dataMapping['schema:description'],
             type: "mapping"

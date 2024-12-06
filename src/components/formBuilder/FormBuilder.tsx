@@ -7,6 +7,9 @@ import { isEmpty } from 'lodash';
 import classNames from 'classnames';
 import { Container, Row, Col } from 'react-bootstrap';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getEditTarget, setEditTarget } from 'redux-store/EditSlice';
@@ -168,11 +171,11 @@ const FormBuilder = () => {
         /* Submit Mapping */
         if (location.pathname.includes('dataMapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
             await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
-                form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '');
+                form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
 
                 /* If editing a Data Mapping, return to data mapping detail page */
                 if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('dataMapping'))) {
-                    navigate(`/dataMapping/${dataMapping?.['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
+                    navigate(`/dataMapping/${dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -184,7 +187,7 @@ const FormBuilder = () => {
             await SubmitSourceSystem(form, editTarget as EditTarget).then((sourceSystem) => {
                 /* On finish: navigate to detail page of Source System */
                 if (sourceSystem) {
-                    navigate(`/sourceSystem/${sourceSystem['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
+                    navigate(`/sourceSystem/${sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -196,7 +199,7 @@ const FormBuilder = () => {
             await SubmitMas(form, editTarget as EditTarget).then((mas) => {
                 /* On finish: navigate to detail page of MAS */
                 if (mas) {
-                    navigate(`/mas/${mas['@id']?.replace(import.meta.env.VITE_HANDLE_URL, '')}`);
+                    navigate(`/mas/${mas['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             });
         }
