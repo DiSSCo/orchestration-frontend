@@ -1,5 +1,5 @@
 /* Import Dependencies */
-import { startCase } from "lodash";
+import { startCase, toUpper } from "lodash";
 
 
 /* Function to capitalize the first character of a string */
@@ -94,10 +94,19 @@ const ReparseString = (string: string) => {
     return newString;
 };
 
+/**
+ * Function for retieving an environment variable by name
+ * @param name The name of the environment variable
+ */
+const RetrieveEnvVariable = (name: string) => {
+    return import.meta.env[`VITE_${toUpper(name)}`];
+};
+
 
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
-    ReparseString
+    ReparseString,
+    RetrieveEnvVariable
 };

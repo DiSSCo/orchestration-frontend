@@ -1,6 +1,9 @@
 /* Import Dependencies */
 import { useNavigate } from 'react-router-dom';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getMachineAnnotationServices } from 'redux-store/MasSlice';
@@ -37,7 +40,7 @@ const MasOverview = () => {
     machineAnnotationServices.forEach((machineAnnotationService) => {
         rows.push({
             index: index,
-            id: machineAnnotationService['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            id: machineAnnotationService['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), ''),
             name: machineAnnotationService['schema:name'],
             containerImage: machineAnnotationService['ods:containerImage'],
             type: "MAS"

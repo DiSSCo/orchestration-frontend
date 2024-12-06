@@ -1,6 +1,9 @@
 /* Import Dependencies */
 import { useNavigate } from 'react-router-dom';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
 import { getSourceSystems } from 'redux-store/SourceSystemSlice';
@@ -41,7 +44,7 @@ const SourceSystemsOverview = () => {
     sourceSystems.forEach((sourceSystem) => {
         rows.push({
             index: index,
-            id: sourceSystem['@id']?.replace(import.meta.env.VITE_HANDLE_URL, ''),
+            id: sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL')L, ''),
             name: sourceSystem['schema:name'],
             endpoint: sourceSystem['schema:url'],
             type: "sourceSystem"

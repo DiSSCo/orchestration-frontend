@@ -6,6 +6,9 @@ import KeycloakService from 'app/Keycloak';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Container, Row, Col } from 'react-bootstrap';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getDataMapping, setDataMapping } from 'redux-store/DataMappingSlice';
@@ -87,7 +90,7 @@ const DataMapping = () => {
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Data Mapping?')) {
                                                     DeleteDataMapping((dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(
-                                                        import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+                                                        RetrieveEnvVariable('HANDLE_URL'), ''), KeycloakService.GetToken()
                                                     ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
@@ -106,7 +109,7 @@ const DataMapping = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
+                                <IDCard identifier={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     IDCardProperties={{
                                         name: dataMapping['schema:name'],
                                         description: dataMapping['schema:description'],
@@ -123,7 +126,7 @@ const DataMapping = () => {
 
                                     {/* Data Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <DataMappingTab dataMappingId={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')} />
+                                        <DataMappingTab dataMappingId={(dataMapping['@id'] ?? dataMapping['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>

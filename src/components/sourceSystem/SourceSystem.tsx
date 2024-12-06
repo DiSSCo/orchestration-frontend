@@ -6,6 +6,9 @@ import classNames from 'classnames';
 import KeycloakService from 'app/Keycloak';
 import { Container, Row, Col } from 'react-bootstrap';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getSourceSystem, setSourceSystem } from 'redux-store/SourceSystemSlice';
@@ -75,7 +78,7 @@ const SourceSystem = () => {
                     <div className="h-100 d-flex flex-column">
                         <Row className="mb-2">
                             <Col>
-                                <TitleBar title={sourceSystem['schema:name'] ?? (sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
+                                <TitleBar title={sourceSystem['schema:name'] ?? (sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     subTitle="Source Systems"
                                 />
                             </Col>
@@ -102,7 +105,7 @@ const SourceSystem = () => {
                                             className="primaryButton delete px-3 py-1"
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this Source System?')) {
-                                                    DeleteSourceSystem((sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, ''),
+                                                    DeleteSourceSystem((sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), ''),
                                                         KeycloakService.GetToken()
                                                     ).then((success) => {
                                                         if (success) {
@@ -122,7 +125,7 @@ const SourceSystem = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={(sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
+                                <IDCard identifier={(sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     IDCardProperties={{
                                         name: sourceSystem['schema:name'],
                                         endpoint: sourceSystem['schema:url'],
@@ -139,7 +142,7 @@ const SourceSystem = () => {
 
                                     {/* Mappings Tab */}
                                     <TabPanel className="react-tabs__tab-panel flex-grow-1">
-                                        <DataMappingTab dataMappingId={sourceSystem['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, '')} />
+                                        <DataMappingTab dataMappingId={sourceSystem['ods:dataMappingID'].replace(RetrieveEnvVariable('HANDLE_URL'), '')} />
                                     </TabPanel>
                                 </Tabs>
                             </Col>
