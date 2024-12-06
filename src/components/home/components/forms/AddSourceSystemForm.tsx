@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 
 /* Import Store */
 import { useAppSelector } from 'app/Hooks';
-import { getMappings } from 'redux-store/DataMappingSlice'
+import { getDataMappings } from 'redux-store/DataMappingSlice'
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
@@ -12,7 +12,7 @@ import styles from 'components/home/home.module.scss';
 
 const AddSourceSystemForm = () => {
     /* Base variables */
-    const mappings = useAppSelector(getMappings);
+    const dataMappings = useAppSelector(getDataMappings);
 
     return (
         <Row>
@@ -43,25 +43,25 @@ const AddSourceSystemForm = () => {
                 </Row>
                 <Row className="mt-3">
                     <Col>
-                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Mapping: </p>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Data Mapping: </p>
                         <Field name="sourceSystemMappingId" as="select"
                             placeholder="Test"
                             className={`${styles.formField} py-1 px-2 w-100`}
                         >
                             <option key={'new'} value="new">
-                                Add New Mapping
+                                Add New Data Mapping
                             </option>
                             <option key={'choose'} value="" disabled>
-                                Choose Mapping
+                                Choose Data Mapping
                             </option>
 
-                            {mappings.map((mapping, index) => {
-                                const key: string = `${mapping['schema:name']}_${index}`;
+                            {dataMappings.map((dataMapping, index) => {
+                                const key: string = `${dataMapping['schema:name']}_${index}`;
 
                                 return (
                                     <option key={key}
-                                        value={mapping['@id']}
-                                        label={mapping['schema:name']}
+                                        value={dataMapping['@id']}
+                                        label={dataMapping['schema:name']}
                                     />
                                 );
                             })}
