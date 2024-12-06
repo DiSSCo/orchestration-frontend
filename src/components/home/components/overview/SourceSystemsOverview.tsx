@@ -44,7 +44,7 @@ const SourceSystemsOverview = () => {
     sourceSystems.forEach((sourceSystem) => {
         rows.push({
             index: index,
-            id: sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL')L, ''),
+            id: sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), ''),
             name: sourceSystem['schema:name'],
             endpoint: sourceSystem['schema:url'],
             type: "sourceSystem"
