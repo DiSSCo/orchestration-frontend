@@ -9,7 +9,7 @@ import { JSONResultArray } from "app/Types";
 const GetDataMappings = async () => {
     let dataMappings = <DataMapping[]>[];
 
-    const endPoint = "/data-mapping"
+    const endPoint = "/data-mapping/v1"
 
     try {
         const result = await axios({

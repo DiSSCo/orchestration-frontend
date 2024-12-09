@@ -10,7 +10,7 @@ const InsertSourceSystem = async (sourceSystemRecord: Dict, token?: string) => {
     if (sourceSystemRecord && token) {
         let sourceSystem = <SourceSystem>{};
 
-        const endPoint = '/source-system';
+        const endPoint = '/source-system/v1';
 
         await axios({
             method: "post",

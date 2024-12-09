@@ -10,7 +10,7 @@ const GetSourceSystem = async (sourceSystemId: string) => {
     let sourceSystem: SourceSystem | undefined;
 
     if (sourceSystemId) {
-        const endPoint = `/source-system/${sourceSystemId}`;
+        const endPoint = `/source-system/v1/${sourceSystemId}`;
 
         try {
             const result = await axios({

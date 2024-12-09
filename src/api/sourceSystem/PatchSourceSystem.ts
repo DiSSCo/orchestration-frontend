@@ -10,7 +10,7 @@ const PatchSourceSystem = async (sourceSystemRecord: Dict, sourceSystemId: strin
     if (sourceSystemRecord && token) {
         let sourceSystem = <SourceSystem>{};
 
-        const endPoint = `/source-system/${sourceSystemId}`;
+        const endPoint = `/source-system/v1/${sourceSystemId}`;
 
         await axios({
             method: "patch",

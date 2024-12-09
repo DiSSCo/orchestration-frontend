@@ -10,7 +10,7 @@ const GetMas = async (masId: string) => {
     let mas: MachineAnnotationService | undefined;
 
     if (masId) {
-        const endPoint = `/mas/${masId}`;
+        const endPoint = `/mas/v1/${masId}`;
 
         try {
             const result = await axios({

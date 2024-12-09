@@ -10,7 +10,7 @@ const PatchMas = async (masRecord: Dict, masId: string, token?: string) => {
     if (masRecord && token) {
         let machineAnnoationService = <MachineAnnotationService>{};
 
-        const endPoint = `/mas/${masId}`;
+        const endPoint = `/mas/v1/${masId}`;
 
         await axios({
             method: "patch",

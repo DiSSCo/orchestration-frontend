@@ -9,7 +9,7 @@ const TriggerSourceSystemIngestion = async (sourceSystemId?: string, token?: str
     let response: JSONResult | undefined;
 
     if (sourceSystemId && token) {
-        const endPoint = `/source-system/${sourceSystemId}/run`;
+        const endPoint = `/source-system/v1/${sourceSystemId}/run`;
 
         try {
             const result = await axios({
