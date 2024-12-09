@@ -1,6 +1,9 @@
 /* Import Dependencies */
 import KeycloakService from "app/Keycloak";
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from "app/Utilities";
+
 /* Import Types */
 import { DataMapping } from "app/types/DataMapping";
 import { MachineAnnotationService } from "app/types/MachineAnnotationService";
@@ -24,7 +27,7 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
                 "schema:name": form.sourceSystemName,
                 "schema:description": form.sourceSystemDescription,
                 "schema:url": form.sourceSystemEndpoint,
-                "ods:dataMappingID": form['ods:dataMappingID'].replace(import.meta.env.VITE_HANDLE_URL, ''),
+                "ods:dataMappingID": form['ods:dataMappingID'].replace(RetrieveEnvVariable('HANDLE_URL'), ''),
                 "ods:translatorType": form.sourceSystemTranslatorType
             }
         }
@@ -35,7 +38,7 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
 
     if (editTarget?.sourceSystem) {
         await PatchSourceSystem(sourceSystemRecord,
-            (editTarget?.sourceSystem["@id"] ?? editTarget?.sourceSystem["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+            (editTarget?.sourceSystem["@id"] ?? editTarget?.sourceSystem["schema:identifier"] ?? '').replace(RetrieveEnvVariable('HANDLE_URL'), ''), KeycloakService.GetToken()
         ).then((sourceSystem) => {
             sourceSystemResponse = sourceSystem;
         });
@@ -85,7 +88,7 @@ const SubmitDataMapping = async (form: Dict, editTarget: EditTarget) => {
 
     if (editTarget?.dataMapping) {
         await PatchDataMapping(
-            dataMappingRecord, (editTarget.dataMapping["@id"] ?? editTarget.dataMapping["schema:identifier"]).replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+            dataMappingRecord, (editTarget.dataMapping["@id"] ?? editTarget.dataMapping["schema:identifier"]).replace(RetrieveEnvVariable('HANDLE_URL'), ''), KeycloakService.GetToken()
         ).then((dataMapping) => {
             dataMappingResponse = dataMapping;
         }).catch(error => {
@@ -143,7 +146,7 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
 
     if (editTarget?.mas) {
         await PatchMas(
-            MasRecord, (editTarget?.mas["@id"] ?? editTarget?.mas["schema:identifier"] ?? '').replace(import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+            MasRecord, (editTarget?.mas["@id"] ?? editTarget?.mas["schema:identifier"] ?? '').replace(RetrieveEnvVariable('HANDLE_URL'), ''), KeycloakService.GetToken()
         ).then((mas) => {
             masResponse = mas;
         });

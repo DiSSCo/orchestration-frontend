@@ -6,6 +6,9 @@ import KeycloakService from 'app/Keycloak';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Container, Row, Col } from 'react-bootstrap';
 
+/* Import Utilities */
+import { RetrieveEnvVariable } from 'app/Utilities';
+
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getMachineAnnotationService, setMachineAnnotationService } from 'redux-store/MasSlice';
@@ -88,7 +91,7 @@ const Mas = () => {
                                             onClick={() => {
                                                 if (window.confirm('Are you sure you want to delete this MAS?')) {
                                                     DeleteMas((mas['@id'] ?? mas['schema:identifier']).replace(
-                                                        import.meta.env.VITE_HANDLE_URL, ''), KeycloakService.GetToken()
+                                                        RetrieveEnvVariable('HANDLE_URL'), ''), KeycloakService.GetToken()
                                                     ).then((success) => {
                                                         if (success) {
                                                             navigate('/');
@@ -107,7 +110,7 @@ const Mas = () => {
                         </Row>
                         <Row className="flex-grow-1">
                             <Col lg={{ span: 4 }}>
-                                <IDCard identifier={(mas['@id'] ?? mas['schema:identifier']).replace(import.meta.env.VITE_HANDLE_URL, '')}
+                                <IDCard identifier={(mas['@id'] ?? mas['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     IDCardProperties={{
                                         name: mas['schema:name'],
                                         containerImage: mas['ods:containerImage'],
