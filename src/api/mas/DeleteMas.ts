@@ -6,7 +6,7 @@ const DeleteMas = async (handle?: string, token?: string) => {
     if (handle && token) {
         let response;
 
-        const endPoint = `mas/${handle}`;
+        const endPoint = `mas/v1/${handle}`;
 
         await axios({
             method: "delete",

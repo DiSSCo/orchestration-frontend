@@ -10,7 +10,7 @@ const InsertDataMapping = async (dataMappingRecord: Dict, token?: string) => {
     if (dataMappingRecord && token) {
         let dataMapping = <DataMapping>{};
 
-        const endPoint = '/data-mapping';
+        const endPoint = '/data-mapping/v1';
 
         await axios({
             method: "post",
