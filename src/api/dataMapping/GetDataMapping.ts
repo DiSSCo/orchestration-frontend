@@ -6,11 +6,11 @@ import { DataMapping } from "app/types/DataMapping";
 import { JSONResult } from "app/Types";
 
 
-const GetMapping = async (mappingId: string) => {
-    let mapping: DataMapping | undefined;
+const GetDataMapping = async (handle: string) => {
+    let dataMapping: DataMapping | undefined;
 
-    if (mappingId) {
-        const endPoint = `/mapping/${mappingId}`;
+    if (handle) {
+        const endPoint = `/data-mapping/${handle}`;
 
         try {
             const result = await axios({
@@ -21,13 +21,13 @@ const GetMapping = async (mappingId: string) => {
 
             const data: JSONResult = result.data;
 
-            mapping = data.data.attributes as DataMapping;
+            dataMapping = data.data.attributes as DataMapping;
         } catch (error) {
             console.warn(error);
         }
     }
 
-    return mapping;
+    return dataMapping;
 };
 
-export default GetMapping;
+export default GetDataMapping;

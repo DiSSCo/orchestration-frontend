@@ -6,32 +6,32 @@ import { DataMapping } from 'app/types/DataMapping';
 import { JSONResult, Dict } from 'app/Types';
 
 
-const InsertMapping = async (mappingRecord: Dict, token?: string) => {
-    if (mappingRecord && token) {
-        let mapping = <DataMapping>{};
+const PatchDataMapping = async (dataMappingRecord: Dict, handle: string, token?: string) => {
+    if (dataMappingRecord && handle && token) {
+        let dataMapping = <DataMapping>{};
 
-        const endPoint = '/mapping';
+        const endPoint = `/data-mapping/${handle}`;
 
         await axios({
-            method: "post",
+            method: "patch",
             url: endPoint,
-            data: mappingRecord,
+            data: dataMappingRecord,
             responseType: 'json',
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         }).then((result) => {
-            /* Set Mapping */
+            /* Set Data Mapping */
             const data: JSONResult = result.data;
 
-            mapping = data.data.attributes as DataMapping;
+            dataMapping = data.data.attributes as DataMapping;
         }).catch((error) => {
             console.warn(error);
         });
 
-        return mapping;
+        return dataMapping;
     }
 };
 
-export default InsertMapping;
+export default PatchDataMapping;

@@ -2,7 +2,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 
-const MappingsOverviewTableConfig = () => {
+const DataMappingsOverviewTableConfig = () => {
     interface DataRow {
         index: number,
         id: string,
@@ -41,4 +41,4 @@ const MappingsOverviewTableConfig = () => {
     };
 }
 
-export default MappingsOverviewTableConfig;
+export default DataMappingsOverviewTableConfig;

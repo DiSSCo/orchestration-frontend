@@ -2,11 +2,11 @@
 import axios from 'axios';
 
 
-const DeleteMapping = async (handle?: string, token?: string) => {
+const DeleteDataMapping = async (handle?: string, token?: string) => {
     if (handle && token) {
         let response;
 
-        const endPoint = `mapping/${handle}`;
+        const endPoint = `data-mapping/${handle}`;
 
         await axios({
             method: "delete",
@@ -25,4 +25,4 @@ const DeleteMapping = async (handle?: string, token?: string) => {
     }
 };
 
-export default DeleteMapping;
+export default DeleteDataMapping;

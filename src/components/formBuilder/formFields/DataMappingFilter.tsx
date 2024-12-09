@@ -20,7 +20,7 @@ interface Props {
 };
 
 
-const MappingFilter = (props: Props) => {
+const DataMappingFilter = (props: Props) => {
     const { name, objectFilter, formValues, objectFilterValues, SetFieldValue } = props;
 
     return (
@@ -88,4 +88,4 @@ const MappingFilter = (props: Props) => {
     );
 }
 
-export default MappingFilter;
+export default DataMappingFilter;
