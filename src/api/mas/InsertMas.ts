@@ -10,7 +10,7 @@ const InsertMas = async (masRecord: Dict, token?: string) => {
     if (masRecord && token) {
         let machineAnnoationService = <MachineAnnotationService>{};
 
-        const endPoint = '/mas';
+        const endPoint = '/mas/v1';
 
         await axios({
             method: "post",

@@ -6,7 +6,7 @@ const DeleteSourceSystem = async (handle?: string, token?: string) => {
     if (handle && token) {
         let response;
 
-        const endPoint = `source-system/${handle}`;
+        const endPoint = `source-system/v1/${handle}`;
 
         await axios({
             method: "delete",

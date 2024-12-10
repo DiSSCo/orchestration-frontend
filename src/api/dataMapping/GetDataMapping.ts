@@ -10,7 +10,7 @@ const GetDataMapping = async (handle: string) => {
     let dataMapping: DataMapping | undefined;
 
     if (handle) {
-        const endPoint = `/data-mapping/${handle}`;
+        const endPoint = `/data-mapping/v1/${handle}`;
 
         try {
             const result = await axios({

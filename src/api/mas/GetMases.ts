@@ -9,7 +9,7 @@ import { JSONResultArray } from "app/Types";
 const GetMases = async () => {
     let machineAnnotationServices = <MachineAnnotationService[]>[];
 
-    const endPoint = "/mas"
+    const endPoint = "/mas/v1"
 
     try {
         const result = await axios({

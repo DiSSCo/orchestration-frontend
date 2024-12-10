@@ -6,7 +6,7 @@ const DeleteDataMapping = async (handle?: string, token?: string) => {
     if (handle && token) {
         let response;
 
-        const endPoint = `data-mapping/${handle}`;
+        const endPoint = `data-mapping/v1/${handle}`;
 
         await axios({
             method: "delete",
