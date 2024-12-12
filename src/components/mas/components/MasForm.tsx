@@ -19,8 +19,6 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
             formFields.push(formField);
         }
 
-        console.log(mas);
-
         /* Add to initial form values */
         if (field.name === 'ods:hasTargetDigitalObjectFilter' && mas) {
             /* If form field is: Target Digital Object Filters, remove JSON path prefixes */

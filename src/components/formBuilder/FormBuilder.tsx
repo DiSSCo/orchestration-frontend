@@ -98,14 +98,14 @@ const FormBuilder = () => {
     /* Depict number of form pages */
     let numberOfFormPages: number = 1;
 
-    if ((location.pathname.includes('sourceSystem') || editTarget?.sourceSystem)) {
+    if ((location.pathname.includes('source-system') || editTarget?.sourceSystem)) {
         numberOfFormPages = 4;
-    } else if (location.pathname.includes('dataMapping')) {
+    } else if (location.pathname.includes('data-mapping')) {
         numberOfFormPages = 3;
     }
 
     /* Define form template based upon location */
-    if (location.pathname.includes('sourceSystem')) {
+    if (location.pathname.includes('source-system')) {
         /* Generate form page for Source System */
         const { formFields, initialValuesFields } = SourceSystemForm(DetermineFormField, editTarget?.sourceSystem);
 
@@ -124,7 +124,7 @@ const FormBuilder = () => {
         initialValues = { ...initialValues, ...initialValuesFields };
     }
 
-    if (location.pathname.includes('dataMapping') || (location.pathname.includes('sourceSystem') && !editTarget?.dataMapping)) {
+    if (location.pathname.includes('data-mapping') || (location.pathname.includes('source-system') && !editTarget?.dataMapping)) {
         /* Generate form pages for Mapping */
         const { formFieldsPages, initialValuesFields } = DataMappingForm(DetermineFormField, editTarget?.dataMapping);
         const tabNames = ['Data Mapping', 'Default Mapping', 'Field Mapping'];
@@ -169,12 +169,12 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (location.pathname.includes('dataMapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
+        if (location.pathname.includes('data-mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
             await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
                 form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
 
                 /* If editing a Data Mapping, return to data mapping detail page */
-                if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('dataMapping'))) {
+                if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('data-mapping'))) {
                     navigate(`/data-mapping/${dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             }).catch(error => {
@@ -183,11 +183,11 @@ const FormBuilder = () => {
         }
 
         /* Submit Source System */
-        if (location.pathname.includes('sourceSystem')) {
+        if (location.pathname.includes('source-system')) {
             await SubmitSourceSystem(form, editTarget as EditTarget).then((sourceSystem) => {
                 /* On finish: navigate to detail page of Source System */
                 if (sourceSystem) {
-                    navigate(`/sourceSystem/${sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
+                    navigate(`/source-system/${sourceSystem['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
@@ -211,9 +211,7 @@ const FormBuilder = () => {
     });
 
     const ClassTab = (tab: string, dataMappingId: string) => {
-        console.log(dataMappingId);
-
-        if ((tab !== 'Source System' && dataMappingId !== 'new' && !location.pathname.includes('dataMapping') && !location.pathname.includes('mas')) && !location.pathname.includes('edit')) {
+        if ((tab !== 'Source System' && dataMappingId !== 'new' && !location.pathname.includes('data-mapping') && !location.pathname.includes('mas')) && !location.pathname.includes('edit')) {
             return classNames({
                 'react-tabs__tab tab bgc-disabled': true,
             });
