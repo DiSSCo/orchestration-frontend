@@ -56,7 +56,7 @@ const DataMappingsOverview = () => {
         <div className="h-100 overflow-scroll b-secondary rounded-c">
             <DataTable columns={columns}
                 data={rows}
-                SelectAction={(row: DataRow) => navigate(`/dataMapping/${row.id}`)}
+                SelectAction={(row: DataRow) => navigate(`/data-mapping/${row.id}`)}
             />
         </div>
     );

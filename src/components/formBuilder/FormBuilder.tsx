@@ -175,7 +175,7 @@ const FormBuilder = () => {
 
                 /* If editing a Data Mapping, return to data mapping detail page */
                 if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('dataMapping'))) {
-                    navigate(`/dataMapping/${dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
+                    navigate(`/data-mapping/${dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '')}`);
                 }
             }).catch(error => {
                 console.warn(error);
