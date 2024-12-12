@@ -60,7 +60,7 @@ const SourceSystemsOverview = () => {
         <div className="h-100 overflow-scroll b-secondary rounded-c">
             <DataTable columns={columns}
                 data={rows}
-                SelectAction={(row: DataRow) => navigate(`/sourceSystem/${row.id}`)}
+                SelectAction={(row: DataRow) => navigate(`/source-system/${row.id}`)}
             />
         </div>
     );

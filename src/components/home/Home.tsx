@@ -1,19 +1,17 @@
 /* Import Dependencies */
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import classNames from 'classnames';
 import KeycloakService from 'app/Keycloak';
+import { toLower } from 'lodash';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 /* Import Store */
 import { useAppDispatch } from 'app/Hooks';
 import { setSourceSystems } from 'redux-store/SourceSystemSlice';
 import { setDataMappings } from 'redux-store/DataMappingSlice';
 import { setMachineAnnotationServices } from 'redux-store/MasSlice';
-
-/* Import Utilities */
-import { ReparseString } from 'app/Utilities';
 
 /* Import Styles */
 import styles from 'components/home/home.module.scss';
@@ -95,7 +93,7 @@ const Home = () => {
                             <div className="position-relative">
                                 <button className={`${styles.addButton} primaryButton position-absolute px-3 py-1 end-0`}
                                     onClick={() => {
-                                        const routeString = ReparseString(chosenTab);
+                                        const routeString = toLower(chosenTab).replace(' ', '-');
 
                                         navigate(`${routeString}/add`);
                                     }}
