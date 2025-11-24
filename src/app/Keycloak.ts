@@ -18,7 +18,7 @@ const InitKeyCloak = (callback?: Callback, token?: string) => {
         onLoad: "check-sso",
         silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
         pkceMethod: "S256",
-        scope: 'roles profile email orcid',
+        scope: 'roles profile email',
         token: token,
         refreshToken: token
     })
