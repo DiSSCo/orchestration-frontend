@@ -8,9 +8,9 @@ type Callback = () => Function | void;
 
 /* Create keycloak instance */
 const keycloak = new Keycloak({
-    url: "https://login-demo.dissco.eu/auth",
-    realm: "dissco",
-    clientId: "orchestration-service",
+    url: import.meta.env.VITE_KEYCLOAK_SERVER,
+    realm: import.meta.env.VITE_KEYCLOAK_REALM,
+    clientId: import.meta.env.VITE_KEYCLOAK_CLIENT,
 });
 
 const InitKeyCloak = (callback?: Callback, token?: string) => {

@@ -7,6 +7,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    matrix:
+      include:
+        - image: public.ecr.aws/dissco/${{ github.event.repository.name }}-production
+          keycloak_client: orchestration-service
+          keycloak_server: https://login-demo.dissco.eu/auth
+          keycloak_realm: dissco
+        - image: public.ecr.aws/dissco/${{ github.event.repository.name }}
+          keycloak_client: dissco-orchestration-frontend
+          keycloak_server: https://keycloak.iam.naturalis.io
+          keycloak_realm: dissco-dev
     steps:
     - uses: actions/checkout@v2
       with:
