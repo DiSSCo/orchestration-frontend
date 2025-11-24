@@ -5,7 +5,6 @@ import Keycloak from 'keycloak-js';
 /* Callback type */
 type Callback = () => Function | void;
 
-
 /* Create keycloak instance */
 const keycloak = new Keycloak({
     url: import.meta.env.VITE_KEYCLOAK_SERVER,
