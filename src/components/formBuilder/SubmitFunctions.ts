@@ -74,9 +74,9 @@ const SubmitDataMapping = async (form: Dict, editTarget: EditTarget) => {
         data: {
             type: "ods:DataMapping",
             attributes: {
-                "schema:name": form.mappingName,
-                "schema:description": form.mappingDescription,
-                "ods:mappingDataStandard": form.mappingSourceDataStandard,
+                "schema:name": form.dataMappingName,
+                "schema:description": form.dataMappingDescription,
+                "ods:mappingDataStandard": form.dataMappingSourceDataStandard,
                 "ods:hasDefaultMapping": defaultMappings,
                 "ods:hasTermMapping": fieldMappings
             }
