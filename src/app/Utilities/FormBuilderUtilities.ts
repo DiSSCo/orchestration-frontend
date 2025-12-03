@@ -19,7 +19,7 @@ const DefineEditTarget = async (targetName: string, id: string) => {
         }).catch(error => {
             console.warn(error);
         });
-    } else if (targetName === 'dataMapping') {
+    } else if (targetName === 'data-mapping') {
         await GetDataMapping(id).then((dataMapping) => {
             if (dataMapping) {
                 copyEditTarget = { ...editTarget, dataMapping };
