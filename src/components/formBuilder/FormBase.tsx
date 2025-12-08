@@ -56,7 +56,7 @@ const FormBase = (props: Props) => {
                     </Col>
                 }
                 <Col className="d-flex justify-content-end">
-                    {numberOfFormPages && NextPage && (currentPage < numberOfFormPages) && ((formValues?.['ods:dataMappingID'] || formValues?.dataMappingId === 'new') || location.pathname.includes('dataMapping'))  ?
+                    {numberOfFormPages && NextPage && (currentPage < numberOfFormPages) && ((formValues?.['ods:dataMappingID'] || formValues?.dataMappingId === 'new') || location.pathname.includes('data-mapping'))  ?
                         <button type="button"
                             className="primaryButton px-3 py-2"
                             onClick={() => NextPage()}
