@@ -12,8 +12,13 @@ import { getEditTarget } from 'redux-store/EditSlice';
 /* Import API */
 import GetDataMappings from 'api/dataMapping/GeDatatMappings';
 
+interface Props {
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
+};
 
-const DataMappingSelect = () => {
+const DataMappingSelect = (props: Props) => {
+    const { required } = props;
     /* Hooks */
     const dispatch = useAppDispatch();
 
@@ -35,7 +40,10 @@ const DataMappingSelect = () => {
     return (
         <Row className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> Data Mapping: </p>
+                <p className="ms-1 mb-1"> 
+                    Data Mapping:
+                    {required && <span className="text-danger"> *</span>}
+                </p>
                 <Field name="dataMappingId" as="select"
                     className="w-100 formField"
                 >

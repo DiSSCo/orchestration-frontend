@@ -11,7 +11,7 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     let editTarget: EditTarget = {};
     let copyEditTarget = { ...editTarget };
 
-    if (targetName === 'sourceSystem') {
+    if (targetName === 'source-system') {
         await GetSourceSystem(id).then(async (sourceSystem) => {
             if (sourceSystem) {
                 copyEditTarget = { ...copyEditTarget, sourceSystem: sourceSystem };

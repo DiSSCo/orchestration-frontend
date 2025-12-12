@@ -38,22 +38,22 @@ import { Header } from 'components/elements/Elements';
 
 
 /* Function to determine the form field by type */
-const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[]) => {
+const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[], required?: boolean) => {
     switch (fieldType) {
         case 'text':
-            return <InputField name={fieldName} visibleName={visibleName} />;
+            return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'textarea':
             return <InputTextArea name={fieldName} visibleName={visibleName} />;
         case 'number':
-            return <InputField name={fieldName} visibleName={visibleName} />;
+            return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'boolean':
             return <BooleanField name={fieldName} visibleName={visibleName} />;
         case 'select':
-            return <SelectField name={fieldName} visibleName={visibleName} options={options} />;
+            return <SelectField name={fieldName} visibleName={visibleName} options={options} required={required} />;
         case 'array':
             return <ArrayField name={fieldName} visibleName={visibleName} />;
         case 'dataMappingSelect':
-            return <DataMappingSelect />;
+            return <DataMappingSelect required={required} />;
         case 'dataMapping':
             return <DataMappingField name={fieldName} visibleName={visibleName} />;
         case 'masFilters':
@@ -169,7 +169,7 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (location.pathname.includes('data-mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
+        if (location.pathname.includes('data-mapping') || form.dataMappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
             await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
                 form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
 

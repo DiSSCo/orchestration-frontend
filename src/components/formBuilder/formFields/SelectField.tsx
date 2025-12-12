@@ -13,17 +13,23 @@ interface Props {
     options?: {
         name: string,
         label: string
-    }[]
+    }[],
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
 }
 
 
 const SelectField = (props: Props) => {
-    const { name, visibleName, options } = props;
+    const { name, visibleName, options, required } = props;
 
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1">
+                    {MakeJsonPathReadableString(visibleName)}
+                    {":"}
+                    {required && <span className="text-danger"> *</span>}
+                </p>
                 <Field name={name} as="select"
                     className="w-100 formField"
                 >

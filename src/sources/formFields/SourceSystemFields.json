@@ -37,6 +37,31 @@
         {
             "name": "ods:dataMappingID",
             "type": "dataMappingSelect"
+        },
+        {
+            "name": "ods:filters",
+            "alias": "sourceSystemFilters",
+            "type": "text"
+        },
+        {
+            "name": "ltc:collectionManagementSystem",
+            "alias": "sourceSystemCollectionManagementSystem",
+            "type": "text"
+        },
+        {
+            "name": "ods:specimenMachineAnnotationServices",
+            "alias": "sourceSystemSpecimenMAS",
+            "type": "text"
+        },
+        {
+            "name": "ods:mediaMachineAnnotationServices",
+            "alias": "sourceSystemMediaMAS",
+            "type": "text"
+        },
+        {
+            "name": "ods:maximumRecords",
+            "alias": "sourceSystemMaximumRecords",
+            "type": "text"
         }
     ]
 }
