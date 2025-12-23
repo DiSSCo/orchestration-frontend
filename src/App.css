@@ -228,9 +228,8 @@ p {
 }
 
 .primaryButton:disabled {
-  background-color: #CBCCD4;
+  background-color: #8E9099;
   color: white;
-  opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
 }
