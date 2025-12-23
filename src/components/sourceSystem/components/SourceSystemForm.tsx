@@ -22,12 +22,19 @@ const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSys
     SourceSystemFields.fields.forEach((field) => {
         /* Check if this field should be marked as mandatory */
         const isRequired = requiredFields.includes(field.name);
-        
+
         /* Push to form fields */
         formFields.push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field?.options, isRequired));
 
         /* Add to initial form values */
-        initialValuesFields[field?.alias ?? field.name] = sourceSystem?.[field.name as keyof typeof sourceSystem] ?? '';
+        const key = field?.alias ?? field.name;
+        const existingValue = sourceSystem?.[field.name as keyof typeof sourceSystem];
+
+        if (field.type === "multiValueTextField") {
+            initialValuesFields[key] = (existingValue as any) ?? [];
+        } else {
+            initialValuesFields[key] = existingValue ?? '';
+        }
     });
 
     return { formFields, initialValuesFields };

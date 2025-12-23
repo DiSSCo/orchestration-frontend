@@ -103,30 +103,10 @@ const RetrieveEnvVariable = (name: string) => {
     return import.meta.env[`VITE_${toUpper(name)}`];
 };
 
-/* Function to parse a string, split it on a comma, remove white spaces and return it as an array */
-const StringToArray = (string: string) => {
-    return string.split(',').map(value => value.trim());
-};
-
-/** Function to parse a string, split it on a comma and return it as an array 
- * with pattern: "^https:\/\/hdl\\.handle\\.net\/[\\w.]+\/(.){3}-(.){3}-(.){3}"
- */
-const StringToHandleUrlArray = (string: string) => {
-    const handleUrl = RetrieveEnvVariable('HANDLE_URL');
-
-    return StringToArray(string)
-        .filter(value => value.length > 0)
-        .map(value => {
-            return `${handleUrl}${value}`;
-        });
-};
-
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
     ReparseString,
-    RetrieveEnvVariable,
-    StringToArray,
-    StringToHandleUrlArray
+    RetrieveEnvVariable
 };

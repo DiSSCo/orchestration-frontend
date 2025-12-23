@@ -1,7 +1,7 @@
 /* Import Dependencies */
 import { useEffect, useState, cloneElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { Formik, Form, useFormikContext } from 'formik';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { isEmpty } from 'lodash';
 import classNames from 'classnames';
@@ -34,6 +34,7 @@ import ArrayField from './formFields/ArrayField';
 import DataMappingSelect from './formFields/DataMappingSelect';
 import DataMappingField from './formFields/DataMappingField';
 import MasFiltersField from './formFields/MasFiltersField';
+import MultiValueTextField from './formFields/MultiValueTextField';
 import { Header } from 'components/elements/Elements';
 
 
@@ -58,11 +59,23 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <DataMappingField name={fieldName} visibleName={visibleName} />;
         case 'masFilters':
             return <MasFiltersField name={fieldName} visibleName={visibleName} />;
+        case 'multiValueTextField':
+            return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
         default:
             return;
     }
 };
 
+/* Function to re-run Formik validation when the form step changes */
+const RevalidateOnPageChange = ({ formPage }: { formPage: number }) => {
+    const { validateForm } = useFormikContext<any>();
+
+    useEffect(() => {
+        validateForm();
+    }, [formPage, validateForm]);
+
+    return null;
+};
 
 const FormBuilder = () => {
     /* Hooks */
@@ -172,6 +185,7 @@ const FormBuilder = () => {
         if (location.pathname.includes('data-mapping') || form.dataMappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
             await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
                 form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
+                form.dataMappingId = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
 
                 /* If editing a Data Mapping, return to data mapping detail page */
                 if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('data-mapping'))) {
@@ -233,15 +247,48 @@ const FormBuilder = () => {
             <Container className="flex-grow-1 py-5 overflow-y-hidden">
                 <Formik initialValues={initialValues}
                     enableReinitialize={true}
+                    /* Trigger validation immediately on mount */
+                    validateOnMount
+                    /* Validate the required fields and return errors */
+                    validate={(values) => {
+                        const errors: Dict = {};
+                        if (location.pathname.includes('source-system') && formPage === 0) {
+                            if (!values.sourceSystemName) {
+                                errors.sourceSystemName = 'Required';
+                            }
+                            if (!values.sourceSystemEndpoint) {
+                                errors.sourceSystemEndpoint = 'Required';
+                            }
+                            if (!values.sourceSystemTranslatorType) {
+                                errors.sourceSystemTranslatorType = 'Required';
+                            }
+                            if (!values.dataMappingId) {
+                                errors.dataMappingId = 'Required';
+                            }
+                        }
+
+                        if (location.pathname.includes('data-mapping') || (location.pathname.includes('source-system') && formPage > 0)) {
+                            if (!values.dataMappingName) {
+                                errors.dataMappingName = 'Required';
+                            }
+                            if (!values.dataMappingSourceDataStandard) {
+                                errors.dataMappingSourceDataStandard = 'Required';
+                            }
+                        }
+
+                        return errors;
+                    }}
+
                     onSubmit={async (form: any) => {
                         await new Promise((resolve) => setTimeout(resolve, 100));
 
                         SubmitForm(form);
                     }}
                 >
-                    {({ values, setFieldValue }) => {
+                    {({ values, setFieldValue, isValid }) => {
                         return (
                             <Form className="h-100">
+                                <RevalidateOnPageChange formPage={formPage} />
                                 <Row className="h-100">
                                     <Col lg={{ span: 6, offset: 3 }} className="h-100">
                                         <Tabs className="h-100 d-flex flex-column"
@@ -266,7 +313,8 @@ const FormBuilder = () => {
                                                     >
                                                         {cloneElement(formTemplate, {
                                                             formValues: values,
-                                                            SetFieldValue: (field: string, value: string) => setFieldValue(field, value)
+                                                            SetFieldValue: (field: string, value: string) => setFieldValue(field, value),
+                                                            isValid
                                                         })}
                                                     </TabPanel>
                                                 );

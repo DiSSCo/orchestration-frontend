@@ -3,8 +3,6 @@ import KeycloakService from "app/Keycloak";
 
 /* Import Utilities */
 import { RetrieveEnvVariable } from "app/Utilities";
-import { StringToArray } from "app/Utilities";
-import {StringToHandleUrlArray} from "app/Utilities";
 
 /* Import Types */
 import { DataMapping } from "app/types/DataMapping";
@@ -31,11 +29,11 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
                 "schema:url": form.sourceSystemEndpoint,
                 "ods:dataMappingID": form.dataMappingId,
                 "ods:translatorType": form.sourceSystemTranslatorType,
-                "ods:filters": StringToArray(form.sourceSystemFilters),
+                "ods:filters": form.sourceSystemFilters,
                 "ltc:collectionManagementSystem": form.sourceSystemCollectionManagementSystem,
-                "ods:maximumRecords": Number(form.sourceSystemMaximumRecords),
-                "ods:mediaMachineAnnotationServices": StringToHandleUrlArray(form.sourceSystemMediaMAS),
-                "ods:specimenMachineAnnotationServices": StringToHandleUrlArray(form.sourceSystemSpecimenMAS)
+                "ods:maximumRecords": form.sourceSystemMaximumRecords === "" ? undefined : Number(form.sourceSystemMaximumRecords),
+                "ods:mediaMachineAnnotationServices": form.sourceSystemMediaMAS,
+                "ods:specimenMachineAnnotationServices": form.sourceSystemSpecimenMAS
             }
         }
     };

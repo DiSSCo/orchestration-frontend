@@ -16,12 +16,13 @@ interface Props {
     numberOfFormPages?: number,
     currentPage: number,
     NextPage?: Function,
-    PreviousPage?: Function
+    PreviousPage?: Function,
+    isValid?: boolean
 };
 
 
 const FormBase = (props: Props) => {
-    const { title, formFields, formValues, SetFieldValue, numberOfFormPages, currentPage, NextPage, PreviousPage } = props;
+    const { title, formFields, formValues, SetFieldValue, numberOfFormPages, currentPage, NextPage, PreviousPage, isValid } = props;
 
     /* Hooks */
     const location = useLocation();
@@ -56,14 +57,16 @@ const FormBase = (props: Props) => {
                     </Col>
                 }
                 <Col className="d-flex justify-content-end">
-                    {numberOfFormPages && NextPage && (currentPage < numberOfFormPages) && ((formValues?.['ods:dataMappingID'] || formValues?.dataMappingId === 'new') || location.pathname.includes('data-mapping'))  ?
+                    {numberOfFormPages && NextPage && (currentPage < numberOfFormPages) && ((formValues?.['ods:dataMappingID'] || formValues?.dataMappingId === 'new') || location.pathname.includes('data-mapping')) ?
                         <button type="button"
                             className="primaryButton px-3 py-2"
+                            disabled={!isValid}
                             onClick={() => NextPage()}
                         >
                             Next
                         </button>
                         : <button type="submit"
+                            disabled={!isValid}
                             className="primaryButton px-3 py-2"
                         >
                             Save

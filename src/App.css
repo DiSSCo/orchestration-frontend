@@ -227,6 +227,14 @@ p {
   filter: brightness(130%);
 }
 
+.primaryButton:disabled {
+  background-color: #CBCCD4;
+  color: white;
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .button-no-style {
   background-color: inherit;
   border: none;
