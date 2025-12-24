@@ -24,8 +24,8 @@ interface Props {
 const MultiValueTextField = (props: Props) => {
     const { name, visibleName, formValues, required } = props;
 
-    /* Values are stored as an array of strings. If the form contains no values, it falls back to an empty array */
-    const values: string[] = formValues?.[name] ?? [];
+    /* Values are stored as an object with a unique id */
+    const values: { id: string, val: string }[] = formValues?.[name] ?? [];
 
     return (
         <Row key={name} className="mt-2">
@@ -38,15 +38,15 @@ const MultiValueTextField = (props: Props) => {
                 <FieldArray name={name}>
                     {({ push, remove }) => (
                         <>
-                            {values.map((_, index) => {
+                            {values.map((item, index) => {
                                 return (
-                                    <Row key={index} className="py-1">
+                                    <Row key={item.id} className="py-1">
                                         <Col>
                                             <Field
-                                                name={`${name}.${index}`}
+                                                name={`${name}.${index}.val`}
                                                 className="w-100 formField"
                                             />
-                                            <ErrorMessage name={`${name}.${index}`}>
+                                            <ErrorMessage name={`${name}.${index}.val`}>
                                                 {(msg) => <div className="text-danger small mt-1">{msg}</div>}
                                             </ErrorMessage>
                                         </Col>
@@ -67,7 +67,7 @@ const MultiValueTextField = (props: Props) => {
                             {formValues &&
                                 <button type="button"
                                     className="w-100 mt-2"
-                                    onClick={() => push('')}
+                                    onClick={() => push({ id: crypto.randomUUID(), val: '' })}
                                 >
                                     <FontAwesomeIcon icon={faPlus} />
                                 </button>

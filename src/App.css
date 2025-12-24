@@ -228,8 +228,8 @@ p {
 }
 
 .primaryButton:disabled {
-  background-color: #8E9099;
-  color: white;
+  background-color: #e8e6e6;
+  color: #595959;
   cursor: not-allowed;
   pointer-events: none;
 }

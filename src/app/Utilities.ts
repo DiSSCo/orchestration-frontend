@@ -103,10 +103,14 @@ const RetrieveEnvVariable = (name: string) => {
     return import.meta.env[`VITE_${toUpper(name)}`];
 };
 
+const ExtractValues = (input: { id: string; val: string }[] = []): string[] =>
+    input.map(item => item.val);
+
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
     ReparseString,
-    RetrieveEnvVariable
+    RetrieveEnvVariable,
+    ExtractValues
 };

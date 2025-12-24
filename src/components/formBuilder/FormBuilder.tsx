@@ -252,28 +252,31 @@ const FormBuilder = () => {
                     /* Validate the required fields and return errors */
                     validate={(values) => {
                         const errors: Dict = {};
+                        const requiredFieldsSourceSystem = [
+                            'sourceSystemName',
+                            'sourceSystemEndpoint',
+                            'sourceSystemTranslatorType',
+                            'dataMappingId'
+                        ];
+                        const requiredFieldsDataMapping = [
+                            'dataMappingName',
+                            'dataMappingSourceDataStandard'
+                        ];
+
                         if (location.pathname.includes('source-system') && formPage === 0) {
-                            if (!values.sourceSystemName) {
-                                errors.sourceSystemName = 'Required';
-                            }
-                            if (!values.sourceSystemEndpoint) {
-                                errors.sourceSystemEndpoint = 'Required';
-                            }
-                            if (!values.sourceSystemTranslatorType) {
-                                errors.sourceSystemTranslatorType = 'Required';
-                            }
-                            if (!values.dataMappingId) {
-                                errors.dataMappingId = 'Required';
-                            }
+                            requiredFieldsSourceSystem.forEach((requiredFieldSourceSystem) => {
+                                if (!values[requiredFieldSourceSystem]) {
+                                    errors[requiredFieldSourceSystem] = 'Required';
+                                }
+                            });
                         }
 
                         if (location.pathname.includes('data-mapping') || (location.pathname.includes('source-system') && formPage > 0)) {
-                            if (!values.dataMappingName) {
-                                errors.dataMappingName = 'Required';
-                            }
-                            if (!values.dataMappingSourceDataStandard) {
-                                errors.dataMappingSourceDataStandard = 'Required';
-                            }
+                            requiredFieldsDataMapping.forEach((requiredFieldDataMapping) => {
+                                if (!values[requiredFieldDataMapping]) {
+                                    errors[requiredFieldDataMapping] = 'Required';
+                                }
+                            });
                         }
 
                         return errors;
