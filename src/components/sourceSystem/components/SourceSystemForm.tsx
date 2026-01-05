@@ -2,9 +2,6 @@
 import { SourceSystem } from 'app/types/SourceSystem';
 import { Dict } from 'app/Types';
 
-/* Import Utilities */
-import { MapToFrontendList } from 'app/Utilities';
-
 /* Import Sources */
 import SourceSystemFields from 'sources/formFields/SourceSystemFields.json';
 
@@ -37,7 +34,7 @@ const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSys
 
         /* Populate initial values, handling specific transformations for multi-value fields */
         if (field.type === "multiValueTextField") {
-            initialValuesFields[formFieldName] = MapToFrontendList(backendValue as string[] | undefined);
+            initialValuesFields[formFieldName] = backendValue ?? [];
         } else {
             initialValuesFields[formFieldName] = backendValue ?? '';
         }

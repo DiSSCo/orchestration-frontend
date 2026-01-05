@@ -24,8 +24,8 @@ interface Props {
 const MultiValueTextField = (props: Props) => {
     const { name, visibleName, formValues, required } = props;
 
-    /* Values are stored as an object with a unique id */
-    const values: { id: string, val: string }[] = formValues?.[name] ?? [];
+    /* Values are stored as an array of strings. If the form contains no values, it falls back to an empty array */
+    const values: string[] = formValues?.[name] ?? [];
 
     return (
         <Row key={name} className="mt-2">
@@ -38,15 +38,16 @@ const MultiValueTextField = (props: Props) => {
                 <FieldArray name={name}>
                     {({ push, remove }) => (
                         <>
-                            {values.map((item, index) => {
+                            {values.map((_, index) => {
+                                const key = `event_${index}`;
                                 return (
-                                    <Row key={item.id} className="py-1">
+                                    <Row key={key} className="py-1">
                                         <Col>
                                             <Field
-                                                name={`${name}.${index}.val`}
+                                                name={`${name}.${index}`}
                                                 className="w-100 formField"
                                             />
-                                            <ErrorMessage name={`${name}.${index}.val`}>
+                                            <ErrorMessage name={`${name}.${index}`}>
                                                 {(msg) => <div className="text-danger small mt-1">{msg}</div>}
                                             </ErrorMessage>
                                         </Col>
@@ -67,7 +68,7 @@ const MultiValueTextField = (props: Props) => {
                             {formValues &&
                                 <button type="button"
                                     className="w-100 mt-2"
-                                    onClick={() => push({ id: crypto.randomUUID(), val: '' })}
+                                    onClick={() => push("")}
                                 >
                                     <FontAwesomeIcon icon={faPlus} />
                                 </button>

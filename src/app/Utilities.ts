@@ -103,22 +103,10 @@ const RetrieveEnvVariable = (name: string) => {
     return import.meta.env[`VITE_${toUpper(name)}`];
 };
 
-/* Function to convert frontend format (objects with IDs) to backend array of strings */
-const ExtractValues = (input: { id: string; val: string }[] = []): string[] =>
-    input.map(item => item.val);
-
-/* Function to convert backend array of strings to frontend format (objects with IDs) */
-const MapToFrontendList = (existingValue: string[] | undefined) => {
-    const values = existingValue || [];
-    return values.map((item) => ({ id: crypto.randomUUID(), val: item }));
-};
-
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
     ReparseString,
-    RetrieveEnvVariable,
-    ExtractValues,
-    MapToFrontendList
+    RetrieveEnvVariable
 };
