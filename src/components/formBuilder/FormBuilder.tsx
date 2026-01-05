@@ -1,7 +1,7 @@
 /* Import Dependencies */
-import { useEffect, useState, cloneElement } from 'react';
+import { useEffect, useState, cloneElement, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Formik, Form, useFormikContext } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { isEmpty } from 'lodash';
 import classNames from 'classnames';
@@ -66,22 +66,12 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
     }
 };
 
-/* Function to re-run Formik validation when the form step changes */
-const RevalidateOnPageChange = ({ formPage }: { formPage: number }) => {
-    const { validateForm } = useFormikContext<any>();
-
-    useEffect(() => {
-        validateForm();
-    }, [formPage, validateForm]);
-
-    return null;
-};
-
 const FormBuilder = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
+    const formikRef = useRef<FormikProps<Dict>>(null);
 
     /* Base variables */
     const editTarget = useAppSelector(getEditTarget);
@@ -107,6 +97,11 @@ const FormBuilder = () => {
             dispatch(setEditTarget(undefined));
         }
     }, []);
+
+    /* Re-run Formik validation when the form step changes */
+    useEffect(() => {
+        formikRef.current?.validateForm();
+    }, [formPage]);
 
     /* Depict number of form pages */
     let numberOfFormPages: number = 1;
@@ -247,6 +242,8 @@ const FormBuilder = () => {
             <Container className="flex-grow-1 py-5 overflow-y-hidden">
                 <Formik initialValues={initialValues}
                     enableReinitialize={true}
+                    /* Formik Prop: 'innerRef' binds the local 'formikRef' variable to the Formik instance */
+                    innerRef={formikRef}
                     /* Trigger validation immediately on mount */
                     validateOnMount
                     /* Validate the required fields and return errors */
@@ -291,7 +288,6 @@ const FormBuilder = () => {
                     {({ values, setFieldValue, isValid }) => {
                         return (
                             <Form className="h-100">
-                                <RevalidateOnPageChange formPage={formPage} />
                                 <Row className="h-100">
                                     <Col lg={{ span: 6, offset: 3 }} className="h-100">
                                         <Tabs className="h-100 d-flex flex-column"

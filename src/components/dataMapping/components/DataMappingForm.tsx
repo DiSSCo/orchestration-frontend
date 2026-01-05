@@ -10,7 +10,7 @@ const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping
     const formFieldsPages: JSX.Element[][] = [];
     const initialValuesFields: Dict = {};
 
-    /* Mandatory fields for this form (UI only, no form validation logic) */
+    /* Required fields for this form */
     const requiredFields = [
         'schema:name',
         'ods:mappingDataStandard'
@@ -22,7 +22,7 @@ const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping
 
         /* Iterate to prepare initial form values */
         page.fields.forEach((field: { name: string, alias?: string, type: string, options?: { name: string, label: string }[] }) => {
-            /* Check if this field should be marked as mandatory */
+            /* Check if this field should be marked as required */
             const isRequired = requiredFields.includes(field.name);
             
             formFieldsPages[index].push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field.options, isRequired));
