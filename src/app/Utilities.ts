@@ -73,7 +73,8 @@ const RemoveSchemaPrefixes = (jsonPath: string): string => {
         .replaceAll('chrono:', '')
         .replaceAll('dcterms:', '')
         .replaceAll('schema:', '')
-        .replaceAll('eco:', '');
+        .replaceAll('eco:', '')
+        .replaceAll('ltc:', '');
 };
 
 /* Function that takes a readable string and returns a CamelCase version of it */
@@ -101,7 +102,6 @@ const ReparseString = (string: string) => {
 const RetrieveEnvVariable = (name: string) => {
     return import.meta.env[`VITE_${toUpper(name)}`];
 };
-
 
 export {
     Capitalize,

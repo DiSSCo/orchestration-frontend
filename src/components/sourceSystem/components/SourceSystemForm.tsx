@@ -10,13 +10,34 @@ const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSys
     const formFields: JSX.Element[] = [];
     const initialValuesFields: Dict = {};
 
+    /* Required fields for this form */
+    const requiredFields = [
+        'schema:name',
+        'schema:url',
+        'ods:translatorType',
+        'ods:dataMappingID'
+    ];
+
     /* Generate Source System form fields */
     SourceSystemFields.fields.forEach((field) => {
-        /* Push to form fields */
-        formFields.push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field?.options));
+        /* Check if this field should be marked as required */
+        const isRequired = requiredFields.includes(field.name);
 
-        /* Add to initial form values */
-        initialValuesFields[field?.alias ?? field.name] = sourceSystem?.[field.name as keyof typeof sourceSystem] ?? '';
+        /* Push to form fields */
+        formFields.push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field?.options, isRequired));
+
+        /* Determine the key used in Formik */
+        const formFieldName = field?.alias ?? field.name;
+
+        /* Retrieve the existing value from the backend object (if editing) */
+        const backendValue = sourceSystem?.[field.name as keyof SourceSystem];
+
+        /* Populate initial values, handling specific transformations for multi-value fields */
+        if (field.type === "multiValueTextField") {
+            initialValuesFields[formFieldName] = backendValue ?? [];
+        } else {
+            initialValuesFields[formFieldName] = backendValue ?? '';
+        }
     });
 
     return { formFields, initialValuesFields };

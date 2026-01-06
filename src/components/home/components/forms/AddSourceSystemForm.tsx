@@ -45,6 +45,46 @@ const AddSourceSystemForm = () => {
                 </Row>
                 <Row className="mt-3">
                     <Col>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Filters: </p>
+                        <Field name="sourceSystemFilters"
+                            className={`${styles.formField} py-1 px-2 w-100`}
+                        />
+                    </Col>
+                </Row>
+                 <Row className="mt-3">
+                    <Col>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Maximum Records: </p>
+                        <Field name="sourceSystemMaximumRecords"
+                            className={`${styles.formField} py-1 px-2 w-100`}
+                        />
+                    </Col>
+                </Row>
+                <Row className="mt-3">
+                    <Col>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Management System: </p>
+                        <Field name="sourceSystemCollectionManagementSystem"
+                            className={`${styles.formField} py-1 px-2 w-100`}
+                        />
+                    </Col>
+                </Row>
+                 <Row className="mt-3">
+                    <Col>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Specimen Machine Annotation Services: </p>
+                        <Field name="sourceSystemSpecimenMAS"
+                            className={`${styles.formField} py-1 px-2 w-100`}
+                        />
+                    </Col>
+                </Row>
+                 <Row className="mt-3">
+                    <Col>
+                        <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Media Machine Annotation Services: </p>
+                        <Field name="sourceSystemMediaMAS"
+                            className={`${styles.formField} py-1 px-2 w-100`}
+                        />
+                    </Col>
+                </Row>
+                <Row className="mt-3">
+                    <Col>
                         <p className={`${styles.formFieldTitle} ms-1 mb-1`}> Data Mapping: </p>
                         <Field name="sourceSystemMappingId" as="select"
                             placeholder="Test"

@@ -27,8 +27,13 @@ const SubmitSourceSystem = async (form: Dict, editTarget: EditTarget) => {
                 "schema:name": form.sourceSystemName,
                 "schema:description": form.sourceSystemDescription,
                 "schema:url": form.sourceSystemEndpoint,
-                "ods:dataMappingID": form['ods:dataMappingID'].replace(RetrieveEnvVariable('HANDLE_URL'), ''),
-                "ods:translatorType": form.sourceSystemTranslatorType
+                "ods:dataMappingID": form.dataMappingId,
+                "ods:translatorType": form.sourceSystemTranslatorType,
+                "ods:filters": form.sourceSystemFilters,
+                "ltc:collectionManagementSystem": form.sourceSystemCollectionManagementSystem,
+                "ods:maximumRecords": form.sourceSystemMaximumRecords === "" ? undefined : Number(form.sourceSystemMaximumRecords),
+                "ods:mediaMachineAnnotationServices": form.sourceSystemMediaMAS,
+                "ods:specimenMachineAnnotationServices": form.sourceSystemSpecimenMAS
             }
         }
     };

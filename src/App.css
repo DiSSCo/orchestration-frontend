@@ -227,6 +227,13 @@ p {
   filter: brightness(130%);
 }
 
+.primaryButton:disabled {
+  background-color: #e8e6e6;
+  color: #595959;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .button-no-style {
   background-color: inherit;
   border: none;

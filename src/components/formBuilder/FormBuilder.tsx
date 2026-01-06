@@ -1,7 +1,7 @@
 /* Import Dependencies */
-import { useEffect, useState, cloneElement } from 'react';
+import { useEffect, useState, cloneElement, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { isEmpty } from 'lodash';
 import classNames from 'classnames';
@@ -34,41 +34,44 @@ import ArrayField from './formFields/ArrayField';
 import DataMappingSelect from './formFields/DataMappingSelect';
 import DataMappingField from './formFields/DataMappingField';
 import MasFiltersField from './formFields/MasFiltersField';
+import MultiValueTextField from './formFields/MultiValueTextField';
 import { Header } from 'components/elements/Elements';
 
 
 /* Function to determine the form field by type */
-const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[]) => {
+const DetermineFormField = (fieldName: string, visibleName: string, fieldType: string, options?: { name: string, label: string }[], required?: boolean) => {
     switch (fieldType) {
         case 'text':
-            return <InputField name={fieldName} visibleName={visibleName} />;
+            return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'textarea':
             return <InputTextArea name={fieldName} visibleName={visibleName} />;
         case 'number':
-            return <InputField name={fieldName} visibleName={visibleName} />;
+            return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'boolean':
             return <BooleanField name={fieldName} visibleName={visibleName} />;
         case 'select':
-            return <SelectField name={fieldName} visibleName={visibleName} options={options} />;
+            return <SelectField name={fieldName} visibleName={visibleName} options={options} required={required} />;
         case 'array':
             return <ArrayField name={fieldName} visibleName={visibleName} />;
         case 'dataMappingSelect':
-            return <DataMappingSelect />;
+            return <DataMappingSelect required={required} />;
         case 'dataMapping':
             return <DataMappingField name={fieldName} visibleName={visibleName} />;
         case 'masFilters':
             return <MasFiltersField name={fieldName} visibleName={visibleName} />;
+        case 'multiValueTextField':
+            return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
         default:
             return;
     }
 };
-
 
 const FormBuilder = () => {
     /* Hooks */
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
+    const formikRef = useRef<FormikProps<Dict>>(null);
 
     /* Base variables */
     const editTarget = useAppSelector(getEditTarget);
@@ -94,6 +97,11 @@ const FormBuilder = () => {
             dispatch(setEditTarget(undefined));
         }
     }, []);
+
+    /* Re-run Formik validation when the form step changes */
+    useEffect(() => {
+        formikRef.current?.validateForm();
+    }, [formPage]);
 
     /* Depict number of form pages */
     let numberOfFormPages: number = 1;
@@ -169,9 +177,10 @@ const FormBuilder = () => {
     /* Function for submitting form */
     const SubmitForm = async (form: Dict) => {
         /* Submit Mapping */
-        if (location.pathname.includes('data-mapping') || form.mappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
+        if (location.pathname.includes('data-mapping') || form.dataMappingId === 'new' || (!isEmpty(editTarget) && editTarget.dataMapping?.['@id'])) {
             await SubmitDataMapping(form, editTarget as EditTarget).then((dataMapping) => {
                 form['ods:dataMappingID'] = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
+                form.dataMappingId = dataMapping?.['@id']?.replace(RetrieveEnvVariable('HANDLE_URL'), '');
 
                 /* If editing a Data Mapping, return to data mapping detail page */
                 if (dataMapping && (editTarget?.dataMapping?.['@id'] || location.pathname.includes('data-mapping'))) {
@@ -233,13 +242,50 @@ const FormBuilder = () => {
             <Container className="flex-grow-1 py-5 overflow-y-hidden">
                 <Formik initialValues={initialValues}
                     enableReinitialize={true}
+                    /* Formik Prop: 'innerRef' binds the local 'formikRef' variable to the Formik instance */
+                    innerRef={formikRef}
+                    /* Trigger validation immediately on mount */
+                    validateOnMount
+                    /* Validate the required fields and return errors */
+                    validate={(values) => {
+                        const errors: Dict = {};
+                        const requiredFieldsSourceSystem = [
+                            'sourceSystemName',
+                            'sourceSystemEndpoint',
+                            'sourceSystemTranslatorType',
+                            'dataMappingId'
+                        ];
+                        const requiredFieldsDataMapping = [
+                            'dataMappingName',
+                            'dataMappingSourceDataStandard'
+                        ];
+
+                        if (location.pathname.includes('source-system') && formPage === 0) {
+                            requiredFieldsSourceSystem.forEach((requiredFieldSourceSystem) => {
+                                if (!values[requiredFieldSourceSystem]) {
+                                    errors[requiredFieldSourceSystem] = 'Required';
+                                }
+                            });
+                        }
+
+                        if (location.pathname.includes('data-mapping') || (location.pathname.includes('source-system') && formPage > 0)) {
+                            requiredFieldsDataMapping.forEach((requiredFieldDataMapping) => {
+                                if (!values[requiredFieldDataMapping]) {
+                                    errors[requiredFieldDataMapping] = 'Required';
+                                }
+                            });
+                        }
+
+                        return errors;
+                    }}
+
                     onSubmit={async (form: any) => {
                         await new Promise((resolve) => setTimeout(resolve, 100));
 
                         SubmitForm(form);
                     }}
                 >
-                    {({ values, setFieldValue }) => {
+                    {({ values, setFieldValue, isValid }) => {
                         return (
                             <Form className="h-100">
                                 <Row className="h-100">
@@ -266,7 +312,8 @@ const FormBuilder = () => {
                                                     >
                                                         {cloneElement(formTemplate, {
                                                             formValues: values,
-                                                            SetFieldValue: (field: string, value: string) => setFieldValue(field, value)
+                                                            SetFieldValue: (field: string, value: string) => setFieldValue(field, value),
+                                                            isValid
                                                         })}
                                                     </TabPanel>
                                                 );

@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { useEffect } from 'react';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import { isEmpty } from 'lodash';
 import { Row, Col } from 'react-bootstrap';
 
@@ -12,8 +12,14 @@ import { getEditTarget } from 'redux-store/EditSlice';
 /* Import API */
 import GetDataMappings from 'api/dataMapping/GeDatatMappings';
 
+/* Props Typing */
+interface Props {
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
+};
 
-const DataMappingSelect = () => {
+const DataMappingSelect = (props: Props) => {
+    const { required } = props;
     /* Hooks */
     const dispatch = useAppDispatch();
 
@@ -35,17 +41,24 @@ const DataMappingSelect = () => {
     return (
         <Row className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> Data Mapping: </p>
+                <p className="ms-1 mb-1">
+                    Data Mapping:
+                    {required && <span className="text-danger"> *</span>}
+                </p>
                 <Field name="dataMappingId" as="select"
                     className="w-100 formField"
                 >
+                    <option value="" disabled>
+                        Select Data Mapping
+                    </option>
+
                     {isEmpty(editTarget) &&
                         <option key={'new'} value="new">
                             Add New Data Mapping
                         </option>
                     }
                     <option key={'choose'} value="" disabled>
-                        Choose Data Mapping
+                        Choose Existing Data Mapping
                     </option>
 
                     {dataMappings.map((dataMapping, index) => {
@@ -58,6 +71,9 @@ const DataMappingSelect = () => {
                         );
                     })}
                 </Field>
+                <ErrorMessage name="dataMappingId">
+                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                </ErrorMessage>
             </Col>
         </Row>
     );
