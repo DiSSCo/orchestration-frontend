@@ -7,7 +7,6 @@ import { Row, Col } from 'react-bootstrap';
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
 import { getDataMappings, setDataMappings } from 'redux-store/DataMappingSlice';
-import { getEditTarget } from 'redux-store/EditSlice';
 
 /* Import API */
 import GetDataMappings from 'api/dataMapping/GeDatatMappings';
@@ -25,7 +24,6 @@ const DataMappingSelect = (props: Props) => {
 
     /* Base variables */
     const dataMappings = useAppSelector(getDataMappings);
-    const editTarget = useAppSelector(getEditTarget);
 
     /* OnLoad: Check if Mappings are present in state, otherwise fetch and set */
     useEffect(() => {
@@ -52,11 +50,10 @@ const DataMappingSelect = (props: Props) => {
                         Select Data Mapping
                     </option>
 
-                    {isEmpty(editTarget) &&
                         <option key={'new'} value="new">
                             Add New Data Mapping
                         </option>
-                    }
+
                     <option key={'choose'} value="" disabled>
                         Choose Existing Data Mapping
                     </option>
