@@ -55,7 +55,8 @@ const SourceSystem = () => {
 
     /* Function to run a Source System Ingestion */
     const RunIngestion = () => {
-        TriggerSourceSystemIngestion(sourceSystem?.['@id'], KeycloakService.GetToken()).then((_response) => { }).catch(error => {
+        const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/','');
+        TriggerSourceSystemIngestion(normalizedId, KeycloakService.GetToken()).then((_response) => { }).catch(error => {
             console.warn(error);
         })
     }
