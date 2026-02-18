@@ -21,8 +21,10 @@ import { Header } from 'components/elements/Elements';
 
 /* Import API */
 import GetSourceSystem from 'api/sourceSystem/GetSourceSystem';
-import TriggerSourceSystemIngestion from 'api/sourceSystem/TriggerSourceSystemIngestion';
 import DeleteSourceSystem from 'api/sourceSystem/DeleteSourceSystem';
+
+/* Import Hooks */
+import { useTriggerSourceSystemIngestion } from 'hooks/useTriggerSourceSystemIngestion';
 
 
 const SourceSystem = () => {
@@ -30,6 +32,7 @@ const SourceSystem = () => {
     const dispatch = useAppDispatch();
     const params = useParams();
     const navigate = useNavigate();
+    const runIngestion = useTriggerSourceSystemIngestion();
 
     /* Base variables */
     const sourceSystem = useAppSelector(getSourceSystem);
@@ -52,14 +55,6 @@ const SourceSystem = () => {
             });
         }
     }, []);
-
-    /* Function to run a Source System Ingestion */
-    const RunIngestion = () => {
-        const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/','');
-        TriggerSourceSystemIngestion(normalizedId, KeycloakService.GetToken()).then((_response) => { }).catch(error => {
-            console.warn(error);
-        })
-    }
 
     /* Class Names */
     const classTabList = classNames({
@@ -88,7 +83,12 @@ const SourceSystem = () => {
                                     <Col className="col-lg-auto">
                                         <button type="button"
                                             className="primaryButton px-3 py-1"
-                                            onClick={() => RunIngestion()}
+                                            onClick={() => {
+                                                const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/', '');
+                                                const KeycloakToken = KeycloakService.GetToken();
+                                                if (!normalizedId || !KeycloakToken) return;
+                                                runIngestion.mutate({ sourceSystemId: normalizedId, token:KeycloakToken });
+                                            }}
                                         >
                                             Run Ingestion
                                         </button>
