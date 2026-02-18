@@ -24,7 +24,9 @@ const TriggerSourceSystemIngestion = async (sourceSystemId?: string, token?: str
 
             response = result.data;
         } catch (error) {
-            console.warn(error);
+            console.error("Error while scheduling ingestion: ", error);
+            /* Rethrow error for useMutation */
+            throw error;
         }
     }
 
