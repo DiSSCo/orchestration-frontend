@@ -56,6 +56,17 @@ const SourceSystem = () => {
         }
     }, []);
 
+
+    /** Normalizes the Source System id and retrieves the token, 
+    * to be used in the Tanstack mutation that triggers the ingestion
+    */
+    const triggerIngestion = () => {
+        const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/','');
+        const KeycloakToken = KeycloakService.GetToken();
+        if (!normalizedId || !KeycloakToken) return;
+        runIngestion.mutate({ sourceSystemId: normalizedId, token: KeycloakToken });
+    };
+
     /* Class Names */
     const classTabList = classNames({
         'tabsList': true
@@ -83,12 +94,7 @@ const SourceSystem = () => {
                                     <Col className="col-lg-auto">
                                         <button type="button"
                                             className="primaryButton px-3 py-1"
-                                            onClick={() => {
-                                                const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/', '');
-                                                const KeycloakToken = KeycloakService.GetToken();
-                                                if (!normalizedId || !KeycloakToken) return;
-                                                runIngestion.mutate({ sourceSystemId: normalizedId, token:KeycloakToken });
-                                            }}
+                                            onClick={triggerIngestion}
                                         >
                                             Run Ingestion
                                         </button>
