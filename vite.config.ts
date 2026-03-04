@@ -9,6 +9,7 @@ export default defineConfig({
     alias: {
       api: '/src/api',
       app: '/src/app',
+      hooks: '/src/hooks',
       components: '/src/components',
       "redux-store": '/src/redux-store',
       sources: '/src/sources',

@@ -3,6 +3,8 @@ import axios from "axios";
 import ReactDOM from 'react-dom/client';
 import KeycloakService from 'app/Keycloak';
 import { Provider } from 'react-redux';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ToastProvider } from "components/elements/notifications/ToastProvider";
 
 /* Import Store */
 import { setupStore } from './app/Store';
@@ -15,7 +17,10 @@ import 'react-tabs/style/react-tabs.css';
 import App from './App';
 
 
+/* Define axios base url */
 axios.defaults.baseURL = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/api`;
+/* Set up queryClient for TanStack query */
+const queryClient = new QueryClient();
 
 const RenderRoot = () => {
   const root = ReactDOM.createRoot(
@@ -23,9 +28,13 @@ const RenderRoot = () => {
   );
 
   root.render(
-    <Provider store={setupStore()}>
-      <App />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={setupStore()}>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </Provider>
+    </QueryClientProvider >
   );
 }
 
