@@ -45,7 +45,9 @@ const DataMappingField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`}
+                    {formValues?.[name].length > 0 && <span className="text-danger"> *</span>}
+                </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (
@@ -93,7 +95,7 @@ const DataMappingField = (props: Props) => {
                                                 onClick={() => remove(index)}
                                             >
                                                 <FontAwesomeIcon icon={faX}
-                                                    className="fs-3"  
+                                                    className="fs-3"
                                                 />
                                             </button>
                                         </Col>
