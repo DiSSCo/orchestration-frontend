@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import KeycloakService from 'app/Keycloak';
 import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ToastProvider } from "components/elements/notifications/ToastProvider";
 
 /* Import Store */
 import { setupStore } from './app/Store';
@@ -29,7 +30,9 @@ const RenderRoot = () => {
   root.render(
     <QueryClientProvider client={queryClient}>
       <Provider store={setupStore()}>
-        <App/>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </Provider>
     </QueryClientProvider >
   );
