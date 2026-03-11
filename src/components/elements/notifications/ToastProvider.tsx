@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 export enum ToastType {
@@ -7,7 +7,7 @@ export enum ToastType {
 };
 
 const ToastContext = createContext({
-  showToast: (_message: string, _type: ToastType) => { },
+  showToast: (_message: string, _type: ToastType) => {},
 });
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
@@ -19,10 +19,15 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     setToast({ message, type });
   };
 
+  const value = useMemo(
+    () => ({
+      showToast,
+    }),
+    [showToast]
+  );
+
   return (
-    <ToastContext.Provider
-      value={{ showToast }}
-    >
+    <ToastContext.Provider value={value}>
       {children}
 
       <ToastContainer position="top-center" className="p-3">
