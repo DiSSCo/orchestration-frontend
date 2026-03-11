@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { cloneDeep } from 'lodash';
-import { FieldArray, Field } from 'formik';
+import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Types */
@@ -28,6 +28,11 @@ interface Props {
 const DataMappingField = (props: Props) => {
     const { name, visibleName, formValues } = props;
 
+    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form.
+     * They are used because the two fields that the component contains, depend on each other for validation.
+     */
+    const { setFieldValue, setFieldTouched, validateField, setTouched, setErrors, validateForm } = useFormikContext();
+
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -46,7 +51,7 @@ const DataMappingField = (props: Props) => {
         <Row key={name} className="mt-2">
             <Col>
                 <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`}
-                    {formValues?.[name].length > 0 && <span className="text-danger"> *</span>}
+                    {formValues?.[name].length > 0 && <span className="text-danger"> * </span>}
                 </p>
 
                 <FieldArray name={name}>
@@ -65,7 +70,24 @@ const DataMappingField = (props: Props) => {
                                             <Row>
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.field`} as="select"
-                                                        className="formField py-1 px-2 w-100 h-100"
+                                                        className="formField py-1 px-2 w-100"
+                                                        /* Cross-field validation: If the input field has a value
+                                                        but the dropdown is still empty (placeholder selected)
+                                                        then the dropdown must be filled and it returns a "Required" error. */
+                                                        validate={(fieldValue: string) => {
+                                                            if (value.value && !fieldValue) {
+                                                                return 'Required';
+                                                            }
+                                                        }}
+                                                        /* Trigger immediate validation of the related field */
+                                                        onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                                                            setFieldValue(`${name}.${index}.field`, event.target.value);
+                                                            setFieldTouched(`${name}.${index}.value`, true, false);
+
+                                                            setTimeout(() => {
+                                                                validateField(`${name}.${index}.value`);
+                                                            }, 0);
+                                                        }}
                                                     >
                                                         <option value="" label="Harmonised property" disabled />
 
@@ -81,18 +103,55 @@ const DataMappingField = (props: Props) => {
                                                             );
                                                         })}
                                                     </Field>
+
+                                                    <ErrorMessage name={`${name}.${index}.field`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+
                                                 </Col>
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.value`}
                                                         className="formField py-1 px-2 w-100"
+                                                        /* Cross-field validation: If the dropdown has a selected harmonised property
+                                                        but the input field is empty, then the input field must be filled and it returns a "Required" error. */
+                                                        validate={(inputValue: string) => {
+                                                            if (value.field && !inputValue) {
+                                                                return 'Required';
+                                                            }
+                                                        }}
+                                                        /* Trigger immediate validation of the related field */
+                                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                            setFieldValue(`${name}.${index}.value`, event.target.value);
+                                                            setFieldTouched(`${name}.${index}.field`, true, false);
+
+                                                            setTimeout(() => {
+                                                                validateField(`${name}.${index}.field`);
+                                                            }, 0);
+                                                        }}
                                                     />
+                                                    <ErrorMessage name={`${name}.${index}.value`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+
                                                 </Col>
                                             </Row>
                                         </Col>
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
                                                 className="button-no-style"
-                                                onClick={() => remove(index)}
+                                                onClick={() => {
+                                                    const isLastRow = formValues?.[name]?.length === 1;
+
+                                                    remove(index);
+
+                                                    if (isLastRow) {
+                                                        setTimeout(() => {
+                                                            setErrors({});
+                                                            setTouched({});
+                                                            validateForm();
+                                                        }, 0);
+                                                    }
+                                                }}
                                             >
                                                 <FontAwesomeIcon icon={faX}
                                                     className="fs-3"
