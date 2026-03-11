@@ -15,11 +15,13 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     { message: string; type: ToastType } | undefined
   >(undefined);
 
+  const showToast = (message: string, type: ToastType) => {
+    setToast({ message, type });
+  };
+
   return (
     <ToastContext.Provider
-      value={{
-        showToast: (message, type) => setToast({ message, type }),
-      }}
+      value={{ showToast }}
     >
       {children}
 
