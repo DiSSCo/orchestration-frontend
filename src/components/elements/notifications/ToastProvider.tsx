@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 
-type ToastType = "success" | "danger";
+export enum ToastType {
+  Success = "success",
+  Danger = "danger",
+};
 
 const ToastContext = createContext({
-  showToast: (_message: string, _type: ToastType) => {},
+  showToast: (_message: string, _type: ToastType) => { },
 });
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
