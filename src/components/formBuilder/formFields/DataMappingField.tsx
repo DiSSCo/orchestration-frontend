@@ -47,6 +47,43 @@ const DataMappingField = (props: Props) => {
         });
     }
 
+    /* Helper to handle dropdown change and trigger validation of the value field */
+    const handleFieldChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
+        setFieldValue(`${name}.${index}.field`, event.target.value);
+        setFieldTouched(`${name}.${index}.value`, true, false);
+
+        /* Delay validation so Formik state is updated first */
+        setTimeout(() => {
+            validateField(`${name}.${index}.value`);
+        }, 0);
+    };
+
+    /* Helper to handle value input change and trigger validation of dropdown */
+    const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        setFieldValue(`${name}.${index}.value`, event.target.value);
+        setFieldTouched(`${name}.${index}.field`, true, false);
+
+        setTimeout(() => {
+            validateField(`${name}.${index}.field`);
+        }, 0);
+    };
+
+    /* Helper to remove row and reset Formik validation if the last mapping is deleted */
+    const handleRemoveRow = (index: number, remove: (index: number) => void) => {
+        const isLastRow = formValues?.[name]?.length === 1;
+
+        remove(index);
+
+        /* Reset validation state when the last row is removed */
+        if (isLastRow) {
+            setTimeout(() => {
+                setErrors({});
+                setTouched({});
+                validateForm();
+            }, 0);
+        }
+    };
+
     return (
         <Row key={name} className="mt-2">
             <Col>
@@ -81,12 +118,7 @@ const DataMappingField = (props: Props) => {
                                                         }}
                                                         /* Trigger immediate validation of the related field */
                                                         onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                                                            setFieldValue(`${name}.${index}.field`, event.target.value);
-                                                            setFieldTouched(`${name}.${index}.value`, true, false);
-
-                                                            setTimeout(() => {
-                                                                validateField(`${name}.${index}.value`);
-                                                            }, 0);
+                                                            handleFieldChange(event, index)
                                                         }}
                                                     >
                                                         <option value="" label="Harmonised property" disabled />
@@ -121,12 +153,7 @@ const DataMappingField = (props: Props) => {
                                                         }}
                                                         /* Trigger immediate validation of the related field */
                                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                                            setFieldValue(`${name}.${index}.value`, event.target.value);
-                                                            setFieldTouched(`${name}.${index}.field`, true, false);
-
-                                                            setTimeout(() => {
-                                                                validateField(`${name}.${index}.field`);
-                                                            }, 0);
+                                                            handleValueChange(event, index)
                                                         }}
                                                     />
                                                     <ErrorMessage name={`${name}.${index}.value`}>
@@ -139,19 +166,7 @@ const DataMappingField = (props: Props) => {
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
                                                 className="button-no-style"
-                                                onClick={() => {
-                                                    const isLastRow = formValues?.[name]?.length === 1;
-
-                                                    remove(index);
-
-                                                    if (isLastRow) {
-                                                        setTimeout(() => {
-                                                            setErrors({});
-                                                            setTouched({});
-                                                            validateForm();
-                                                        }, 0);
-                                                    }
-                                                }}
+                                                onClick={() => handleRemoveRow(index, remove)}
                                             >
                                                 <FontAwesomeIcon icon={faX}
                                                     className="fs-3"
