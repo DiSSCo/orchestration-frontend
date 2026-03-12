@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import TriggerSourceSystemIngestion from 'api/sourceSystem/TriggerSourceSystemIngestion';
+import { useToast, ToastType } from "components/elements/notifications/ToastProvider";
 
 type TriggerIngestionParams = {
   sourceSystemId: string;
@@ -13,9 +14,17 @@ type TriggerIngestionParams = {
 * via the error property
 */
 export const useTriggerSourceSystemIngestion = () => {
+  const toast = useToast();
   return useMutation({
     mutationFn: (variables: TriggerIngestionParams) => {
       return TriggerSourceSystemIngestion(variables.sourceSystemId, variables.token);
-    }
+    },
+    onSuccess: () => {
+      toast?.showToast("Ingestion is scheduled successfully", ToastType.Success);
+    },
+    onError: () => {
+      toast?.showToast(
+        "Source System not found",ToastType.Danger);
+    },
   });
 };
