@@ -110,7 +110,7 @@ const DataMappingField = (props: Props) => {
                                                         className="formField py-1 px-2 w-100"
                                                         /* Cross-field validation: If the input field has a value
                                                         but the dropdown is still empty (placeholder selected)
-                                                        then the dropdown must be filled and it returns a "Required" error. */
+                                                        then the dropdown must be filled and it returns a "Required" error */
                                                         validate={(fieldValue: string) => {
                                                             if (value.value && !fieldValue) {
                                                                 return 'Required';
