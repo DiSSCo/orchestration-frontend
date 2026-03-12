@@ -44,21 +44,21 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'text':
             return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'textarea':
-            return <InputTextArea name={fieldName} visibleName={visibleName} />;
+            return <InputTextArea name={fieldName} visibleName={visibleName} required={required} />;
         case 'number':
             return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'boolean':
-            return <BooleanField name={fieldName} visibleName={visibleName} />;
+            return <BooleanField name={fieldName} visibleName={visibleName} required={required}/>;
         case 'select':
             return <SelectField name={fieldName} visibleName={visibleName} options={options} required={required} />;
         case 'array':
-            return <ArrayField name={fieldName} visibleName={visibleName} />;
+            return <ArrayField name={fieldName} visibleName={visibleName} required={required} />;
         case 'dataMappingSelect':
             return <DataMappingSelect required={required} />;
         case 'dataMapping':
             return <DataMappingField name={fieldName} visibleName={visibleName} />;
         case 'masFilters':
-            return <MasFiltersField name={fieldName} visibleName={visibleName} />;
+            return <MasFiltersField name={fieldName} visibleName={visibleName} required={required} />;
         case 'multiValueTextField':
             return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
         default:

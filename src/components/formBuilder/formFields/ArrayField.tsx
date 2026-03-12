@@ -17,17 +17,23 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 interface Props {
     name: string,
     visibleName: string,
-    formValues?: Dict
+    formValues?: Dict,
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
 };
 
 
 const ArrayField = (props: Props) => {
-    const { name, visibleName, formValues } = props;
+    const { name, visibleName, formValues, required } = props;
 
     return (
         <Row className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1">
+                    {MakeJsonPathReadableString(visibleName)}
+                    {":"}
+                    {required && <span className="text-danger"> * </span>}
+                </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (
