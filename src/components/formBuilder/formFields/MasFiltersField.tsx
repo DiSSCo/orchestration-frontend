@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import { cloneDeep } from 'lodash';
 
 /* Import Utilities */
@@ -36,15 +36,32 @@ const MasFiltersField = (props: Props) => {
     return (
         <Row className="mt-2">
             <Col>
+                <Field
+                    name={name}
+                    validate={(value: Dict) => {
+                        if (!value || Object.keys(value).length === 0) {
+                            return 'Required';
+                        }
+                    }}
+                >
+                    {() => null}
+                </Field>
                 <Row>
                     <Col>
                         <p className="ms-1 mb-1">
                             {MakeJsonPathReadableString(visibleName)}
                             {":"}
-                            {required && <span className="text-danger"> * </span>} 
+                            {required && <span className="text-danger"> * </span>}
                         </p>
                     </Col>
                 </Row>
+                <ErrorMessage name={name}>
+                    {(msg) =>
+                        typeof msg === 'string' ? (
+                            <div className="text-danger small mt-1">{msg}</div>
+                        ) : null
+                    }
+                </ErrorMessage>
                 <Row className="mb-2">
                     <Col>
                         {Object.keys(formValues?.['ods:hasTargetDigitalObjectFilter']).map((objectFilter) => {
@@ -69,6 +86,14 @@ const MasFiltersField = (props: Props) => {
                     <Col className="col-lg-auto">
                         <Field name="targetDigitalObjectFiltersOptions"
                             as="select"
+                            validate={(value: string) => {
+                                if (
+                                    value &&
+                                    !formValues?.['ods:hasTargetDigitalObjectFilter']?.[value]
+                                ) {
+                                    return 'Required';
+                                }
+                            }}
                         >
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
@@ -78,6 +103,9 @@ const MasFiltersField = (props: Props) => {
                                 }
                             })}
                         </Field>
+                        <ErrorMessage name="targetDigitalObjectFiltersOptions">
+                            {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                        </ErrorMessage>
                     </Col>
                     <Col>
                         <button type="button"

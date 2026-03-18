@@ -1,5 +1,5 @@
 /* Import Dependencies */
-import { Field } from "formik";
+import { Field, ErrorMessage } from "formik";
 import { Row, Col } from 'react-bootstrap';
 
 /* Import Utitilies */
@@ -31,6 +31,9 @@ const BooleanField = (props: Props) => {
                 <Field name={name}
                     type="checkbox"
                 />
+                <ErrorMessage name={name}>
+                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                </ErrorMessage>
             </Col>
         </Row>
     );

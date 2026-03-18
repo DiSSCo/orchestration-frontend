@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { FieldArray, Field } from 'formik';
+import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -22,6 +22,7 @@ interface Props {
 
 const DataMappingFilter = (props: Props) => {
     const { name, objectFilter, formValues, objectFilterValues, SetFieldValue } = props;
+    const { setFieldTouched, validateField } = useFormikContext();
 
     return (
         <FieldArray name={`${name}.${objectFilter}`}>
@@ -36,7 +37,11 @@ const DataMappingFilter = (props: Props) => {
                         <Col className="col-md-auto pe-0">
                             <button type="button"
                                 className="button-no-style c-secondary"
-                                onClick={() => push("")}
+                                onClick={() => {
+                                    push("")
+                                    setFieldTouched(`${name}.${objectFilter}.${objectFilterValues.length}`, true);
+                                    validateField(`${name}.${objectFilter}.${objectFilterValues.length}`);
+                                }}
                             >
                                 Add value
                             </button>
@@ -69,7 +74,18 @@ const DataMappingFilter = (props: Props) => {
                                             <Col md={{ span: 9 }} className="pe-0">
                                                 <Field name={`ods:hasTargetDigitalObjectFilter.${objectFilter}.${index}`}
                                                     className="formField w-100 mb-2"
+                                                    validate={(value: string) => {
+                                                        if (!value || value.trim() === '') {
+                                                            return 'Required';
+                                                        }
+                                                    }}
+                                                    onBlur={() => {
+                                                        setFieldTouched(`${name}.${objectFilter}.${index}`, true, true);
+                                                    }}
                                                 />
+                                                <ErrorMessage name={`${name}.${objectFilter}.${index}`}>
+                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                </ErrorMessage>
                                             </Col>
                                             <Col>
                                                 <FontAwesomeIcon icon={faX}

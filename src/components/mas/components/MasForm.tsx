@@ -10,10 +10,21 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
     const formFields: JSX.Element[] = [];
     const initialValuesFields: Dict = {};
 
+    /* Required fields for this form */
+    const requiredFields = [
+        'schema:name',
+        'ods:containerImage',
+        'ods:containerTag',
+        'ods:hasTargetDigitalObjectFilter',
+        'ods:batchingPermitted'
+    ];
+
     /* Generate MAS form fields */
     MasFields.fields.forEach((field) => {
+        /* Check if this field should be marked as required */
+        const isRequired = requiredFields.includes(field.name);
         /* Push to form fields, if not hidden */
-        const formField = DetermineFormField(field.alias ?? field.name, field.name, field.type);
+        const formField = DetermineFormField(field.alias ?? field.name, field.name, field.type, 'options' in field ? field.options : undefined, isRequired);
 
         if (formField) {
             formFields.push(formField);
@@ -33,6 +44,9 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
             initialValuesFields[field?.alias ?? field.name] = mas?.['schema:maintainer']?.['schema:identifier'];
         } else if (field.name === 'schema:ContactPoint') {
             initialValuesFields[field?.alias ?? field.name] = mas?.['schema:ContactPoint']?.['schema:url'];
+        } else if (field.type === 'multiValueTextField') {
+            initialValuesFields[field?.alias ?? field.name] =
+                mas?.[field.name as keyof typeof mas] ?? [];
         } else {
             initialValuesFields[field?.alias ?? field.name] = mas?.[field.name as keyof typeof mas] ?? (field.defaultValue ?? '');
         }

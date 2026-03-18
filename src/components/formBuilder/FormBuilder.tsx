@@ -48,7 +48,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'number':
             return <InputField name={fieldName} visibleName={visibleName} required={required} />;
         case 'boolean':
-            return <BooleanField name={fieldName} visibleName={visibleName} required={required}/>;
+            return <BooleanField name={fieldName} visibleName={visibleName} required={required} />;
         case 'select':
             return <SelectField name={fieldName} visibleName={visibleName} options={options} required={required} />;
         case 'array':
@@ -259,6 +259,13 @@ const FormBuilder = () => {
                             'dataMappingName',
                             'dataMappingSourceDataStandard'
                         ];
+                        const requiredFieldsMAS = [
+                            'masName',
+                            'masContainerImage',
+                            'masContainerTag',
+                            // 'masTargetDigitalObjectFilters',
+                            'masBatchingPermitted'
+                        ];
 
                         if (location.pathname.includes('source-system') && formPage === 0) {
                             requiredFieldsSourceSystem.forEach((requiredFieldSourceSystem) => {
@@ -275,6 +282,14 @@ const FormBuilder = () => {
                                 }
                             });
                         }
+
+                        if (location.pathname.includes('mas')) {
+                           requiredFieldsMAS.forEach((requiredFieldsMAS) => {
+                               if (!values[requiredFieldsMAS]) {
+                                   errors[requiredFieldsMAS] = 'Required';
+                               }
+                           });
+                       }
 
                         return errors;
                     }}
