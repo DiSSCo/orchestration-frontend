@@ -2,6 +2,7 @@
 import { cloneDeep } from 'lodash';
 import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
 import { Row, Col } from 'react-bootstrap';
+import { useRef, useEffect } from 'react';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -31,7 +32,7 @@ const DataMappingField = (props: Props) => {
     /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form.
      * They are used because the two fields that the component contains, depend on each other for validation.
      */
-    const { setFieldValue, setFieldTouched, validateField, setTouched, setErrors, validateForm } = useFormikContext();
+    const { validateForm } = useFormikContext();
 
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -47,41 +48,13 @@ const DataMappingField = (props: Props) => {
         });
     }
 
-    /* Helper to handle dropdown change and trigger validation of the value field */
-    const handleFieldChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-        setFieldValue(`${name}.${index}.field`, event.target.value);
-        setFieldTouched(`${name}.${index}.value`, true, false);
+    /* Re-validate the form whenever a row is added or removed */
+    useEffect(() => {
+        validateForm();
+    }, [formValues?.[name]?.length]);
 
-        /* Delay validation so Formik state is updated first */
-        setTimeout(() => {
-            validateField(`${name}.${index}.value`);
-        }, 0);
-    };
-
-    /* Helper to handle value input change and trigger validation of dropdown */
-    const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        setFieldValue(`${name}.${index}.value`, event.target.value);
-        setFieldTouched(`${name}.${index}.field`, true, false);
-
-        setTimeout(() => {
-            validateField(`${name}.${index}.field`);
-        }, 0);
-    };
-
-    /* Helper to remove row and reset Formik validation if the last mapping is deleted */
     const handleRemoveRow = (index: number, remove: (index: number) => void) => {
-        const isLastRow = formValues?.[name]?.length === 1;
-
         remove(index);
-
-        /* Reset validation state when the last row is removed */
-        if (isLastRow) {
-            setTimeout(() => {
-                setErrors({});
-                setTouched({});
-                validateForm();
-            }, 0);
-        }
     };
 
     return (
@@ -108,17 +81,10 @@ const DataMappingField = (props: Props) => {
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.field`} as="select"
                                                         className="formField py-1 px-2 w-100"
-                                                        /* Cross-field validation: If the input field has a value
-                                                        but the dropdown is still empty (placeholder selected)
-                                                        then the dropdown must be filled and it returns a "Required" error */
                                                         validate={(fieldValue: string) => {
-                                                            if (value.value && !fieldValue) {
+                                                            if (!fieldValue) {
                                                                 return 'Required';
                                                             }
-                                                        }}
-                                                        /* Trigger immediate validation of the related field */
-                                                        onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                                                            handleFieldChange(event, index)
                                                         }}
                                                     >
                                                         <option value="" label="Harmonised property" disabled />
@@ -144,16 +110,10 @@ const DataMappingField = (props: Props) => {
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.value`}
                                                         className="formField py-1 px-2 w-100"
-                                                        /* Cross-field validation: If the dropdown has a selected harmonised property
-                                                        but the input field is empty, then the input field must be filled and it returns a "Required" error. */
                                                         validate={(inputValue: string) => {
-                                                            if (value.field && !inputValue) {
+                                                            if (!inputValue) {
                                                                 return 'Required';
                                                             }
-                                                        }}
-                                                        /* Trigger immediate validation of the related field */
-                                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                                            handleValueChange(event, index)
                                                         }}
                                                     />
                                                     <ErrorMessage name={`${name}.${index}.value`}>
