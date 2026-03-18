@@ -2,7 +2,7 @@
 import { cloneDeep } from 'lodash';
 import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
 import { Row, Col } from 'react-bootstrap';
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 
 /* Import Types */
 import { Dict } from 'app/Types';
