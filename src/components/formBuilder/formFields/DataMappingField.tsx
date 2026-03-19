@@ -29,9 +29,7 @@ interface Props {
 const DataMappingField = (props: Props) => {
     const { name, visibleName, formValues } = props;
 
-    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form.
-     * They are used because the two fields that the component contains, depend on each other for validation.
-     */
+    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
     const { validateForm } = useFormikContext();
 
     /* Base variables */
