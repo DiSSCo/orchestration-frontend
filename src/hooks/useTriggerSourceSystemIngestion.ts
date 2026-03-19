@@ -24,7 +24,7 @@ export const useTriggerSourceSystemIngestion = () => {
     },
     onError: () => {
       toast?.showToast(
-        "Source System not found",ToastType.Danger);
+        "Source System not found", ToastType.Danger);
     },
   });
 };
