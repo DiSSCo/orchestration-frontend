@@ -1,7 +1,8 @@
 /* Import Dependencies */
 import { cloneDeep } from 'lodash';
-import { FieldArray, Field } from 'formik';
+import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
 import { Row, Col } from 'react-bootstrap';
+import { useEffect } from 'react';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -28,6 +29,9 @@ interface Props {
 const DataMappingField = (props: Props) => {
     const { name, visibleName, formValues } = props;
 
+    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
+    const { validateForm } = useFormikContext();
+
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -42,10 +46,21 @@ const DataMappingField = (props: Props) => {
         });
     }
 
+    /* Re-validate the form whenever a row is added or removed */
+    useEffect(() => {
+        validateForm();
+    }, [formValues?.[name]?.length]);
+
+    const handleRemoveRow = (index: number, remove: (index: number) => void) => {
+        remove(index);
+    };
+
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
+                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`}
+                    {formValues?.[name].length > 0 && <span className="text-danger"> * </span>}
+                </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (
@@ -63,7 +78,12 @@ const DataMappingField = (props: Props) => {
                                             <Row>
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.field`} as="select"
-                                                        className="formField py-1 px-2 w-100 h-100"
+                                                        className="formField py-1 px-2 w-100"
+                                                        validate={(fieldValue: string) => {
+                                                            if (!fieldValue) {
+                                                                return 'Required';
+                                                            }
+                                                        }}
                                                     >
                                                         <option value="" label="Harmonised property" disabled />
 
@@ -79,21 +99,35 @@ const DataMappingField = (props: Props) => {
                                                             );
                                                         })}
                                                     </Field>
+
+                                                    <ErrorMessage name={`${name}.${index}.field`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+
                                                 </Col>
                                                 <Col md={{ span: 6 }}>
                                                     <Field name={`${name}.${index}.value`}
                                                         className="formField py-1 px-2 w-100"
+                                                        validate={(inputValue: string) => {
+                                                            if (!inputValue) {
+                                                                return 'Required';
+                                                            }
+                                                        }}
                                                     />
+                                                    <ErrorMessage name={`${name}.${index}.value`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+
                                                 </Col>
                                             </Row>
                                         </Col>
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
                                                 className="button-no-style"
-                                                onClick={() => remove(index)}
+                                                onClick={() => handleRemoveRow(index, remove)}
                                             >
                                                 <FontAwesomeIcon icon={faX}
-                                                    className="fs-3"  
+                                                    className="fs-3"
                                                 />
                                             </button>
                                         </Col>
