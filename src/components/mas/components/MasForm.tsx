@@ -33,6 +33,8 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
             initialValuesFields[field?.alias ?? field.name] = mas?.['schema:maintainer']?.['schema:identifier'];
         } else if (field.name === 'schema:ContactPoint') {
             initialValuesFields[field?.alias ?? field.name] = mas?.['schema:ContactPoint']?.['schema:url'];
+        } else if (field.type === 'multiValueTextField') {
+            initialValuesFields[field?.alias ?? field.name] =mas?.[field.name as keyof typeof mas] ?? [];
         } else {
             initialValuesFields[field?.alias ?? field.name] = mas?.[field.name as keyof typeof mas] ?? (field.defaultValue ?? '');
         }

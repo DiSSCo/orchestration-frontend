@@ -71,6 +71,33 @@
             "type": "number",
             "defaultValue": 1
         },
+                {
+            "name": "schema:creativeWorkStatus",
+            "alias": "masCreativeWorkStatus",
+            "type": "text"
+        },
+        {
+            "name": "schema:programmingLanguage",
+            "alias": "masProgrammingLanguage",
+            "type": "text"
+        },
+        {
+            "name": "ods:timeToLive",
+            "alias": "masTimeToLive",
+            "type": "number",
+            "defaultValue": 3600
+        },
+        {
+            "name": "ods:dependency",
+            "alias": "masDependency",
+            "type": "multiValueTextField"
+        },
+        {
+            "name": "ods:isIngestionCompatible",
+            "alias": "masIsIngestionCompatible",
+            "type": "boolean",
+            "defaultValue": false
+        },
         {
             "name": "ods:batchingPermitted",
             "alias": "masBatchingPermitted",

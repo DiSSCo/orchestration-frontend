@@ -141,7 +141,12 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
                 },
                 "ods:slaDocumentation": form.masSlaDocumentation,
                 "ods:maxReplicas": form.masMaxReplicas,
-                "ods:batchingPermitted": form.masBatchingPermitted
+                "ods:batchingPermitted": form.masBatchingPermitted,
+                "schema:creativeWorkStatus": form.masCreativeWorkStatus,
+                "schema:programmingLanguage": form.masProgrammingLanguage,
+                "ods:timeToLive": form.masTimeToLive,
+                "ods:dependency": form.masDependency,
+                "ods:isIngestionCompatible": form.masIsIngestionCompatible,
             }
         }
     };
