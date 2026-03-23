@@ -11,18 +11,18 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
     const initialValuesFields: Dict = {};
 
     /* Required fields for this form */
-    const requiredFields = [
+    const requiredFields = new Set([
         'schema:name',
         'ods:containerImage',
         'ods:containerTag',
         'ods:hasTargetDigitalObjectFilter',
         'ods:batchingPermitted'
-    ];
+    ]);
 
     /* Generate MAS form fields */
     MasFields.fields.forEach((field) => {
         /* Check if this field should be marked as required */
-        const isRequired = requiredFields.includes(field.name);
+        const isRequired = requiredFields.has(field.name);
 
         /* Push to form fields, if not hidden */
         const formField = DetermineFormField(field.alias ?? field.name, field.name, field.type, 'options' in field ? field.options : undefined, isRequired);
