@@ -10,7 +10,7 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
     const formFields: JSX.Element[] = [];
     const initialValuesFields: Dict = {};
 
-    /* Required fields for this form */
+    /* Required fields for the MAS form */
     const requiredFields = new Set([
         'schema:name',
         'ods:containerImage',
