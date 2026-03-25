@@ -1,7 +1,8 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { Field } from 'formik';
+import { Field, ErrorMessage, useFormikContext } from 'formik';
 import { cloneDeep } from 'lodash';
+import { useEffect } from 'react';
 
 /* Import Utilities */
 import { MakeJsonPathReadableString } from 'app/Utilities';
@@ -29,6 +30,11 @@ interface Props {
 
 const MasFiltersField = (props: Props) => {
     const { name, visibleName, formValues, SetFieldValue, required } = props;
+    const { validateForm } = useFormikContext();
+
+    useEffect(() => {
+        validateForm();
+    }, [formValues?.[name], validateForm]);
 
     /* Base variables */
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -36,6 +42,21 @@ const MasFiltersField = (props: Props) => {
     return (
         <Row className="mt-2">
             <Col>
+                <Field
+                    name={name}
+                    validate={(value: Dict) => {
+                        // Check if filters exist
+                        if (!value || Object.keys(value).length === 0) {
+                            return 'Required';
+                        }
+                        // Check if the filter is selected but no values are added
+                        if (formValues?.targetDigitalObjectFiltersOptions && formValues.targetDigitalObjectFiltersOptions !== "") {
+                            return 'Required';
+                        }
+                    }}
+                >
+                    {() => null}
+                </Field>
                 <Row>
                     <Col>
                         <p className="ms-1 mb-1">
@@ -43,6 +64,13 @@ const MasFiltersField = (props: Props) => {
                             {":"}
                             {required && <span className="text-danger"> * </span>}
                         </p>
+                        {/* Only render top level(string) errors. Nested errors are handled at input level*/}
+                        <ErrorMessage name={name}>
+                            {(msg) => {
+                                if (typeof msg !== 'string') return null;
+                                return <div className="text-danger small mt-1">{msg}</div>;
+                            }}
+                        </ErrorMessage>
                     </Col>
                 </Row>
                 <Row className="mb-2">

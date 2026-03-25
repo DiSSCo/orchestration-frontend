@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { FieldArray, Field } from 'formik';
+import { FieldArray, Field, ErrorMessage } from 'formik';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -69,7 +69,15 @@ const DataMappingFilter = (props: Props) => {
                                             <Col md={{ span: 9 }} className="pe-0">
                                                 <Field name={`ods:hasTargetDigitalObjectFilter.${objectFilter}.${index}`}
                                                     className="formField w-100 mb-2"
+                                                    validate={(value: string) => {
+                                                        if (!value || value.trim() === '') {
+                                                            return 'Required';
+                                                        }
+                                                    }}
                                                 />
+                                                <ErrorMessage name={`${name}.${objectFilter}.${index}`}>
+                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                </ErrorMessage>
                                             </Col>
                                             <Col>
                                                 <FontAwesomeIcon icon={faX}

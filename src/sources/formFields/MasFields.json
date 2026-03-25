@@ -71,7 +71,7 @@
             "type": "number",
             "defaultValue": 1
         },
-                {
+        {
             "name": "schema:creativeWorkStatus",
             "alias": "masCreativeWorkStatus",
             "type": "text"
