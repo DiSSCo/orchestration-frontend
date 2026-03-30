@@ -2,7 +2,6 @@
 import { Row, Col } from 'react-bootstrap';
 import { Field, ErrorMessage, useFormikContext } from 'formik';
 import { cloneDeep } from 'lodash';
-import { useEffect } from 'react';
 
 /* Import Utilities */
 import { MakeJsonPathReadableString } from 'app/Utilities';
@@ -30,11 +29,6 @@ interface Props {
 
 const MasFiltersField = (props: Props) => {
     const { name, visibleName, formValues, SetFieldValue, required } = props;
-    const { validateForm } = useFormikContext();
-
-    useEffect(() => {
-        validateForm();
-    }, [formValues?.[name], validateForm]);
 
     /* Base variables */
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
