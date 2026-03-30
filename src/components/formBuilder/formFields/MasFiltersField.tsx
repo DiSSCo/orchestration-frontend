@@ -21,12 +21,14 @@ interface Props {
     name: string,
     visibleName: string,
     formValues?: Dict,
-    SetFieldValue?: Function
+    SetFieldValue?: Function,
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
 };
 
 
 const MasFiltersField = (props: Props) => {
-    const { name, visibleName, formValues, SetFieldValue } = props;
+    const { name, visibleName, formValues, SetFieldValue, required } = props;
 
     /* Base variables */
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -36,7 +38,11 @@ const MasFiltersField = (props: Props) => {
             <Col>
                 <Row>
                     <Col>
-                        <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`} </p>
+                        <p className="ms-1 mb-1">
+                            {MakeJsonPathReadableString(visibleName)}
+                            {":"}
+                            {required && <span className="text-danger"> * </span>}
+                        </p>
                     </Col>
                 </Row>
                 <Row className="mb-2">
