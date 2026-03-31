@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 /* Import Components */
-import FormikFieldWithError from './FormikFieldWithError';
+import RequiredFormikField from './FormikFieldWithError';
 
 
 /* Props Typing */
@@ -26,6 +26,11 @@ interface Props {
     required?: boolean
 }
 
+interface FieldConfig {
+    key: string,
+    placeholder: string
+}
+
 const EnvironmentalVariablesField = (props: Props) => {
     const { name, visibleName, formValues, required } = props;
 
@@ -34,6 +39,18 @@ const EnvironmentalVariablesField = (props: Props) => {
 
     /* Values are stored as an array of objects. If the form contains no values, it falls back to an empty array */
     const values: Dict[] = formValues?.[name] ?? [];
+
+    /* Fields rendered for each row */
+    const fields: FieldConfig[] = [
+        {
+            key: 'schema:name',
+            placeholder: 'Variable name'
+        },
+        {
+            key: 'schema:value',
+            placeholder: 'Value'
+        }
+    ];
 
     /* Re validate the form whenever a row is added or removed */
     useEffect(() => {
@@ -59,15 +76,13 @@ const EnvironmentalVariablesField = (props: Props) => {
                                 const key = `event_${index}`;
                                 return (
                                     <Row key={key} className="py-1">
-                                        <FormikFieldWithError
-                                            name={`${name}.${index}.schema:name`}
-                                            placeholder="Variable name"
-                                        />
-
-                                        <FormikFieldWithError
-                                            name={`${name}.${index}.schema:value`}
-                                            placeholder="Value"
-                                        />
+                                        {fields.map((field) => (
+                                            <RequiredFormikField
+                                                key={field.key}
+                                                name={`${name}.${index}.${field.key}`}
+                                                placeholder={field.placeholder}
+                                            />
+                                        ))}
 
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
