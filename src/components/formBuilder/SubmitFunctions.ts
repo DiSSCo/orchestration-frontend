@@ -2,8 +2,7 @@
 import KeycloakService from "app/Keycloak";
 
 /* Import Utilities */
-import { RetrieveEnvVariable } from "app/Utilities";
-import { ConvertToTypedValue } from 'app/Utilities';
+import { RetrieveEnvVariable, ConvertToTypedValue } from "app/Utilities";
 
 /* Import Types */
 import { DataMapping } from "app/types/DataMapping";
