@@ -3,6 +3,7 @@ import KeycloakService from "app/Keycloak";
 
 /* Import Utilities */
 import { RetrieveEnvVariable } from "app/Utilities";
+import { ConvertToTypedValue } from 'app/Utilities';
 
 /* Import Types */
 import { DataMapping } from "app/types/DataMapping";
@@ -147,7 +148,10 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
                 "ods:timeToLive": form.masTimeToLive,
                 "ods:dependency": form.masDependency,
                 "ods:isIngestionCompatible": form.masIsIngestionCompatible,
-                "ods:hasEnvironmentalVariables": form.masEnvironmentalVariables,
+                "ods:hasEnvironmentalVariables": form.masEnvironmentalVariables.map((item: Dict) => ({
+                    "schema:name": item["schema:name"],
+                    "schema:value": ConvertToTypedValue(item["schema:value"])
+                })),
             }
         }
     };
