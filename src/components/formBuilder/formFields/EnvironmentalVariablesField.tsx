@@ -1,5 +1,5 @@
 /* Import Dependencies */
-import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 import { Row, Col } from 'react-bootstrap';
 import { useEffect } from 'react';
 
@@ -12,6 +12,9 @@ import { MakeJsonPathReadableString } from 'app/Utilities';
 /* Import Icons */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
+
+/* Import Components */
+import FormikFieldWithError from './FormikFieldWithError';
 
 
 /* Props Typing */
@@ -41,23 +44,6 @@ const EnvironmentalVariablesField = (props: Props) => {
         remove(index);
     };
 
-    const validateRequiredField = (fieldValue: string) => {
-        if (!fieldValue || fieldValue.trim() === '') {
-            return 'Required';
-        }
-    };
-
-    const rowFields = [
-        {
-            fieldName: 'schema:name',
-            placeholder: 'Variable name'
-        },
-        {
-            fieldName: 'schema:value',
-            placeholder: 'Value'
-        }
-    ];
-
     return (
         <Row key={name} className="mt-2">
             <Col>
@@ -73,19 +59,15 @@ const EnvironmentalVariablesField = (props: Props) => {
                                 const key = `event_${index}`;
                                 return (
                                     <Row key={key} className="py-1">
-                                        {rowFields.map((field) => (
-                                            <Col key={field.fieldName}>
-                                                <Field
-                                                    name={`${name}.${index}.${field.fieldName}`}
-                                                    className="w-100 formField"
-                                                    placeholder={field.placeholder}
-                                                    validate={validateRequiredField}
-                                                />
-                                                <ErrorMessage name={`${name}.${index}.${field.fieldName}`}>
-                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                </ErrorMessage>
-                                            </Col>
-                                        ))}
+                                        <FormikFieldWithError
+                                            name={`${name}.${index}.schema:name`}
+                                            placeholder="Variable name"
+                                        />
+
+                                        <FormikFieldWithError
+                                            name={`${name}.${index}.schema:value`}
+                                            placeholder="Value"
+                                        />
 
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
