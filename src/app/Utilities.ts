@@ -113,7 +113,7 @@ const ConvertToTypedValue = (value: string) => {
     if (value === 'false' || value === 'False') return false;
 
     const numberValue = Number(value);
-    if (!isNaN(numberValue) && value.trim() !== '') return numberValue;
+    if (!Number.isNaN(numberValue) && value.trim() !== '') return numberValue;
 
     return value;
 };

@@ -39,89 +39,86 @@ const EnvironmentalVariablesField = (props: Props) => {
 
     const handleRemoveRow = (index: number, remove: (index: number) => void) => {
         remove(index);
-    };
 
-    return (
-        <Row key={name} className="mt-2">
-            <Col>
-                <p className="ms-1 mb-1">
-                    {`${MakeJsonPathReadableString(visibleName)}:`}
-                    {required && <span className="text-danger"> *</span>}
-                </p>
+        const validateRequiredField = (fieldValue: string) => {
+            if (!fieldValue || fieldValue.trim() === '') {
+                return 'Required';
+            }
+        };
 
-                <FieldArray name={name}>
-                    {({ push, remove }) => (
-                        <>
-                            {values.map((_, index) => {
-                                const key = `event_${index}`;
-                                return (
-                                    <Row key={key} className="py-1">
-                                        <Col>
-                                            <Row>
-                                                <Col>
-                                                    <Field
-                                                        name={`${name}.${index}.schema:name`}
-                                                        className="w-100 formField"
-                                                        placeholder="Variable name"
-                                                        validate={(fieldValue: string) => {
-                                                            if (!fieldValue || fieldValue.trim() === "") {
-                                                                return "Required";
-                                                            }
-                                                        }}
-                                                    />
-                                                    <ErrorMessage name={`${name}.${index}.schema:name`}>
-                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                    </ErrorMessage>
-                                                </Col>
+        return (
+            <Row key={name} className="mt-2">
+                <Col>
+                    <p className="ms-1 mb-1">
+                        {`${MakeJsonPathReadableString(visibleName)}:`}
+                        {required && <span className="text-danger"> *</span>}
+                    </p>
 
-                                                <Col>
-                                                    <Field
-                                                        name={`${name}.${index}.schema:value`}
-                                                        className="w-100 formField"
-                                                        placeholder="Value"
-                                                        validate={(fieldValue: string) => {
-                                                            if (!fieldValue || fieldValue.trim() === "") {
-                                                                return "Required";
-                                                            }
-                                                        }}
-                                                    />
-                                                    <ErrorMessage name={`${name}.${index}.schema:value`}>
-                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                    </ErrorMessage>
-                                                </Col>
-                                            </Row>
-                                        </Col>
+                    <FieldArray name={name}>
+                        {({ push, remove }) => (
+                            <>
+                                {values.map((_, index) => {
+                                    const key = `event_${index}`;
+                                    return (
+                                        <Row key={key} className="py-1">
+                                            <Col>
+                                                <Row>
+                                                    <Col>
+                                                        <Field
+                                                            name={`${name}.${index}.schema:name`}
+                                                            className="w-100 formField"
+                                                            placeholder="Variable name"
+                                                            validate={validateRequiredField}
+                                                        />
+                                                        <ErrorMessage name={`${name}.${index}.schema:name`}>
+                                                            {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                        </ErrorMessage>
+                                                    </Col>
 
-                                        <Col className="col-md-auto d-flex align-items-center">
-                                            <button type="button"
-                                                className="button-no-style"
-                                                onClick={() => handleRemoveRow(index, remove)}
-                                            >
-                                                <FontAwesomeIcon icon={faX} className="fs-3" />
-                                            </button>
-                                        </Col>
-                                    </Row>
-                                );
-                            })}
+                                                    <Col>
+                                                        <Field
+                                                            name={`${name}.${index}.schema:value`}
+                                                            className="w-100 formField"
+                                                            placeholder="Value"
+                                                            validate={validateRequiredField}
+                                                        />
+                                                        <ErrorMessage name={`${name}.${index}.schema:value`}>
+                                                            {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                        </ErrorMessage>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
 
-                            {/* Button for adding additional values */}
-                            {formValues &&
-                                <button type="button"
-                                    className="w-100 mt-2"
-                                    onClick={() => push({
-                                        "schema:name": "",
-                                        "schema:value": ""
-                                    })}
-                                >
-                                    <FontAwesomeIcon icon={faPlus} />
-                                </button>
-                            }
-                        </>
-                    )}
-                </FieldArray>
-            </Col>
-        </Row>
-    );
-}
+                                            <Col className="col-md-auto d-flex align-items-center">
+                                                <button type="button"
+                                                    className="button-no-style"
+                                                    onClick={() => handleRemoveRow(index, remove)}
+                                                >
+                                                    <FontAwesomeIcon icon={faX} className="fs-3" />
+                                                </button>
+                                            </Col>
+                                        </Row>
+                                    );
+                                })}
 
-export default EnvironmentalVariablesField;
+                                {/* Button for adding additional values */}
+                                {formValues &&
+                                    <button type="button"
+                                        className="w-100 mt-2"
+                                        onClick={() => push({
+                                            "schema:name": "",
+                                            "schema:value": ""
+                                        })}
+                                    >
+                                        <FontAwesomeIcon icon={faPlus} />
+                                    </button>
+                                }
+                            </>
+                        )}
+                    </FieldArray>
+                </Col>
+            </Row>
+        );
+    }
+
+    export default EnvironmentalVariablesField;
