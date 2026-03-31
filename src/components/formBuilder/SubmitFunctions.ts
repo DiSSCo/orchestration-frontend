@@ -147,6 +147,7 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
                 "ods:timeToLive": form.masTimeToLive,
                 "ods:dependency": form.masDependency,
                 "ods:isIngestionCompatible": form.masIsIngestionCompatible,
+                "ods:hasEnvironmentalVariables": form.masEnvironmentalVariables,
             }
         }
     };

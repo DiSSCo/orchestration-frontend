@@ -36,6 +36,7 @@ import DataMappingField from './formFields/DataMappingField';
 import MasFiltersField from './formFields/MasFiltersField';
 import MultiValueTextField from './formFields/MultiValueTextField';
 import { Header } from 'components/elements/Elements';
+import EnvironmentalVariablesField from './formFields/EnvironmentalVariablesField';
 
 
 /* Function to determine the form field by type */
@@ -61,6 +62,8 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <MasFiltersField name={fieldName} visibleName={visibleName} required={required} />;
         case 'multiValueTextField':
             return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
+        case 'environmentalVariables':
+            return <EnvironmentalVariablesField name={fieldName} visibleName={visibleName} />;
         default:
             return;
     }
