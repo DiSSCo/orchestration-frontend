@@ -47,6 +47,17 @@ const EnvironmentalVariablesField = (props: Props) => {
         }
     };
 
+    const rowFields = [
+        {
+            fieldName: 'schema:name',
+            placeholder: 'Variable name'
+        },
+        {
+            fieldName: 'schema:value',
+            placeholder: 'Value'
+        }
+    ];
+
     return (
         <Row key={name} className="mt-2">
             <Col>
@@ -62,33 +73,19 @@ const EnvironmentalVariablesField = (props: Props) => {
                                 const key = `event_${index}`;
                                 return (
                                     <Row key={key} className="py-1">
-                                        <Col>
-                                            <Row>
-                                                <Col>
-                                                    <Field
-                                                        name={`${name}.${index}.schema:name`}
-                                                        className="w-100 formField"
-                                                        placeholder="Variable name"
-                                                        validate={validateRequiredField}
-                                                    />
-                                                    <ErrorMessage name={`${name}.${index}.schema:name`}>
-                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                    </ErrorMessage>
-                                                </Col>
-
-                                                <Col>
-                                                    <Field
-                                                        name={`${name}.${index}.schema:value`}
-                                                        className="w-100 formField"
-                                                        placeholder="Value"
-                                                        validate={validateRequiredField}
-                                                    />
-                                                    <ErrorMessage name={`${name}.${index}.schema:value`}>
-                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                    </ErrorMessage>
-                                                </Col>
-                                            </Row>
-                                        </Col>
+                                        {rowFields.map((field) => (
+                                            <Col key={field.fieldName}>
+                                                <Field
+                                                    name={`${name}.${index}.${field.fieldName}`}
+                                                    className="w-100 formField"
+                                                    placeholder={field.placeholder}
+                                                    validate={validateRequiredField}
+                                                />
+                                                <ErrorMessage name={`${name}.${index}.${field.fieldName}`}>
+                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                </ErrorMessage>
+                                            </Col>
+                                        ))}
 
                                         <Col className="col-md-auto d-flex align-items-center">
                                             <button type="button"
