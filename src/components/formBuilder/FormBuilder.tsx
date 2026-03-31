@@ -260,6 +260,14 @@ const FormBuilder = () => {
                             'dataMappingSourceDataStandard'
                         ];
 
+                        const requiredFieldsMAS = [
+                            'masName',
+                            'masContainerImage',
+                            'masContainerTag',
+                            'ods:hasTargetDigitalObjectFilter',
+                            'masBatchingPermitted'
+                        ];
+
                         if (location.pathname.includes('source-system') && formPage === 0) {
                             requiredFieldsSourceSystem.forEach((requiredFieldSourceSystem) => {
                                 if (!values[requiredFieldSourceSystem]) {
@@ -272,6 +280,14 @@ const FormBuilder = () => {
                             requiredFieldsDataMapping.forEach((requiredFieldDataMapping) => {
                                 if (!values[requiredFieldDataMapping]) {
                                     errors[requiredFieldDataMapping] = 'Required';
+                                }
+                            });
+                        }
+
+                        if (location.pathname.includes('mas')) {
+                            requiredFieldsMAS.forEach((requiredFieldsMAS) => {
+                                if (!values[requiredFieldsMAS]) {
+                                    errors[requiredFieldsMAS] = 'Required';
                                 }
                             });
                         }

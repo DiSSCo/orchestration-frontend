@@ -1,6 +1,6 @@
 /* Import Dependencies */
 import { Row, Col } from 'react-bootstrap';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import { cloneDeep } from 'lodash';
 
 /* Import Utilities */
@@ -69,6 +69,13 @@ const MasFiltersField = (props: Props) => {
                     <Col className="col-lg-auto">
                         <Field name="targetDigitalObjectFiltersOptions"
                             as="select"
+                            validate={() => {
+                                const addedFilters = formValues?.['ods:hasTargetDigitalObjectFilter'];
+
+                                if (Object.keys(addedFilters).length === 0) {
+                                    return 'Required';
+                                }
+                            }}
                         >
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
@@ -78,6 +85,9 @@ const MasFiltersField = (props: Props) => {
                                 }
                             })}
                         </Field>
+                        <ErrorMessage name="targetDigitalObjectFiltersOptions">
+                            {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                        </ErrorMessage>
                     </Col>
                     <Col>
                         <button type="button"
