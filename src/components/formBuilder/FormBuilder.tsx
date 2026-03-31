@@ -63,7 +63,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'multiValueTextField':
             return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
         case 'environmentalVariables':
-            return <EnvironmentalVariablesField name={fieldName} visibleName={visibleName} />;
+            return <EnvironmentalVariablesField name={fieldName} visibleName={visibleName} required={required} />;
         default:
             return;
     }

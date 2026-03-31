@@ -18,15 +18,19 @@ import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 interface Props {
     name: string,
     visibleName: string,
-    formValues?: Dict
-};
-
+    formValues?: Dict,
+    /* Visual indicator for required fields (no form validation logic) */
+    required?: boolean
+}
 
 const EnvironmentalVariablesField = (props: Props) => {
-    const { name, visibleName, formValues } = props;
+    const { name, visibleName, formValues, required } = props;
 
     /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
     const { validateForm } = useFormikContext();
+
+    /* Values are stored as an array of objects. If the form contains no values, it falls back to an empty array */
+    const values: Dict[] = formValues?.[name] ?? [];
 
     /* Re validate the form whenever a row is added or removed */
     useEffect(() => {
@@ -40,72 +44,73 @@ const EnvironmentalVariablesField = (props: Props) => {
     return (
         <Row key={name} className="mt-2">
             <Col>
-                <p className="ms-1 mb-1"> {`${MakeJsonPathReadableString(visibleName)}:`}
-                    {formValues?.[name]?.length > 0 && <span className="text-danger"> * </span>}
+                <p className="ms-1 mb-1">
+                    {`${MakeJsonPathReadableString(visibleName)}:`}
+                    {required && <span className="text-danger"> *</span>}
                 </p>
 
                 <FieldArray name={name}>
                     {({ push, remove }) => (
                         <>
-                            {formValues?.[name]?.map((value: Dict, index: number) => (
-                                <Row key={`${name}-${index}`} className="py-1">
-                                    <Col>
-                                        <Row>
-                                            <Col md={{ span: 6 }}>
-                                                <Field name={`${name}.${index}.schema:name`}
-                                                    className="formField py-1 px-2 w-100"
-                                                    placeholder="Environemntal variable"
-                                                    validate={(fieldValue: string) => {
-                                                        if (!fieldValue || fieldValue.trim() === '') {
-                                                            return 'Required';
-                                                        }
-                                                    }}
-                                                />
-                                                <ErrorMessage name={`${name}.${index}.schema:name`}>
-                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                </ErrorMessage>
-                                            </Col>
+                            {values.map((_, index) => {
+                                const key = `event_${index}`;
+                                return (
+                                    <Row key={key} className="py-1">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <Field
+                                                        name={`${name}.${index}.schema:name`}
+                                                        className="w-100 formField"
+                                                        placeholder="Variable name"
+                                                        validate={(fieldValue: string) => {
+                                                            if (!fieldValue || fieldValue.trim() === "") {
+                                                                return "Required";
+                                                            }
+                                                        }}
+                                                    />
+                                                    <ErrorMessage name={`${name}.${index}.schema:name`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+                                                </Col>
 
-                                            <Col md={{ span: 6 }}>
-                                                <Field name={`${name}.${index}.schema:value`}
-                                                    className="formField py-1 px-2 w-100"
-                                                    placeholder="Value"
-                                                    validate={(fieldValue: string | number | boolean) => {
-                                                        if (
-                                                            fieldValue === undefined ||
-                                                            fieldValue === null ||
-                                                            fieldValue === ''
-                                                        ) {
-                                                            return 'Required';
-                                                        }
-                                                    }}
-                                                />
-                                                <ErrorMessage name={`${name}.${index}.schema:value`}>
-                                                    {(msg) => <div className="text-danger small mt-1">{msg}</div>}
-                                                </ErrorMessage>
-                                            </Col>
-                                        </Row>
-                                    </Col>
+                                                <Col>
+                                                    <Field
+                                                        name={`${name}.${index}.schema:value`}
+                                                        className="w-100 formField"
+                                                        placeholder="Value"
+                                                        validate={(fieldValue: string) => {
+                                                            if (!fieldValue || fieldValue.trim() === "") {
+                                                                return "Required";
+                                                            }
+                                                        }}
+                                                    />
+                                                    <ErrorMessage name={`${name}.${index}.schema:value`}>
+                                                        {(msg) => <div className="text-danger small mt-1">{msg}</div>}
+                                                    </ErrorMessage>
+                                                </Col>
+                                            </Row>
+                                        </Col>
 
-                                    <Col className="col-md-auto d-flex align-items-center">
-                                        <button type="button"
-                                            className="button-no-style"
-                                            onClick={() => handleRemoveRow(index, remove)}
-                                        >
-                                            <FontAwesomeIcon icon={faX}
-                                                className="fs-3"
-                                            />
-                                        </button>
-                                    </Col>
-                                </Row>
-                            ))}
+                                        <Col className="col-md-auto d-flex align-items-center">
+                                            <button type="button"
+                                                className="button-no-style"
+                                                onClick={() => handleRemoveRow(index, remove)}
+                                            >
+                                                <FontAwesomeIcon icon={faX} className="fs-3" />
+                                            </button>
+                                        </Col>
+                                    </Row>
+                                );
+                            })}
 
+                            {/* Button for adding additional values */}
                             {formValues &&
                                 <button type="button"
                                     className="w-100 mt-2"
                                     onClick={() => push({
-                                        'schema:name': '',
-                                        'schema:value': ''
+                                        "schema:name": "",
+                                        "schema:value": ""
                                     })}
                                 >
                                     <FontAwesomeIcon icon={faPlus} />
