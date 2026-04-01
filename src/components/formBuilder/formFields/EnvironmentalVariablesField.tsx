@@ -16,7 +16,6 @@ import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 /* Import Components */
 import RequiredFormikField from './FormikFieldWithError';
 
-
 /* Props Typing */
 interface Props {
     name: string,
@@ -62,58 +61,57 @@ const EnvironmentalVariablesField = (props: Props) => {
     };
 
     return (
-        <Row key={name} className="mt-2">
-            <Col>
-                <p className="ms-1 mb-1">
-                    {`${MakeJsonPathReadableString(visibleName)}:`}
-                    {required && <span className="text-danger"> *</span>}
-                </p>
+        <div className="mt-2">
+            <p className="ms-1 mb-1">
+                {`${MakeJsonPathReadableString(visibleName)}:`}
+                {required && <span className="text-danger"> *</span>}
+            </p>
 
-                <FieldArray name={name}>
-                    {({ push, remove }) => (
-                        <>
-                            {values.map((_, index) => {
-                                const key = `event_${index}`;
-                                return (
-                                    <Row key={key} className="py-1">
-                                        {fields.map((field) => (
-                                            <RequiredFormikField
-                                                key={field.key}
-                                                name={`${name}.${index}.${field.key}`}
-                                                placeholder={field.placeholder}
-                                            />
-                                        ))}
+            <FieldArray name={name}>
+                {({ push, remove }) => (
+                    <>
+                        {values.map((_, index) => {
+                            const key = `event_${index}`;
+                            return (
+                                <Row key={key} className="py-1">
+                                    {fields.map((field) => (
+                                        <RequiredFormikField
+                                            key={field.key}
+                                            name={`${name}.${index}.${field.key}`}
+                                            placeholder={field.placeholder}
+                                        />
+                                    ))}
+                                    <Col className="col-md-auto d-flex align-items-center">
+                                        <button
+                                            type="button"
+                                            className="button-no-style"
+                                            onClick={() => handleRemoveRow(index, remove)}
+                                        >
+                                            <FontAwesomeIcon icon={faX} className="fs-3" />
+                                        </button>
+                                    </Col>
+                                </Row>
+                            );
+                        })}
 
-                                        <Col className="col-md-auto d-flex align-items-center">
-                                            <button type="button"
-                                                className="button-no-style"
-                                                onClick={() => handleRemoveRow(index, remove)}
-                                            >
-                                                <FontAwesomeIcon icon={faX} className="fs-3" />
-                                            </button>
-                                        </Col>
-                                    </Row>
-                                );
-                            })}
-
-                            {/* Button for adding additional values */}
-                            {formValues &&
-                                <button type="button"
-                                    className="w-100 mt-2"
-                                    onClick={() => push({
-                                        "schema:name": "",
-                                        "schema:value": ""
-                                    })}
-                                >
-                                    <FontAwesomeIcon icon={faPlus} />
-                                </button>
-                            }
-                        </>
-                    )}
-                </FieldArray>
-            </Col>
-        </Row>
+                        {/* Button for adding additional values */}
+                        {formValues &&
+                            <button
+                                type="button"
+                                className="w-100 mt-2"
+                                onClick={() => push({
+                                    'schema:name': '',
+                                    'schema:value': ''
+                                })}
+                            >
+                                <FontAwesomeIcon icon={faPlus} />
+                            </button>
+                        }
+                    </>
+                )}
+            </FieldArray>
+        </div>
     );
-}
+};
 
 export default EnvironmentalVariablesField;
