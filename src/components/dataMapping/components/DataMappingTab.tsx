@@ -23,21 +23,23 @@ const DataMappingTab = (props: Props) => {
 
     /* Base variables */
     const [dataMapping, setDataMapping] = useState<DataMapping | undefined>();
+    const [dataMappingIdOld, setDataMappingIdOld] = useState<string | undefined>();
 
     /* OnLoad: Fetch Mapping with provided ID */
     useEffect(() => {
-        if (!dataMapping) {
+        if (!dataMapping || !dataMappingId || dataMappingId !== dataMappingIdOld) {
             GetDataMapping(dataMappingId).then((dataMapping) => {
                 setDataMapping(dataMapping);
+                setDataMappingIdOld(dataMappingId);
             }).catch(error => {
                 console.warn(error);
             });
         }
-    }, [dataMappingId]);
+    }, [dataMapping, dataMappingId, dataMappingIdOld]);
 
     return (
         <Card className="h-100">
-            {dataMapping &&
+            {dataMapping && dataMappingId && dataMappingId === dataMappingIdOld &&
                 <Card.Body className="h-100 d-flex flex-column">
                     <Card.Subtitle className="text-muted">
                         <Row>
