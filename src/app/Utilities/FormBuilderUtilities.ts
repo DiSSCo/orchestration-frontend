@@ -42,6 +42,18 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     return editTarget;
 };
 
+const handleRemoveRow = (index: number, remove: (index: number) => void) => {
+        remove(index);
+    };
+
+const validateRequiredField = (fieldValue: string) => {
+        if (!fieldValue || fieldValue.trim() === '') {
+            return 'Required';
+        }
+    };
+
 export {
-    DefineEditTarget
+    DefineEditTarget,
+    handleRemoveRow,
+    validateRequiredField
 };

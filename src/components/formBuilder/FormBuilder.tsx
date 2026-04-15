@@ -36,7 +36,7 @@ import DataMappingField from './formFields/DataMappingField';
 import MasFiltersField from './formFields/MasFiltersField';
 import MultiValueTextField from './formFields/MultiValueTextField';
 import { Header } from 'components/elements/Elements';
-import EnvironmentalVariablesField from './formFields/EnvironmentalVariablesField';
+import KeyValuePairField from './formFields/KeyValuePairField.tsx';
 
 
 /* Function to determine the form field by type */
@@ -63,7 +63,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
         case 'multiValueTextField':
             return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
         case 'environmentalVariables':
-            return <EnvironmentalVariablesField name={fieldName} visibleName={visibleName} required={required} />;
+            return <KeyValuePairField name={fieldName} visibleName={visibleName} required={required} keyValuePair={{ key: 'schema:name', value: 'schema:value' }} />;
         default:
             return;
     }
