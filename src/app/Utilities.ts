@@ -109,8 +109,10 @@ const RetrieveEnvVariable = (name: string) => {
  * @returns Parsed value (string | number | boolean)
  */
 const ConvertToTypedValue = (value: string) => {
-    if (value === 'true' || value === 'True' ) return true;
-    if (value === 'false' || value === 'False') return false;
+    const trimmed = value.trim();
+
+    if (/true/i.test(trimmed)) return true;
+    if (/false/i.test(trimmed)) return false;
 
     const numberValue = Number(value);
     if (!Number.isNaN(numberValue) && value.trim() !== '') return numberValue;

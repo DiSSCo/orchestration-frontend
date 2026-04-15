@@ -1,12 +1,16 @@
-import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
+import { FieldArray, Field, ErrorMessage } from 'formik';
 import { Row, Col } from 'react-bootstrap';
-import { useEffect } from 'react';
 
 /* Import Types */
 import { Dict } from 'app/Types';
 
 /* Import Utitlities */
 import { MakeJsonPathReadableString } from 'app/Utilities';
+import { validateRequiredField, handleRemoveRow } from 'app/Utilities/FormBuilderUtilities';
+
+/* Import hooks */
+import { useRevalidateOnAddRemoveRow } from 'hooks/useRevalidateOnAddRemoveRow';
+
 
 /* Import Icons */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,34 +22,21 @@ interface Props {
     visibleName: string,
     formValues?: Dict,
     /* Visual indicator for required fields (no form validation logic) */
-    required?: boolean
+    required?: boolean,
+    keyValuePair: {
+        key: string,
+        value: string
+    }
 }
 
-const EnvironmentalVariablesField = (props: Props) => {
-    const { name, visibleName, formValues, required } = props;
-
-    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
-    const { validateForm } = useFormikContext();
+const KeyValuePairField = (props: Props) => {
+    const { name, visibleName, formValues, required, keyValuePair } = props;
 
     /* Values are stored as an array of objects. If the form contains no values, it falls back to an empty array */
     const values: Dict[] = formValues?.[name] ?? [];
 
     /* Re validate the form whenever a row is added or removed */
-    useEffect(() => {
-        validateForm();
-    }, [formValues?.[name]?.length]);
-
-
-    const handleRemoveRow = (index: number, remove: (index: number) => void) => {
-        remove(index);
-    };
-
-
-    const validateRequiredField = (fieldValue: string) => {
-        if (!fieldValue || fieldValue.trim() === '') {
-            return 'Required';
-        }
-    };
+    useRevalidateOnAddRemoveRow(formValues?.[name]?.length);
 
 
     return (
@@ -57,29 +48,28 @@ const EnvironmentalVariablesField = (props: Props) => {
             <FieldArray name={name}>
                 {({ push, remove }) => (
                     <>
-                        {values.map((_, index) => {
-                            const key = `event_${index}`;
+                        {values.map((pair, index) => {
                             return (
-                                <Row key={key} className="py-1">
+                                <Row key={pair.id} className="py-1">
                                     <Col>
                                         <Field
-                                            name={`${name}.${index}.schema:name`}
+                                            name={`${name}.${index}.${keyValuePair.key}`}
                                             className="w-100 formField"
                                             placeholder="Variable name"
                                             validate={validateRequiredField}
                                         />
-                                        <ErrorMessage name={`${name}.${index}.schema:name`}>
+                                        <ErrorMessage name={`${name}.${index}.${keyValuePair.key}`}>
                                             {(msg) => <div className="text-danger small mt-1">{msg}</div>}
                                         </ErrorMessage>
                                     </Col>
                                     <Col>
                                         <Field
-                                            name={`${name}.${index}.schema:value`}
+                                            name={`${name}.${index}.${keyValuePair.value}`}
                                             className="w-100 formField"
                                             placeholder="Value"
                                             validate={validateRequiredField}
                                         />
-                                        <ErrorMessage name={`${name}.${index}.schema:value`}>
+                                        <ErrorMessage name={`${name}.${index}.${keyValuePair.value}`}>
                                             {(msg) => <div className="text-danger small mt-1">{msg}</div>}
                                         </ErrorMessage>
                                     </Col>
@@ -101,8 +91,9 @@ const EnvironmentalVariablesField = (props: Props) => {
                                 type="button"
                                 className="w-100 mt-2"
                                 onClick={() => push({
-                                    "schema:name": "",
-                                    "schema:value": ""
+                                    id: crypto.randomUUID(),
+                                    [keyValuePair.key]: "",
+                                    [keyValuePair.value]: ""
                                 })}
                             >
                                 <FontAwesomeIcon icon={faPlus} />
@@ -115,4 +106,4 @@ const EnvironmentalVariablesField = (props: Props) => {
     );
 }
 
-export default EnvironmentalVariablesField;
+export default KeyValuePairField;

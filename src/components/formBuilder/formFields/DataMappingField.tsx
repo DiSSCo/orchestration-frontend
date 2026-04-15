@@ -1,8 +1,7 @@
 /* Import Dependencies */
 import { cloneDeep } from 'lodash';
-import { FieldArray, Field, ErrorMessage, useFormikContext } from 'formik';
+import { FieldArray, Field, ErrorMessage } from 'formik';
 import { Row, Col } from 'react-bootstrap';
-import { useEffect } from 'react';
 
 /* Import Types */
 import { Dict } from 'app/Types';
@@ -12,6 +11,9 @@ import { MakeJsonPathReadableString } from 'app/Utilities';
 
 /* Import Sources */
 import HarmonisedAttributes from 'sources/hamonisedAttributes.json';
+
+/* Import hooks */
+import { useRevalidateOnAddRemoveRow } from 'hooks/useRevalidateOnAddRemoveRow';
 
 /* Import Icons */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,9 +31,6 @@ interface Props {
 const DataMappingField = (props: Props) => {
     const { name, visibleName, formValues } = props;
 
-    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
-    const { validateForm } = useFormikContext();
-
     /* Base variables */
     const originalHarmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
     const harmonisedAttributes: Dict = cloneDeep(HarmonisedAttributes);
@@ -46,10 +45,8 @@ const DataMappingField = (props: Props) => {
         });
     }
 
-    /* Re-validate the form whenever a row is added or removed */
-    useEffect(() => {
-        validateForm();
-    }, [formValues?.[name]?.length]);
+    /* Re validate the form whenever a row is added or removed */
+    useRevalidateOnAddRemoveRow(formValues?.[name]?.length);
 
     const handleRemoveRow = (index: number, remove: (index: number) => void) => {
         remove(index);
