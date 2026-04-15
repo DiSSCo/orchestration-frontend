@@ -94,7 +94,7 @@
         },
         {
             "name": "ods:hasEnvironmentalVariables",
-            "type": "environmentalVariables",
+            "type": "keyValuePairField",
             "alias": "masEnvironmentalVariables",
             "defaultValue": []
         },

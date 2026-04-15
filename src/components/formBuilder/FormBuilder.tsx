@@ -62,7 +62,7 @@ const DetermineFormField = (fieldName: string, visibleName: string, fieldType: s
             return <MasFiltersField name={fieldName} visibleName={visibleName} required={required} />;
         case 'multiValueTextField':
             return <MultiValueTextField name={fieldName} visibleName={visibleName} required={required} />;
-        case 'environmentalVariables':
+        case 'keyValuePairField':
             return <KeyValuePairField name={fieldName} visibleName={visibleName} required={required} keyValuePair={{ key: 'schema:name', value: 'schema:value' }} />;
         default:
             return;
