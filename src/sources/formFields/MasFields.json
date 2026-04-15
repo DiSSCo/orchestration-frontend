@@ -99,6 +99,12 @@
             "defaultValue": []
         },
         {
+            "name": "ods:hasSecretVariables",
+            "type": "secretVariables",
+            "alias": "masSecretVariables",
+            "defaultValue": []
+        },
+        {
             "name": "ods:isIngestionCompatible",
             "alias": "masIsIngestionCompatible",
             "type": "boolean",
