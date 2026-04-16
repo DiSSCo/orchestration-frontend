@@ -11,7 +11,6 @@ import { validateRequiredField, handleRemoveRow } from 'app/Utilities/FormBuilde
 /* Import hooks */
 import { useRevalidateOnAddRemoveRow } from 'hooks/useRevalidateOnAddRemoveRow';
 
-
 /* Import Icons */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +36,6 @@ const KeyValuePairField = (props: Props) => {
 
     /* Re validate the form whenever a row is added or removed */
     useRevalidateOnAddRemoveRow(formValues?.[name]?.length);
-
 
     return (
         <div className="mt-2">
