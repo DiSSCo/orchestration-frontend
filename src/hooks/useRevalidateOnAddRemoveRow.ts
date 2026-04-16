@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useFormikContext } from 'formik';
 
-
+/**
+* Revalidates the form when the number of rows changes.
+* Uses Formik's validateForm to trigger validation after adding or removing a row.
+*/
 export const useRevalidateOnAddRemoveRow = (length: number) => {
-    /** Formik hook that gives access to the helper functions, in order to control the state and the validation of the form. */
     const { validateForm } = useFormikContext();
 
     useEffect(() => {
