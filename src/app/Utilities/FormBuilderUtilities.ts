@@ -1,5 +1,5 @@
 /* Import Types */
-import { EditTarget} from "app/Types";
+import { EditTarget } from "app/Types";
 
 /* Import API */
 import GetSourceSystem from "api/sourceSystem/GetSourceSystem";
@@ -42,7 +42,7 @@ const DefineEditTarget = async (targetName: string, id: string) => {
     return editTarget;
 };
 
-/** Removes a row at the given index. Intended to be used in delete button handlers */
+/* Removes a row at the given index. Intended to be used in delete button handlers */
 const handleRemoveRow = (index: number, remove: (index: number) => void) => {
         remove(index);
     };
