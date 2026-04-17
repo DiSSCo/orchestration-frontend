@@ -103,10 +103,28 @@ const RetrieveEnvVariable = (name: string) => {
     return import.meta.env[`VITE_${toUpper(name)}`];
 };
 
+/**
+ * Function to parse a string value into number or boolean if applicable
+ * @param value The input value from the form
+ * @returns Parsed value (string | number | boolean)
+ */
+const ConvertToTypedValue = (value: string) => {
+    const trimmed = value.trim();
+
+    if (/true/i.test(trimmed)) return true;
+    if (/false/i.test(trimmed)) return false;
+
+    const numberValue = Number(value);
+    if (!Number.isNaN(numberValue) && value.trim() !== '') return numberValue;
+
+    return value;
+};
+
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
     ReparseString,
-    RetrieveEnvVariable
+    RetrieveEnvVariable,
+    ConvertToTypedValue
 };

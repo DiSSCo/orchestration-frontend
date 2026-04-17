@@ -93,6 +93,12 @@
             "type": "multiValueTextField"
         },
         {
+            "name": "ods:hasEnvironmentalVariables",
+            "type": "keyValuePairField",
+            "alias": "masEnvironmentalVariables",
+            "defaultValue": []
+        },
+        {
             "name": "ods:isIngestionCompatible",
             "alias": "masIsIngestionCompatible",
             "type": "boolean",
