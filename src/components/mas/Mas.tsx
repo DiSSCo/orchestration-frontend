@@ -115,7 +115,6 @@ const Mas = () => {
                                         name: mas['schema:name'],
                                         containerImage: mas['ods:containerImage'],
                                         containerTag: mas['ods:containerTag'],
-                                        topicName: mas['ods:topicName'],
                                         sourceCodeRepository: mas['schema:codeRepository'],
                                         codeMaintainer: mas['schema:maintainer']?.['schema:identifier'],
                                         codeLicense: mas['schema:license'],

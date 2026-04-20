@@ -127,7 +127,6 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
                 "ods:containerImage": form.masContainerImage,
                 "ods:containerTag": form.masContainerTag,
                 "ods:hasTargetDigitalObjectFilter": targetDigitalObjectFilters,
-                "ods:topicName": form.masTopicName,
                 "schema:description": form.masServiceDescription,
                 "schema:codeRepository": form.masSourceCodeRepository,
                 "ods:serviceAvailability": form.masServiceAvailability,
