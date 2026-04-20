@@ -151,6 +151,10 @@ const SubmitMas = async (form: Dict, editTarget: EditTarget) => {
                     "schema:name": item["schema:name"],
                     "schema:value": ConvertToTypedValue(item["schema:value"])
                 })),
+                "ods:hasSecretVariables": form.masSecretVariables.map((item: Dict) => ({
+                    "schema:name": item["schema:name"],
+                    "ods:secretKeyRef": item["ods:secretKeyRef"]
+                })),
             }
         }
     };
