@@ -26,11 +26,6 @@
             "defaultValue": ""
         },
         {
-            "name": "ods:topicName",
-            "alias": "masTopicName",
-            "type": "text"
-        },
-        {
             "name": "schema:description",
             "alias": "masServiceDescription",
             "type": "textarea"
