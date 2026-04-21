@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Utilities */
-import { RetrieveEnvVariable } from 'app/Utilities';
+import { KebabToCamel, RetrieveEnvVariable } from 'app/Utilities';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
@@ -90,14 +90,12 @@ const FormBuilder = () => {
             const route = location.pathname.split('/', 2)[1];
             const id = `${location.pathname.split('/', 3)[2]}/${location.pathname.split('/', 4)[3]}`;
 
-            if (!editTarget?.[route as keyof typeof editTarget]) {
                 /* Set edit target */
                 DefineEditTarget(route, id).then((editTarget) => {
                     dispatch(setEditTarget(editTarget));
                 }).catch(error => {
                     console.warn(error);
                 });
-            }
         } else {
             dispatch(setEditTarget(undefined));
         }
