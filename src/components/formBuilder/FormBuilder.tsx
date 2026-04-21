@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Import Utilities */
-import { KebabToCamel, RetrieveEnvVariable } from 'app/Utilities';
+import { RetrieveEnvVariable } from 'app/Utilities';
 
 /* Import Store */
 import { useAppSelector, useAppDispatch } from 'app/Hooks';
@@ -84,7 +84,7 @@ const FormBuilder = () => {
     const formTemplates: JSX.Element[] = [];
     let initialValues: Dict = {};
 
-    /* OnLoad: check if route is edit and edit target is present and valid */
+    /* OnLoad: always fetch fresh edit target for edit routes, clear it otherwise */
     useEffect(() => {
         if (location.pathname.includes('edit')) {
             const route = location.pathname.split('/', 2)[1];
