@@ -84,20 +84,18 @@ const FormBuilder = () => {
     const formTemplates: JSX.Element[] = [];
     let initialValues: Dict = {};
 
-    /* OnLoad: check if route is edit and edit target is present and valid */
+    /* OnLoad: always fetch fresh edit target for edit routes, clear it otherwise */
     useEffect(() => {
         if (location.pathname.includes('edit')) {
             const route = location.pathname.split('/', 2)[1];
             const id = `${location.pathname.split('/', 3)[2]}/${location.pathname.split('/', 4)[3]}`;
 
-            if (!editTarget?.[route as keyof typeof editTarget]) {
                 /* Set edit target */
                 DefineEditTarget(route, id).then((editTarget) => {
                     dispatch(setEditTarget(editTarget));
                 }).catch(error => {
                     console.warn(error);
                 });
-            }
         } else {
             dispatch(setEditTarget(undefined));
         }
