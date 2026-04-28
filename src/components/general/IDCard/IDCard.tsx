@@ -1,15 +1,15 @@
 /* Import Dependencies */
 import { Row, Col, Card } from 'react-bootstrap';
 
-/* Import Utilities */
-import { Capitalize } from 'app/Utilities';
-
 /* Import Types */
 import { Dict } from 'app/Types';
 
+/* Import Utilities */
+import { arrayToNewline } from 'app/Utilities';
+
 
 /* Props Typing */
-interface Props {  
+interface Props {
     identifier: string,
     IDCardProperties: Dict
 };
@@ -43,8 +43,10 @@ const IDCard = (props: Props) => {
                                         return (
                                             <Row key={propertyKey} className="my-2">
                                                 <Col className="text-overflow">
-                                                    <p className="fw-lightBold"> {Capitalize(propertyKey)} </p>
-                                                    <p> {propertyValue} </p>
+                                                    <p className="fw-lightBold"> {propertyKey} </p>
+                                                    <p style={{ whiteSpace: 'pre-line' }}>
+                                                        {arrayToNewline(propertyValue)}
+                                                    </p>
                                                 </Col>
                                             </Row>
                                         );

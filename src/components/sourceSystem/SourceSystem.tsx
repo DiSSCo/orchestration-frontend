@@ -61,7 +61,7 @@ const SourceSystem = () => {
     * to be used in the Tanstack mutation that triggers the ingestion
     */
     const triggerIngestion = () => {
-        const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/','');
+        const normalizedId = sourceSystem?.['@id']?.replace('https://hdl.handle.net/', '');
         const KeycloakToken = KeycloakService.GetToken();
         if (!normalizedId || !KeycloakToken) return;
         runIngestion.mutate({ sourceSystemId: normalizedId, token: KeycloakToken });
@@ -134,10 +134,14 @@ const SourceSystem = () => {
                             <Col lg={{ span: 4 }}>
                                 <IDCard identifier={(sourceSystem['@id'] ?? sourceSystem['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     IDCardProperties={{
-                                        name: sourceSystem['schema:name'],
-                                        endpoint: sourceSystem['schema:url'],
-                                        description: sourceSystem['schema:description'],
-                                        created: sourceSystem['schema:dateCreated']
+                                        'Name': sourceSystem['schema:name'],
+                                        'Endpoint': sourceSystem['schema:url'],
+                                        'Description': sourceSystem['schema:description'],
+                                        'Created': sourceSystem['schema:dateCreated'],
+                                        'Collection Management System': sourceSystem['ltc:collectionManagementSystem'],
+                                        'Filters': sourceSystem['ods:filters'],
+                                        'Specimen MAS': sourceSystem['ods:specimenMachineAnnotationServices'],
+                                        'Media MAS': sourceSystem['ods:mediaMachineAnnotationServices']
                                     }}
                                 />
                             </Col>

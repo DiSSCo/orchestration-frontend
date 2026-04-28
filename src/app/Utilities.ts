@@ -120,11 +120,25 @@ const ConvertToTypedValue = (value: string) => {
     return value;
 };
 
+/**
+ * Function that formats an array of strings into newline seperated strings for better UI display.
+ * @param value Array of strings to be formatted
+ * @returns Newline-separated string
+ */
+const arrayToNewline = (value: any): string => {
+    if (Array.isArray(value)) {
+        return value.join('\n');
+    }
+
+    return String(value);
+};
+
 export {
     Capitalize,
     MakeJsonPathReadableString,
     ParseString,
     ReparseString,
     RetrieveEnvVariable,
-    ConvertToTypedValue
+    ConvertToTypedValue,
+    arrayToNewline
 };
