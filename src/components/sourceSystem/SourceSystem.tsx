@@ -137,11 +137,11 @@ const SourceSystem = () => {
                                         'Name': sourceSystem['schema:name'],
                                         'Endpoint': sourceSystem['schema:url'],
                                         'Description': sourceSystem['schema:description'],
-                                        'Created': sourceSystem['schema:dateCreated'],
                                         'Collection Management System': sourceSystem['ltc:collectionManagementSystem'],
                                         'Filters': sourceSystem['ods:filters'],
                                         'Specimen MAS': sourceSystem['ods:specimenMachineAnnotationServices'],
-                                        'Media MAS': sourceSystem['ods:mediaMachineAnnotationServices']
+                                        'Media MAS': sourceSystem['ods:mediaMachineAnnotationServices'],
+                                        'Created': sourceSystem['schema:dateCreated']
                                     }}
                                 />
                             </Col>

@@ -7,7 +7,6 @@ import { Dict } from 'app/Types';
 /* Import Utilities */
 import { arrayToNewline } from 'app/Utilities';
 
-
 /* Props Typing */
 interface Props {
     identifier: string,
