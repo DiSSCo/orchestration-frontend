@@ -248,6 +248,10 @@ p {
   resize: none;
 }
 
+.idCardValue {
+  white-space: pre-line;
+}
+
 
 /* Bootstrap class overwrite */
 .tab-content {

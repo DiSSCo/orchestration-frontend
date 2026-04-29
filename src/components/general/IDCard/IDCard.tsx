@@ -43,9 +43,7 @@ const IDCard = (props: Props) => {
                                             <Row key={propertyKey} className="my-2">
                                                 <Col className="text-overflow">
                                                     <p className="fw-lightBold"> {propertyKey} </p>
-                                                    <p style={{ whiteSpace: 'pre-line' }}>
-                                                        {arrayToNewline(propertyValue)}
-                                                    </p>
+                                                    <p className='idCardValue'>{arrayToNewline(propertyValue)} </p>
                                                 </Col>
                                             </Row>
                                         );
