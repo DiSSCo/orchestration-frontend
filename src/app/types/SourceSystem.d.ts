@@ -52,11 +52,15 @@ export interface SourceSystem {
    */
   "schema:url": string;
   /**
+   * List of filters to apply to ingesting from source system. How filters are implemented will vary per translator type.
+   */
+  "ods:filters"?: string[];
+  /**
    * The collection management system that the source system is using
    */
   "ltc:collectionManagementSystem"?: string;
   /**
-   * The serialisation of the data the endpoint provides indicating what type of Translator is required
+   * The serialisation of the data the endpoint provides indicating what type of Translator is required. If 'none', no translator is used
    */
   "ods:translatorType": "dwca" | "biocase";
   /**
@@ -67,6 +71,14 @@ export interface SourceSystem {
    * The Handle of the Mapping Object needed for this Source System
    */
   "ods:dataMappingID": string;
+  /**
+   * Handles of machine annotation services that are triggered during the ingestion of this source system. These MASs target specimens in the source system
+   */
+  "ods:specimenMachineAnnotationServices"?: string[];
+  /**
+   * Handles of machine annotation services that are triggered during the ingestion of this source system. These MASs target media in the source system
+   */
+  "ods:mediaMachineAnnotationServices"?: string[];
   "ods:hasTombstoneMetadata"?: TombstoneMetadata;
 }
 /**
@@ -81,11 +93,11 @@ export interface Agent {
    * The type of the agent, the prov ontology is only used in the prov-o ods:CreateUpdateTombstoneEvent
    */
   "@type":
-    | "schema:Person"
-    | "schema:Organization"
-    | "schema:SoftwareApplication"
-    | "prov:Person"
-    | "prov:SoftwareAgent";
+  | "schema:Person"
+  | "schema:Organization"
+  | "schema:SoftwareApplication"
+  | "prov:Person"
+  | "prov:SoftwareAgent";
   /**
    * The primary unique identifier of the Agent object. All identifiers will also be added to the ods:hasIdentifiers array
    */
@@ -186,28 +198,28 @@ export interface Identifier {
    * The type of the value in the `dcterms:identifier` field
    */
   "dcterms:type"?:
-    | "ARK"
-    | "arXiv"
-    | "bibcode"
-    | "DOI"
-    | "EAN13"
-    | "EISSN"
-    | "Handle"
-    | "IGSN"
-    | "ISBN"
-    | "ISSN"
-    | "ISTC"
-    | "LISSN"
-    | "LSID"
-    | "PMID"
-    | "PURL"
-    | "UPC"
-    | "URL"
-    | "URN"
-    | "w3id"
-    | "UUID"
-    | "Other"
-    | "Locally unique identifier";
+  | "ARK"
+  | "arXiv"
+  | "bibcode"
+  | "DOI"
+  | "EAN13"
+  | "EISSN"
+  | "Handle"
+  | "IGSN"
+  | "ISBN"
+  | "ISSN"
+  | "ISTC"
+  | "LISSN"
+  | "LSID"
+  | "PMID"
+  | "PURL"
+  | "UPC"
+  | "URL"
+  | "URN"
+  | "w3id"
+  | "UUID"
+  | "Other"
+  | "Locally unique identifier";
   /**
    * The value for the identifier
    */
@@ -228,11 +240,11 @@ export interface Identifier {
    * Indicates whether the identifier is a persistent identifier
    */
   "ods:gupriLevel"?:
-    | "LocallyUniqueStable"
-    | "GloballyUniqueStable"
-    | "GloballyUniqueStableResolvable"
-    | "GloballyUniqueStablePersistentResolvable"
-    | "GloballyUniqueStablePersistentResolvableFDOCompliant";
+  | "LocallyUniqueStable"
+  | "GloballyUniqueStable"
+  | "GloballyUniqueStableResolvable"
+  | "GloballyUniqueStablePersistentResolvable"
+  | "GloballyUniqueStablePersistentResolvableFDOCompliant";
   /**
    * Indicates the status of the identifier
    */
@@ -291,11 +303,11 @@ export interface Agent1 {
    * The type of the agent, the prov ontology is only used in the prov-o ods:CreateUpdateTombstoneEvent
    */
   "@type":
-    | "schema:Person"
-    | "schema:Organization"
-    | "schema:SoftwareApplication"
-    | "prov:Person"
-    | "prov:SoftwareAgent";
+  | "schema:Person"
+  | "schema:Organization"
+  | "schema:SoftwareApplication"
+  | "prov:Person"
+  | "prov:SoftwareAgent";
   /**
    * The primary unique identifier of the Agent object. All identifiers will also be added to the ods:hasIdentifiers array
    */
