@@ -46,7 +46,7 @@ const IDCard = (props: Props) => {
                                                     {[propertyValue].flat().map((value, index) => {
                                                         
                                                         return (
-                                                            <p key={index} > {String(value)} </p>
+                                                            <p key={`${propertyKey}-${index}`} > {String(value)} </p>
                                                         );
                                                     })}
                                                 </Col>
