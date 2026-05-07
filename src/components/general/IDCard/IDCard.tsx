@@ -4,15 +4,11 @@ import { Row, Col, Card } from 'react-bootstrap';
 /* Import Types */
 import { Dict } from 'app/Types';
 
-/* Import Utilities */
-import { arrayToNewline } from 'app/Utilities';
-
 /* Props Typing */
 interface Props {
     identifier: string,
     IDCardProperties: Dict
 };
-
 
 const IDCard = (props: Props) => {
     const { identifier, IDCardProperties } = props;
@@ -26,6 +22,7 @@ const IDCard = (props: Props) => {
                             <Col className="fs-4 c-secondary fw-lightBold">
                                 <p> ID Card </p>
                             </Col>
+
                             <Col className="fs-4 col-md-auto fw-lightBold">
                                 <p> {identifier} </p>
                             </Col>
@@ -33,17 +30,25 @@ const IDCard = (props: Props) => {
                     </Card.Subtitle>
 
                     <div className="flex-grow-1">
-                        <div className="mh-100 ">
+                        <div className="mh-100">
                             <Row className="h-100">
                                 <Col className="h-100 d-flex flex-column justify-content-between">
-                                    {Object.keys(IDCardProperties).map((propertyKey) => {
+                                    {Object.keys(IDCardProperties).filter((propertyKey) => {
+                                        const propertyValue = IDCardProperties[propertyKey];
+                                        return propertyValue !== undefined;
+                                    }).map((propertyKey) => {
                                         const propertyValue = IDCardProperties[propertyKey];
 
                                         return (
                                             <Row key={propertyKey} className="my-2">
                                                 <Col className="text-overflow">
                                                     <p className="fw-lightBold"> {propertyKey} </p>
-                                                    <p className='idCardValue'>{arrayToNewline(propertyValue)} </p>
+                                                    {[propertyValue].flat().map((value, index) => {
+                                                        
+                                                        return (
+                                                            <p key={index} > {String(value)} </p>
+                                                        );
+                                                    })}
                                                 </Col>
                                             </Row>
                                         );
