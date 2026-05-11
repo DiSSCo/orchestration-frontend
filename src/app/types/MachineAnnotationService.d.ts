@@ -112,9 +112,9 @@ export interface MachineAnnotationService {
    */
   "ods:slaDocumentation"?: string;
   /**
-   * Kafka topic through which the MAS receives messages. Defaults to PID of the Machine Annotation Service
+   * RabbitMQ queue name through which the MAS receives messages. Value is the suffix of the Machine Annotation Service PID
    */
-  "ods:topicName"?: string;
+  "ods:topicName": string;
   /**
    * The maximum amount of this MAS that can simultaneously run without causing issues
    */
@@ -136,6 +136,10 @@ export interface MachineAnnotationService {
    * Secret variables to supply to the Machine Annotation Service, sensitive
    */
   "ods:hasSecretVariables"?: SecretVariable[];
+  /**
+   * Indicates if the MAS may be run on specimen and/or media as they are ingested into DiSSCo. Should be able to support the appropriate amount of traffic.
+   */
+  "ods:isIngestionCompatible"?: boolean;
 }
 /**
  * Contains information about the creator of this MachineAnnotationService Digital Object, the agent creating this record in DiSSCo's system
@@ -149,11 +153,11 @@ export interface Agent {
    * The type of the agent, the prov ontology is only used in the prov-o ods:CreateUpdateTombstoneEvent
    */
   "@type":
-    | "schema:Person"
-    | "schema:Organization"
-    | "schema:SoftwareApplication"
-    | "prov:Person"
-    | "prov:SoftwareAgent";
+  | "schema:Person"
+  | "schema:Organization"
+  | "schema:SoftwareApplication"
+  | "prov:Person"
+  | "prov:SoftwareAgent";
   /**
    * The primary unique identifier of the Agent object. All identifiers will also be added to the ods:hasIdentifiers array
    */
@@ -254,28 +258,28 @@ export interface Identifier {
    * The type of the value in the `dcterms:identifier` field
    */
   "dcterms:type"?:
-    | "ARK"
-    | "arXiv"
-    | "bibcode"
-    | "DOI"
-    | "EAN13"
-    | "EISSN"
-    | "Handle"
-    | "IGSN"
-    | "ISBN"
-    | "ISSN"
-    | "ISTC"
-    | "LISSN"
-    | "LSID"
-    | "PMID"
-    | "PURL"
-    | "UPC"
-    | "URL"
-    | "URN"
-    | "w3id"
-    | "UUID"
-    | "Other"
-    | "Locally unique identifier";
+  | "ARK"
+  | "arXiv"
+  | "bibcode"
+  | "DOI"
+  | "EAN13"
+  | "EISSN"
+  | "Handle"
+  | "IGSN"
+  | "ISBN"
+  | "ISSN"
+  | "ISTC"
+  | "LISSN"
+  | "LSID"
+  | "PMID"
+  | "PURL"
+  | "UPC"
+  | "URL"
+  | "URN"
+  | "w3id"
+  | "UUID"
+  | "Other"
+  | "Locally unique identifier";
   /**
    * The value for the identifier
    */
@@ -296,11 +300,11 @@ export interface Identifier {
    * Indicates whether the identifier is a persistent identifier
    */
   "ods:gupriLevel"?:
-    | "LocallyUniqueStable"
-    | "GloballyUniqueStable"
-    | "GloballyUniqueStableResolvable"
-    | "GloballyUniqueStablePersistentResolvable"
-    | "GloballyUniqueStablePersistentResolvableFDOCompliant";
+  | "LocallyUniqueStable"
+  | "GloballyUniqueStable"
+  | "GloballyUniqueStableResolvable"
+  | "GloballyUniqueStablePersistentResolvable"
+  | "GloballyUniqueStablePersistentResolvableFDOCompliant";
   /**
    * Indicates the status of the identifier
    */
@@ -318,11 +322,11 @@ export interface Agent1 {
    * The type of the agent, the prov ontology is only used in the prov-o ods:CreateUpdateTombstoneEvent
    */
   "@type":
-    | "schema:Person"
-    | "schema:Organization"
-    | "schema:SoftwareApplication"
-    | "prov:Person"
-    | "prov:SoftwareAgent";
+  | "schema:Person"
+  | "schema:Organization"
+  | "schema:SoftwareApplication"
+  | "prov:Person"
+  | "prov:SoftwareAgent";
   /**
    * The primary unique identifier of the Agent object. All identifiers will also be added to the ods:hasIdentifiers array
    */
@@ -456,11 +460,11 @@ export interface Agent2 {
    * The type of the agent, the prov ontology is only used in the prov-o ods:CreateUpdateTombstoneEvent
    */
   "@type":
-    | "schema:Person"
-    | "schema:Organization"
-    | "schema:SoftwareApplication"
-    | "prov:Person"
-    | "prov:SoftwareAgent";
+  | "schema:Person"
+  | "schema:Organization"
+  | "schema:SoftwareApplication"
+  | "prov:Person"
+  | "prov:SoftwareAgent";
   /**
    * The primary unique identifier of the Agent object. All identifiers will also be added to the ods:hasIdentifiers array
    */

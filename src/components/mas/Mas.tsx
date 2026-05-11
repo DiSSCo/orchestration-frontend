@@ -112,16 +112,23 @@ const Mas = () => {
                             <Col lg={{ span: 4 }}>
                                 <IDCard identifier={(mas['@id'] ?? mas['schema:identifier']).replace(RetrieveEnvVariable('HANDLE_URL'), '')}
                                     IDCardProperties={{
-                                        name: mas['schema:name'],
-                                        containerImage: mas['ods:containerImage'],
-                                        containerTag: mas['ods:containerTag'],
-                                        sourceCodeRepository: mas['schema:codeRepository'],
-                                        codeMaintainer: mas['schema:maintainer']?.['schema:identifier'],
-                                        codeLicense: mas['schema:license'],
-                                        supportContact: mas['schema:ContactPoint']?.['schema:url'],
-                                        slaDocumentation: mas['ods:slaDocumentation'],
-                                        maxReplicas: mas['ods:maxReplicas'],
-                                        batchingPermitted: mas['ods:batchingPermitted'] ? 'True' : 'False'
+                                        'Name': mas['schema:name'],
+                                        'Container Image': mas['ods:containerImage'],
+                                        'Container Tag': mas['ods:containerTag'],
+                                        'Source Code Repository': mas['schema:codeRepository'],
+                                        'Service Availability': mas['ods:serviceAvailability'],
+                                        'Code Maintainer': mas['schema:maintainer']?.['schema:identifier'],
+                                        'Code License': mas['schema:license'],
+                                        'Contact Point': mas['schema:ContactPoint']?.['schema:url'],
+                                        'SLA Documentation': mas['ods:slaDocumentation'],
+                                        'Max Replicas': mas['ods:maxReplicas'],
+                                        'Creative Work Status': mas['schema:creativeWorkStatus'],
+                                        'Programming Language': mas['schema:programmingLanguage'],
+                                        'Time to Live': mas['ods:timeToLive'],
+                                        'Environmental Variables': mas['ods:hasEnvironmentalVariables'],
+                                        'Secret Variables': mas['ods:hasSecretVariables'],
+                                        'Ingestion Compatible': mas['ods:isIngestionCompatible'],
+                                        'Batching Permitted': mas['ods:batchingPermitted'] ? 'True' : 'False'
                                     }}
                                 />
                             </Col>
