@@ -69,13 +69,6 @@ const MasFiltersField = (props: Props) => {
                     <Col className="col-lg-auto">
                         <Field name="targetDigitalObjectFiltersOptions"
                             as="select"
-                            validate={() => {
-                                const addedFilters = formValues?.['ods:hasTargetDigitalObjectFilter'];
-
-                                if (Object.keys(addedFilters).length === 0) {
-                                    return 'Required';
-                                }
-                            }}
                         >
                             <option value="" disabled={true}> Select a harmonised attribute </option>
 
