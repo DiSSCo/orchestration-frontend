@@ -90,12 +90,12 @@ const FormBuilder = () => {
             const route = location.pathname.split('/', 2)[1];
             const id = `${location.pathname.split('/', 3)[2]}/${location.pathname.split('/', 4)[3]}`;
 
-                /* Set edit target */
-                DefineEditTarget(route, id).then((editTarget) => {
-                    dispatch(setEditTarget(editTarget));
-                }).catch(error => {
-                    console.warn(error);
-                });
+            /* Set edit target */
+            DefineEditTarget(route, id).then((editTarget) => {
+                dispatch(setEditTarget(editTarget));
+            }).catch(error => {
+                console.warn(error);
+            });
         } else {
             dispatch(setEditTarget(undefined));
         }
@@ -266,9 +266,7 @@ const FormBuilder = () => {
                         const requiredFieldsMAS = [
                             'masName',
                             'masContainerImage',
-                            'masContainerTag',
-                            'ods:hasTargetDigitalObjectFilter',
-                            'masBatchingPermitted'
+                            'masContainerTag'
                         ];
 
                         if (location.pathname.includes('source-system') && formPage === 0) {

@@ -14,9 +14,7 @@ const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) =
     const requiredFields = new Set([
         'schema:name',
         'ods:containerImage',
-        'ods:containerTag',
-        'ods:hasTargetDigitalObjectFilter',
-        'ods:batchingPermitted'
+        'ods:containerTag'
     ]);
 
     /* Generate MAS form fields */
