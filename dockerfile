@@ -4,19 +4,21 @@ FROM node:24-alpine3.21 as build
 # Set working directory
 WORKDIR /orchestration-frontend
 
-# Install dependencies
-COPY package.json ./
-COPY package-lock.json ./
+# Install pnpm globally
+RUN npm install -g pnpm@latest-11
 
-RUN npm install npm@11.6.3
+# Copy package.json and pnpm-lock.yaml for dependency caching
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+# Install project dependencies (including devDependencies like typescript)
+RUN pnpm install --frozen-lockfile
 
 # Copy application
 COPY . ./
 
 # Generate Type Files
-RUN npm install typescript -g
-
-RUN tsc 'src/app/GenerateTypes.ts' \
+RUN pnpm exec tsc 'src/app/GenerateTypes.ts' \
     --outDir 'src/app' \
     --ignoreConfig \
     --types 'node' \
@@ -40,7 +42,7 @@ ARG VITE_KEYCLOAK_REALM
 ENV VITE_KEYCLOAK_REALM ${VITE_KEYCLOAK_REALM}
 
 # Setting app to production build
-RUN npm run build
+RUN pnpm run build
 
 # Setting up NGINX
 FROM nginx:alpine
