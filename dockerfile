@@ -19,7 +19,6 @@ COPY . ./
 # Generate Type Files
 RUN pnpm exec tsc 'src/app/GenerateTypes.ts' \
     --outDir 'src/app' \
-    --ignoreConfig \
     --types 'node' \
     --moduleResolution 'node' \
     --module 'CommonJS' \
