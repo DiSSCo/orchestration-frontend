@@ -27,7 +27,7 @@ RUN pnpm exec tsc 'src/app/GenerateTypes.ts' \
     --esModuleInterop
 
 RUN cp 'src/app/GenerateTypes.js' 'src/app/GenerateTypes.cjs'
-RUN rm 'src/app/GenerateTypes.js'
+RUN rm 'src/app/GenerateTypes.js' 'src/app/Types.js'
 RUN node 'src/app/GenerateTypes.cjs'
 
 # Set env variables
