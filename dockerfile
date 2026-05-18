@@ -24,8 +24,7 @@ RUN pnpm exec tsc 'src/app/GenerateTypes.ts' \
     --module 'CommonJS' \
     --target 'es2020' \
     --lib 'es2020','dom' \
-    --esModuleInterop \
-    --ignoreDeprecations '6.0'
+    --esModuleInterop
 
 RUN cp 'src/app/GenerateTypes.js' 'src/app/GenerateTypes.cjs'
 RUN rm 'src/app/GenerateTypes.js'
