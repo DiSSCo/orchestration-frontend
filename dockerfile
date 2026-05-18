@@ -1,6 +1,8 @@
 # Pull official node image as base
 FROM node:24-alpine3.21 as build
 
+RUN corepack enable && corepack prepare pnpm@latest-11 --activate
+
 # Set working directory
 WORKDIR /orchestration-frontend
 
@@ -12,7 +14,7 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 
 # Install project dependencies (including devDependencies like typescript)
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy application
 COPY . ./
