@@ -6,9 +6,6 @@ RUN corepack enable && corepack prepare pnpm@latest-11 --activate
 # Set working directory
 WORKDIR /orchestration-frontend
 
-# Install pnpm globally
-RUN npm install -g pnpm@latest-11
-
 # Copy package.json and pnpm-lock.yaml for dependency caching
 COPY package.json ./
 COPY pnpm-lock.yaml ./
