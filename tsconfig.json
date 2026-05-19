@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "preserveSymlinks": true,
+    "preserveSymlinks": false,
     "types": ["node", "@testing-library/jest-dom"],
 
     /* Bundler mode */

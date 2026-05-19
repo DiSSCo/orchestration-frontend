@@ -1,3 +1,5 @@
 allowBuilds:
-  '@parcel/watcher': true
+  '@fortawesome/fontawesome-common-types': true
+  '@fortawesome/fontawesome-svg-core': true
+  '@fortawesome/free-solid-svg-icons': true
   esbuild: true
