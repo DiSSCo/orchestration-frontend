@@ -1,31 +1,30 @@
 # Pull official node image as base
 FROM node:24-alpine3.21 as build
 
+RUN corepack enable && corepack prepare pnpm@latest-11 --activate
+
 # Set working directory
 WORKDIR /orchestration-frontend
 
-# Install dependencies
+# Copy package.json and pnpm-lock.yaml for dependency caching
 COPY package.json ./
-COPY package-lock.json ./
+COPY pnpm-lock.yaml ./
 
-RUN npm install npm@11.6.3
+# Install project dependencies (including devDependencies like typescript)
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy application
 COPY . ./
 
 # Generate Type Files
-RUN npm install typescript -g
-
-RUN tsc 'src/app/GenerateTypes.ts' \
+RUN pnpm exec tsc 'src/app/GenerateTypes.ts' \
     --outDir 'src/app' \
-    --ignoreConfig \
     --types 'node' \
     --moduleResolution 'node' \
     --module 'CommonJS' \
     --target 'es2020' \
     --lib 'es2020','dom' \
-    --esModuleInterop \
-    --ignoreDeprecations '6.0'
+    --esModuleInterop
 
 RUN cp 'src/app/GenerateTypes.js' 'src/app/GenerateTypes.cjs'
 RUN rm 'src/app/GenerateTypes.js'
@@ -40,7 +39,7 @@ ARG VITE_KEYCLOAK_REALM
 ENV VITE_KEYCLOAK_REALM ${VITE_KEYCLOAK_REALM}
 
 # Setting app to production build
-RUN npm run build
+RUN pnpm run build
 
 # Setting up NGINX
 FROM nginx:alpine
