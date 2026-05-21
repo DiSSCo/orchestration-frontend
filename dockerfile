@@ -1,6 +1,7 @@
 # Pull official node image as base
 FROM node:24-alpine3.21 as build
 
+# Enable corepack
 RUN corepack enable && corepack prepare pnpm@latest-11 --activate
 
 # Set working directory
