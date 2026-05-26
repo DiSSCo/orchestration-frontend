@@ -19,7 +19,7 @@ jobs:
             keycloak_server: https://keycloak.iam.naturalis.io
             keycloak_realm: dissco-dev
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
         
