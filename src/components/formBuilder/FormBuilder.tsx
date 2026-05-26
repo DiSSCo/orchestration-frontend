@@ -40,11 +40,11 @@ import KeyValuePairField from './formFields/KeyValuePairField.tsx';
 
 
 /* Props Typing */
-interface formTemplatesProps {
+interface FormTemplatesProps {
     title: string,
     formValues?: Dict,
     SetFieldValue?: Function,
-    isValid?: Boolean
+    isValid?: boolean
 };
 
 /* Function to determine the form field by type */
@@ -89,7 +89,7 @@ const FormBuilder = () => {
     /* Base variables */
     const editTarget = useAppSelector(getEditTarget);
     const [formPage, setFormPage] = useState<number>(0);
-    const formTemplates: React.ReactElement<formTemplatesProps>[] = [];
+    const formTemplates: React.ReactElement<FormTemplatesProps>[] = [];
     let initialValues: Dict = {};
 
     /* OnLoad: always fetch fresh edit target for edit routes, clear it otherwise */
