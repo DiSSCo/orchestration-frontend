@@ -6,8 +6,15 @@ import { Dict } from 'app/Types';
 import SourceSystemFields from 'sources/formFields/SourceSystemFields.json';
 
 
+/* Props Typing */
+interface FormFieldProps {
+    name: string,
+    formValues?: Dict,
+    SetFieldValue?: Function
+};
+
 const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSystem) => {
-    const formFields: React.ReactElement[] = [];
+    const formFields: React.ReactElement<FormFieldProps>[] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for this form */

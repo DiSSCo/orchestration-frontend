@@ -6,8 +6,15 @@ import { Dict } from 'app/Types';
 import MasFields from 'sources/formFields/MasFields.json';
 
 
+/* Props Typing */
+interface FormFieldProps {
+    name: string,
+    formValues?: Dict,
+    SetFieldValue?: Function
+};
+
 const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) => {
-    const formFields: React.ReactElement[] = [];
+    const formFields: React.ReactElement<FormFieldProps>[] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for the MAS form */

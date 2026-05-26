@@ -8,9 +8,15 @@ import { Dict } from 'app/Types';
 
 
 /* Props Typing */
+interface FormFieldProps {
+    name: string,
+    formValues?: Dict,
+    SetFieldValue?: Function
+};
+
 interface Props {
     title: string,
-    formFields: React.ReactElement[],
+    formFields: React.ReactElement<FormFieldProps>[],
     formValues?: Dict,
     SetFieldValue?: Function,
     numberOfFormPages?: number,

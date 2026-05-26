@@ -6,8 +6,15 @@ import { Dict } from 'app/Types';
 import DataMappingFields from 'sources/formFields/DataMappingFields.json';
 
 
+/* Props Typing */
+interface FormFieldProps {
+    name: string,
+    formValues?: Dict,
+    SetFieldValue?: Function
+};
+
 const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping) => {
-    const formFieldsPages: React.ReactElement[][] = [];
+    const formFieldsPages: React.ReactElement<FormFieldProps>[][] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for this form */
