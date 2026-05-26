@@ -7,7 +7,7 @@ import SourceSystemFields from 'sources/formFields/SourceSystemFields.json';
 
 
 const SourceSystemForm = (DetermineFormField: Function, sourceSystem?: SourceSystem) => {
-    const formFields: JSX.Element[] = [];
+    const formFields: React.ReactElement[] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for this form */

@@ -10,7 +10,7 @@ import { Dict } from 'app/Types';
 /* Props Typing */
 interface Props {
     title: string,
-    formFields: JSX.Element[],
+    formFields: React.ReactElement[],
     formValues?: Dict,
     SetFieldValue?: Function,
     numberOfFormPages?: number,

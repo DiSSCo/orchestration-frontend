@@ -81,7 +81,7 @@ const FormBuilder = () => {
     /* Base variables */
     const editTarget = useAppSelector(getEditTarget);
     const [formPage, setFormPage] = useState<number>(0);
-    const formTemplates: JSX.Element[] = [];
+    const formTemplates: React.ReactElement[] = [];
     let initialValues: Dict = {};
 
     /* OnLoad: always fetch fresh edit target for edit routes, clear it otherwise */

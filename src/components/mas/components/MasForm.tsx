@@ -7,7 +7,7 @@ import MasFields from 'sources/formFields/MasFields.json';
 
 
 const MasForm = (DetermineFormField: Function, mas?: MachineAnnotationService) => {
-    const formFields: JSX.Element[] = [];
+    const formFields: React.ReactElement[] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for the MAS form */

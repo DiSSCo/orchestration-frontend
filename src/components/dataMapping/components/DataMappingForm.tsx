@@ -7,7 +7,7 @@ import DataMappingFields from 'sources/formFields/DataMappingFields.json';
 
 
 const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping) => {
-    const formFieldsPages: JSX.Element[][] = [];
+    const formFieldsPages: React.ReactElement[][] = [];
     const initialValuesFields: Dict = {};
 
     /* Required fields for this form */
@@ -24,7 +24,7 @@ const DataMappingForm = (DetermineFormField: Function, dataMapping?: DataMapping
         page.fields.forEach((field: { name: string, alias?: string, type: string, options?: { name: string, label: string }[] }) => {
             /* Check if this field should be marked as required */
             const isRequired = requiredFields.includes(field.name);
-            
+
             formFieldsPages[index].push(DetermineFormField(field.alias ?? field.name, field.name, field.type, field.options, isRequired));
 
             /* Add to initial form values */

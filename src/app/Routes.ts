@@ -6,7 +6,7 @@ import SourceSystemRoutes from 'components/sourceSystem/Routes';
 
 
 /* Routes for application */
-const AppRoutes: JSX.Element[] = [
+const AppRoutes: React.ReactElement[] = [
     ...HomeRoutes,
     ...DataMappingRoutes,
     ...MasRoutes,
