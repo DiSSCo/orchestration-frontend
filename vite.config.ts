@@ -14,7 +14,8 @@ export default defineConfig({
       "redux-store": '/src/redux-store',
       sources: '/src/sources',
       tests: '/src/tests',
-      webroot: '/src/webroot'
+      webroot: '/src/webroot',
+      styles: '/src/styles'
     }
   },
   build: {
