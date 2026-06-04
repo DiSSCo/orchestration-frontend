@@ -5,6 +5,7 @@ import KeycloakService from 'app/Keycloak';
 import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ToastProvider } from "components/elements/notifications/ToastProvider";
+import { Theme } from "@radix-ui/themes";
 
 /* Import Store */
 import { setupStore } from './app/Store';
@@ -12,6 +13,7 @@ import { setupStore } from './app/Store';
 /* Import Styles */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tabs/style/react-tabs.css';
+import "@radix-ui/themes/styles.css";
 
 /* Import Components */
 import App from './App';
@@ -31,7 +33,9 @@ const RenderRoot = () => {
     <QueryClientProvider client={queryClient}>
       <Provider store={setupStore()}>
         <ToastProvider>
-          <App />
+          <Theme accentColor="indigo">
+            <App />
+          </Theme>
         </ToastProvider>
       </Provider>
     </QueryClientProvider >

@@ -1,0 +1,48 @@
+/* Import color definitions */
+@import "./colors.scss";
+
+/* Import fonts */
+@font-face {
+    font-family: 'Inter';
+    src: url(webroot/font/Inter-VariableFont_opsz,wght.ttf);
+}
+
+/* Radix theme configuration */
+.radix-themes {
+    height: 100%;
+    
+
+    --default-font-family: 'Inter', sans-serif;
+    --default-font-weight: 400;
+    --default-font-color: #202020;
+    --default-font-size: 14px;
+    --default-line-height: 20px;
+
+
+    /* Map custom blueberry color to Radix indigo */
+    --indigo-1: var(--disscover-blueberry-1);
+    --indigo-2: var(--disscover-blueberry-2);
+    --indigo-3: var(--disscover-blueberry-3);
+    --indigo-4: var(--disscover-blueberry-4);
+    --indigo-5: var(--disscover-blueberry-5);
+    --indigo-6: var(--disscover-blueberry-6);
+    --indigo-7: var(--disscover-blueberry-7);
+    --indigo-8: var(--disscover-blueberry-8);
+    --indigo-9: var(--disscover-blueberry-9);
+    --indigo-10: var(--disscover-blueberry-10);
+    --indigo-11: var(--disscover-blueberry-11);
+    --indigo-12: var(--disscover-blueberry-12);
+
+    --indigo-a1: var(--disscover-blueberry-a1);
+    --indigo-a2: var(--disscover-blueberry-a2);
+    --indigo-a3: var(--disscover-blueberry-a3);
+    --indigo-a4: var(--disscover-blueberry-a4);
+    --indigo-a5: var(--disscover-blueberry-a5);
+    --indigo-a6: var(--disscover-blueberry-a6);
+    --indigo-a7: var(--disscover-blueberry-a7);
+    --indigo-a8: var(--disscover-blueberry-a8);
+    --indigo-a9: var(--disscover-blueberry-a9);
+    --indigo-a10: var(--disscover-blueberry-a10);
+    --indigo-a11: var(--disscover-blueberry-a11);
+    --indigo-a12: var(--disscover-blueberry-a12);
+}

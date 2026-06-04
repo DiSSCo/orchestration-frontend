@@ -13,6 +13,7 @@ export default defineConfig({
       components: '/src/components',
       "redux-store": '/src/redux-store',
       sources: '/src/sources',
+      styles: '/src/styles',
       tests: '/src/tests',
       webroot: '/src/webroot'
     }

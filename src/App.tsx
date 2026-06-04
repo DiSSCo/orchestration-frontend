@@ -8,7 +8,8 @@ import {
 import AppRoutes from 'app/Routes';
 
 /* Import Styles */
-import './App.css';
+import 'styles/App.css';
+import 'styles/main.scss';
 
 
 const App = () => {
