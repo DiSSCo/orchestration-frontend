@@ -9,7 +9,6 @@ import AppRoutes from 'app/Routes';
 
 /* Import Styles */
 import 'styles/App.css';
-import 'styles/index.scss';
 import 'styles/main.scss';
 
 
